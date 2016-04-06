@@ -65,3 +65,4 @@ $RECYCLE.BIN/
 *.lnk
 /Punto_de_venta_P2/build/
 /Punto_de_venta_P2/dist/
+Punto_de_venta_P2/nbproject/private/private.properties
