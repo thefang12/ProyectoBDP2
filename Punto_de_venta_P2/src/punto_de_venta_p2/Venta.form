@@ -178,7 +178,7 @@
                 <Component class="javax.swing.JButton" name="jButton6">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/punto_de_venta_p2/Drawing (1).png"/>
+                      <Image iconType="3" name="/Assets/Drawing (1).png"/>
                     </Property>
                     <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="contentAreaFilled" type="boolean" value="false"/>
@@ -192,7 +192,7 @@
                 <Component class="javax.swing.JButton" name="jButton8">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/punto_de_venta_p2/Experience_Music_Project_Museum_uhd.jpg"/>
+                      <Image iconType="3" name="/Assets/Experience_Music_Project_Museum_uhd.jpg"/>
                     </Property>
                     <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="contentAreaFilled" type="boolean" value="false"/>
@@ -421,7 +421,7 @@
                 <Component class="javax.swing.JButton" name="jButton4">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/punto_de_venta_p2/Drawing (1).png"/>
+                      <Image iconType="3" name="/Assets/Drawing (1).png"/>
                     </Property>
                     <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="contentAreaFilled" type="boolean" value="false"/>
@@ -438,7 +438,7 @@
                       <Color blue="fb" green="fb" red="fb" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/punto_de_venta_p2/nebula.png"/>
+                      <Image iconType="3" name="/Assets/nebula.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="jButton7"/>
                   </Properties>

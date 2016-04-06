@@ -100,12 +100,12 @@ public class Venta extends javax.swing.JFrame {
         jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 160, -1));
         jPanel2.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 160, -1));
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/punto_de_venta_p2/Drawing (1).png"))); // NOI18N
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
         jButton6.setBorderPainted(false);
         jButton6.setContentAreaFilled(false);
         jPanel2.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/punto_de_venta_p2/Experience_Music_Project_Museum_uhd.jpg"))); // NOI18N
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Experience_Music_Project_Museum_uhd.jpg"))); // NOI18N
         jButton8.setBorderPainted(false);
         jButton8.setContentAreaFilled(false);
         jPanel2.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 820, 560));
@@ -169,13 +169,13 @@ public class Venta extends javax.swing.JFrame {
         jButton5.setText("Agregar");
         jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 70, -1, -1));
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/punto_de_venta_p2/Drawing (1).png"))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
         jButton4.setBorderPainted(false);
         jButton4.setContentAreaFilled(false);
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 140, -1));
 
         jButton7.setBackground(new java.awt.Color(251, 251, 251));
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/punto_de_venta_p2/nebula.png"))); // NOI18N
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/nebula.png"))); // NOI18N
         jButton7.setText("jButton7");
         jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1540, 650));
 
