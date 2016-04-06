@@ -5,15 +5,26 @@
  */
 package punto_de_venta_p2;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Arrays;
+import java.util.regex.Pattern;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author fangi
  */
+
 public class login extends javax.swing.JFrame {
 
     /**
      * Creates new form login
      */
+     int idCuenta=-1;
     public login() {
         initComponents();
     }
@@ -30,18 +41,14 @@ public class login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jPasswordField1 = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel2.setText("Usuario");
+        jLabel2.setText("ID");
 
         jLabel3.setText("Contraseña");
-
-        jTextField1.setText("jTextField1");
-
-        jTextField2.setText("jTextField2");
 
         jButton1.setText("Ingresar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -49,6 +56,8 @@ public class login extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        jPasswordField1.setText("jPasswordField1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -60,9 +69,9 @@ public class login extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel2))
                 .addGap(74, 74, 74)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                    .addComponent(jPasswordField1))
                 .addGap(135, 135, 135))
             .addGroup(layout.createSequentialGroup()
                 .addGap(234, 234, 234)
@@ -79,7 +88,7 @@ public class login extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(62, 62, 62)
                 .addComponent(jButton1)
                 .addContainerGap(175, Short.MAX_VALUE))
@@ -90,15 +99,35 @@ public class login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         // TODO add your handling code here:
-        
-        
-        
-        Venta newFrame = new Venta();
-        newFrame.setVisible(true);
-        this.dispose();
+       try { 
+           String query =  "SELECT * From staff ";
+            char[] input = jPasswordField1.getPassword();
+           
+           Connection con = Conexion.getConexion();
+           Statement st = con.createStatement();
+           ResultSet rs= st.executeQuery(query);
+           String n =jTextField1.getText();
+           if(!n.matches(".*[a-zA-Z]+.*")&&!n.equals(""))
+           while(rs.next()){
+               
+               if(Integer.parseInt(n)==rs.getInt(1)&&checkPassword(jPasswordField1.getPassword(),rs.getString(2))){
+                   idCuenta=rs.getInt(1);
+                   cambiarVentana(new Venta());
+               }
+           }
+           st.close();
+           con.close(); 
+       } catch (SQLException ex){
+           System.out.println(ex.getMessage());
+       }
+       if(idCuenta==-1){
+                   JOptionPane.showMessageDialog(null,"Ingrese ID y contraseña validos");
+               }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    private void cambiarVentana(JFrame frame){
+        frame.setVisible(true);
+        this.dispose();
+    }
     /**
      * @param args the command line arguments
      */
@@ -138,7 +167,11 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
+
+    private boolean checkPassword(char[] epswd,String pswd) {
+              return Arrays.equals(epswd, pswd.toCharArray());
+    }
 }
