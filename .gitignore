@@ -66,3 +66,5 @@ $RECYCLE.BIN/
 /Punto_de_venta_P2/build/
 /Punto_de_venta_P2/dist/
 Punto_de_venta_P2/nbproject/private/private.properties
+Punto_de_venta_P2/src/propiedad.properties
+Punto_de_venta_P2/nbproject/private/private.properties
