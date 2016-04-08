@@ -4,18 +4,24 @@
  * and open the template in the editor.
  */
 package punto_de_venta_p2;
-
+import javax.swing.table.DefaultTableModel;
+ import java.sql.*;
+import javax.swing.JOptionPane;
+import org.xml.sax.Attributes;
+import javax.swing.*;
 /**
  *
  * @author pablotabales
  */
 public class Venta extends javax.swing.JFrame {
-
+    
+    ResultSet resultset;
     /**
      * Creates new form Venta
      */
     public Venta() {
         initComponents();
+        tablaProducto();
     }
 
     /**
@@ -35,35 +41,63 @@ public class Venta extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        btnPrecio = new javax.swing.JTextField();
+        btnCategoria = new javax.swing.JTextField();
+        btnNombre = new javax.swing.JTextField();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jButton14 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel12 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jTextField6 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
+        jButton15 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jButton17 = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        btnApellidoU = new javax.swing.JTextField();
+        btnActivoU = new javax.swing.JTextField();
+        btnContraseñaU = new javax.swing.JTextField();
+        btnNombreU = new javax.swing.JTextField();
+        btnPuesto = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        btnSucursal = new javax.swing.JTextField();
+        jButton16 = new javax.swing.JButton();
+        jLabel20 = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        jTable4 = new javax.swing.JTable();
+        jLabel19 = new javax.swing.JLabel();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,39 +105,61 @@ public class Venta extends javax.swing.JFrame {
 
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Agregar Productos");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, -1, -1));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, -1, -1));
 
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Nombre");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, -1, -1));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, -1, -1));
 
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Categoría");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, -1));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, -1, -1));
 
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Costo");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, -1, -1));
+        jLabel10.setText("Precio");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, -1));
 
         jButton3.setText("Agregar");
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 250, -1, -1));
-
-        jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
-        jScrollPane5.setViewportView(jTextArea3);
-
-        jPanel2.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 330, 560, 160));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 220, -1, -1));
 
         jButton1.setText("Buscar");
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 170, -1, -1));
-        jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 160, -1));
-        jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 160, -1));
-        jPanel2.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 160, -1));
+        jPanel2.add(btnPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 160, -1));
+        jPanel2.add(btnCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 160, -1));
+        jPanel2.add(btnNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 160, -1));
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane8.setViewportView(jTable3);
+
+        jPanel2.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 350, 520, 100));
+
+        jButton14.setText("Cerrar Sesión ");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, -1, -1));
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
         jButton6.setBorderPainted(false);
         jButton6.setContentAreaFilled(false);
-        jPanel2.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
+        jPanel2.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
 
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Experience_Music_Project_Museum_uhd.jpg"))); // NOI18N
         jButton8.setBorderPainted(false);
@@ -117,40 +173,71 @@ public class Venta extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton2.setText("Buscar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 105, 80, 30));
+
+        jLabel11.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel11.setText("Ventas");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, 70, -1));
 
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setText("Punto de Venta");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, -1, -1));
 
         jLabel2.setForeground(new java.awt.Color(204, 204, 204));
         jLabel2.setText("Nombre/Código");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(245, 82, 139, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 139, -1));
 
         jLabel3.setForeground(new java.awt.Color(204, 204, 204));
         jLabel3.setText("Categoría");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(245, 122, 139, -1));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(396, 80, 238, -1));
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(396, 120, 238, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 139, -1));
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 238, -1));
+        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 238, -1));
+
+        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField5ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, 76, -1));
 
-        jScrollPane1.setForeground(new java.awt.Color(238, 238, 238));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(jTable1);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setForeground(new java.awt.Color(238, 238, 238));
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jTextArea1.setSelectedTextColor(new java.awt.Color(204, 204, 204));
-        jScrollPane1.setViewportView(jTextArea1);
+        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, 400, 180));
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 510, 190));
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane7.setViewportView(jTable2);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jTextArea2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jScrollPane4.setViewportView(jTextArea2);
+        jPanel1.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 440, 180));
 
-        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(577, 202, 210, 190));
+        jLabel12.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel12.setText("Busquedas");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 170, 70, -1));
 
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Total");
@@ -166,22 +253,147 @@ public class Venta extends javax.swing.JFrame {
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 420, -1, -1));
         jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 420, 70, -1));
 
+        jButton15.setText("Cerrar Sesión ");
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton15, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 20, -1, -1));
+
+        jButton13.setText("Pago");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 460, 100, -1));
+
         jButton5.setText("Agregar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 70, -1, -1));
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
         jButton4.setBorderPainted(false);
         jButton4.setContentAreaFilled(false);
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 140, -1));
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 140, -1));
 
         jButton7.setBackground(new java.awt.Color(251, 251, 251));
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/nebula.png"))); // NOI18N
         jButton7.setText("jButton7");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1540, 650));
+
+        jButton17.setText("Cerrar Sesión");
+        jPanel1.add(jButton17, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 30, -1, -1));
 
         jScrollPane2.setViewportView(jPanel1);
 
         jTabbedPane1.addTab("Venta", jScrollPane2);
+
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Agregar Personal y Asignación Usuarios");
+        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, -1, -1));
+
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Nombre");
+        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, -1, -1));
+
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Contraseña");
+        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, -1, -1));
+
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("Apellido");
+        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, -1));
+
+        jButton9.setText("Agregar");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 230, -1, -1));
+
+        jButton10.setText("Buscar");
+        jPanel3.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 230, -1, -1));
+        jPanel3.add(btnApellidoU, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 160, -1));
+        jPanel3.add(btnActivoU, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 160, -1));
+        jPanel3.add(btnContraseñaU, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, 160, -1));
+        jPanel3.add(btnNombreU, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 160, -1));
+
+        btnPuesto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPuestoActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnPuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 180, 160, -1));
+
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setText("Puesto");
+        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 180, -1, -1));
+
+        btnSucursal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSucursalActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 140, 160, -1));
+
+        jButton16.setText("Cerrar Sesión");
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton16, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 30, -1, -1));
+
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setText("Sucursal");
+        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 140, -1, -1));
+
+        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane9.setViewportView(jTable4);
+
+        jPanel3.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 350, 520, 100));
+
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("Activo");
+        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, -1, -1));
+
+        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
+        jButton11.setBorderPainted(false);
+        jButton11.setContentAreaFilled(false);
+        jPanel3.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
+
+        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Experience_Music_Project_Museum_uhd.jpg"))); // NOI18N
+        jButton12.setBorderPainted(false);
+        jButton12.setContentAreaFilled(false);
+        jPanel3.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 820, 560));
+
+        jScrollPane4.setViewportView(jPanel3);
+
+        jTabbedPane1.addTab("Agregar usuarios", jScrollPane4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -202,6 +414,312 @@ public class Venta extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    
+     private void cambiarVentana(JFrame frame){
+        frame.setVisible(true);
+        this.dispose();
+    }
+    
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+            DefaultTableModel modeloFotos;
+        try {
+            Conetzion conectar = new Conetzion();
+            String codBuscar = jTextField1.getText();
+           // codBuscar = JOptionPane.showInputDialog("Ingrese el codigo a Buscar: ");
+            resultset = conectar.consulta("SELECT articulo_id  FROM articulo");
+            boolean encontro = false;
+            while (resultset.next()) {
+                if (codBuscar.equals(resultset.getObject("articulo_id"))) {
+                    encontro = true;
+                    break;
+                }
+            }
+            String SQL = "SELECT * FROM articulo where articulo_id ='" + codBuscar + "'";
+            modeloFotos = conectar.retornarDatosTabla(SQL);
+           
+            jTable1.setModel(modeloFotos);
+            jScrollPane6.getViewport().add(jTable1);
+            
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+      
+
+        try {
+                  
+           Conetzion conectar = new Conetzion();
+          // String insertFoto="update table set foto="
+           String sentenciaInsert="INSERT INTO articulo VALUES(?,?,?,?)";
+            conectar.psPrepararSentencia=conectar.conectar.prepareStatement(sentenciaInsert);
+           Connection con = Conexion.getConexion();
+           PreparedStatement psmt2 =con.prepareStatement(sentenciaInsert,Statement.RETURN_GENERATED_KEYS);
+           ResultSet tblkeys = psmt2.getGeneratedKeys();
+           int autoid=0;
+           if(tblkeys.next()){
+               autoid=tblkeys.getInt(1);
+           }
+            conectar.psPrepararSentencia.setInt(1,autoid);
+            conectar.psPrepararSentencia.setString(2,btnNombre.getText());
+            conectar.psPrepararSentencia.setString(3,btnPrecio.getText());
+            conectar.psPrepararSentencia.setString(4,btnCategoria.getText());
+            conectar.psPrepararSentencia.executeUpdate();
+            
+            DefaultTableModel modeloFotos;
+        String query =  "SELECT * From articulo ";
+           Statement st = con.createStatement();
+           ResultSet rs= st.executeQuery(query);
+           String codBuscar="";
+           while(rs.next()){if(rs.isLast())
+            codBuscar = rs.getInt(1)+"";}
+           // String codBuscar = btnID.getText();
+           // codBuscar = JOptionPane.showInputDialog("Ingrese el codigo a Buscar: ");
+            resultset = conectar.consulta("SELECT articulo_id  FROM articulo");
+            boolean encontro = false;
+            while (resultset.next()) {
+                if (codBuscar.equals(resultset.getObject("articulo_id"))) {
+                    encontro = true;
+                    break;
+                }
+            }
+            String SQL = "SELECT * FROM articulo where articulo_id ='" + codBuscar + "'";
+            modeloFotos = conectar.retornarDatosTabla(SQL);
+           
+            jTable3.setModel(modeloFotos);
+            jScrollPane8.getViewport().add(jTable3);
+            
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }         
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        
+        try {
+                  
+           Conetzion conectar = new Conetzion();
+          // String insertFoto="update table set foto="
+           String sentenciaInsert="INSERT INTO staff VALUES(?,?,?,?,?,?,?)";
+           
+            conectar.psPrepararSentencia=conectar.conectar.prepareStatement(sentenciaInsert);
+            Connection con = Conexion.getConexion();
+           PreparedStatement psmt2 =con.prepareStatement(sentenciaInsert,Statement.RETURN_GENERATED_KEYS);
+           ResultSet tblkeys = psmt2.getGeneratedKeys();
+           int autoid=0;
+           if(tblkeys.next()){
+               autoid=tblkeys.getInt(1);
+           }
+            //conectar.psPrepararSentencia.setString(1,btnID1.getText());
+            conectar.psPrepararSentencia.setInt(1, autoid);
+            conectar.psPrepararSentencia.setString(2,btnContraseñaU.getText());
+            conectar.psPrepararSentencia.setString(3,btnNombreU.getText());
+            conectar.psPrepararSentencia.setString(4,btnApellidoU.getText());
+            conectar.psPrepararSentencia.setInt(5, Integer.parseInt(btnActivoU.getText()));
+            //conectar.psPrepararSentencia.setString(5,btnActivoU.getText());
+            conectar.psPrepararSentencia.setInt(6, Integer.parseInt(btnSucursal.getText()));
+            //conectar.psPrepararSentencia.setString(6,btnSucursal.getText());
+            conectar.psPrepararSentencia.setString(7,btnPuesto.getText());
+
+            conectar.psPrepararSentencia.executeUpdate();
+            
+            DefaultTableModel modeloFotos;
+        String query =  "SELECT * From staff ";
+           Statement st = con.createStatement();
+           ResultSet rs= st.executeQuery(query);
+           String codBuscar="";
+           while(rs.next()){if(rs.isLast())
+            codBuscar = rs.getInt(1)+"";}
+           // codBuscar = JOptionPane.showInputDialog("Ingrese el codigo a Buscar: ");
+            resultset = conectar.consulta("SELECT staff_id  FROM staff");
+            boolean encontro = false;
+            while (resultset.next()) {
+                if (codBuscar.equals(resultset.getObject("staff_id"))) {
+                    encontro = true;
+                    break;
+                }
+            }
+            String SQL = "SELECT * FROM staff where staff_id ='" + codBuscar + "'";
+            modeloFotos = conectar.retornarDatosTabla(SQL);
+           
+            jTable4.setModel(modeloFotos);
+            jScrollPane9.getViewport().add(jTable4);
+            
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }        
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    
+    private DefaultTableModel rellenarTabla(JTable table, float cantidad, int articulo, String nombre, float precio, int categoria) {
+    
+
+    Object[] row = { cantidad, articulo, nombre, precio,categoria };
+
+    DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+     model.addRow(row);
+    return model;
+    // clear the entries.
+}
+    private void obtenerDatosTabla()
+    {
+        int column = 3;
+        float total=0;
+        int row = jTable2.getRowCount();
+        for(int i = 0; i < row; i++) {
+            float valor=(float)jTable2.getValueAt(i, 0);
+        total+= (float)jTable2.getValueAt(i, column)*valor;
+}
+        jTextField5.setText(Float.toString(total));
+    }
+    
+     private void modificarTotal(float precio,int cantidad)
+    {
+     
+        int valorAnterior;
+        float total=0;
+        
+        if(jTextField5.getText()!=null){
+        valorAnterior= Integer.parseInt(jTextField5.getText());
+        total = (float)valorAnterior;
+        total += precio * (float)cantidad;
+        }else{
+           total += precio * (float)cantidad; 
+        }
+        
+        jTextField5.setText(Float.toString(total));
+    }
+     
+     
+    
+        private void tablaProducto(){
+       jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                
+            },
+            new String [] {
+                "Cantidad", "Articulo ID", "Nombre", "Precio","Categoria"
+            }
+        ));
+       jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                
+            },
+            new String [] {
+                "Cantidad", "Articulo ID", "Nombre", "Precio","Categoria"
+            }
+        ));
+       jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                
+            },
+            new String [] {
+                "Cantidad", "Articulo ID", "Nombre", "Precio","Categoria"
+            }
+        ));
+       jTable4.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                
+            },
+            new String [] {
+                "Staff_id", "Contraseña", "Nombre", "Apellido","Sucursal ID","Puesto"
+            }
+        ));
+        }
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        
+          // TODO add your handling code here:
+       try { 
+           
+           String query =  "SELECT * From articulo";
+           int id= Integer.parseInt(jTextField1.getText());
+           int uno=0;
+           String dos="";
+           float tres=0;
+           int cuatro=0;
+           Connection cone = Conexion.getConexion();
+           Statement ste = cone.createStatement();
+            resultset = ste.executeQuery(query);
+           while(resultset.next()){
+               if(id==resultset.getInt(1)){
+           uno= resultset.getInt(1);
+           dos= resultset.getString(2);
+           tres= (float)resultset.getInt(3);
+           cuatro= resultset.getInt(4);
+           break;
+               }
+           
+       }
+           //String n =jTextField1.getText();
+           String ax = JOptionPane.showInputDialog("Ingrese la cantidad: ");
+        JOptionPane.showMessageDialog(null, "El numero ingresado es: "+ax);
+        float cantidad = Float.parseFloat(ax);
+           jTable2.setModel(rellenarTabla(jTable2,cantidad,uno,dos,tres,cuatro));
+           jScrollPane7.getViewport().add(jTable2);
+           ste.close();
+           cone.close(); 
+           obtenerDatosTabla();
+           
+       } catch (SQLException ex){
+           System.out.println(ex.getMessage());
+       }
+       
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+        // TODO add your handling code here:
+        //textfield del total
+        
+    }//GEN-LAST:event_jTextField5ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        // TODO add your handling code here:
+        float total=Float.parseFloat(jTextField5.getText());
+        float recibio=Float.parseFloat(jTextField6.getText());
+        float cambio=0;
+        cambio = recibio-total;
+        if(cambio<0)
+        {
+            
+            JOptionPane.showMessageDialog(null, "Dinero insuficiente");
+        }
+        else 
+            jTextField7.setText(Float.toString(cambio));
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void btnSucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSucursalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSucursalActionPerformed
+
+    private void btnPuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuestoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPuestoActionPerformed
+
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        // TODO add your handling code here:
+        cambiarVentana(new login());
+    }//GEN-LAST:event_jButton14ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        // TODO add your handling code here:
+        cambiarVentana(new login());
+    }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+        // TODO add your handling code here:
+        cambiarVentana(new login());
+    }//GEN-LAST:event_jButton16ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -234,12 +752,30 @@ public class Venta extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Venta().setVisible(true);
+                
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField btnActivoU;
+    private javax.swing.JTextField btnApellidoU;
+    private javax.swing.JTextField btnCategoria;
+    private javax.swing.JTextField btnContraseñaU;
+    private javax.swing.JTextField btnNombre;
+    private javax.swing.JTextField btnNombreU;
+    private javax.swing.JTextField btnPrecio;
+    private javax.swing.JTextField btnPuesto;
+    private javax.swing.JTextField btnSucursal;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -247,9 +783,19 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -259,22 +805,23 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
+    private javax.swing.JTable jTable4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     // End of variables declaration//GEN-END:variables
 }

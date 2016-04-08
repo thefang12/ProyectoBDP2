@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+ import java.sql.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,6 +25,9 @@ public class Conexion {
        private static String password;
         private static String service;
          private static ResourceBundle dbProperties;
+         
+        
+
          
          public static Connection getConexion() throws SQLException
          {
@@ -47,3 +52,5 @@ public class Conexion {
     
     
 }
+
+
