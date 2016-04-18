@@ -5,11 +5,13 @@
  */
 package punto_de_venta_p2;
 
+import java.awt.Rectangle;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
  import java.sql.*;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,15 +22,94 @@ public class Conexion {
     
     //10.49.176.129 my ip
     private static String ipAddress;
-     private static String dbName;
-      private static String user;
-       private static String password;
-        private static String service;
-         private static ResourceBundle dbProperties;
+    private static String dbName;
+    private static String user;
+    private static String password;
+    private static String service;
+    private static ResourceBundle dbProperties;
          
         
 
+         public static int getAutonumericField(Connection con , String query,int column) throws SQLException{
+             
+           int ai=0;
+           PreparedStatement psmt =con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+           ResultSet tblkeys = psmt.getGeneratedKeys();
+           while(tblkeys.next())
+              ai=tblkeys.getInt(column);
+           return ai;
+             
+         }
+         public static Object getForeignKey(Connection con , String query,int column) throws SQLException{
+             
+           int ai=0;
+           PreparedStatement psmt =con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+           ResultSet tblkeys = psmt.getGeneratedKeys();
+           while(tblkeys.next())
+              ai=tblkeys.getInt(column);
+           return ai;
+             
+         }
+         public static void insertValues(Connection con , String query,Object[] data ) throws SQLException{
          
+            PreparedStatement psmt = con.prepareStatement(query);
+            int i=1;
+            for(Object t : data){
+                psmt.setObject(i, t);
+                i++;
+            }
+            psmt.execute();
+         }
+            public static ResultSet consultValues(Connection con , String query) throws SQLException{
+           Statement st = con.createStatement();
+           return st.executeQuery(query);
+         }
+             public static  void refreshTable(JTable tabla,String querry,Connection con) {
+                 tabla.setModel(Conexion.createTableModel(con,querry));
+                 //tabla.setViewportView(tabla);
+             }
+           public static DefaultTableModel createTableModel(Connection con,String SentenciaSQL) {
+                DefaultTableModel modelo = new DefaultTableModel();
+                try {
+                     ResultSet rsDatos = consultValues(con,SentenciaSQL);
+                     if(rsDatos.next()){
+                     //optendremos lo metodos se la consulta 
+                    // del cual optenemos 
+                         rsDatos.beforeFirst();
+                    ResultSetMetaData metaDatos = rsDatos.getMetaData();
+                    //optemos el nro de columnas
+                    int numeroColumnas = metaDatos.getColumnCount();//columnas
+                    //optener las etiquetas  de la tabla 
+                    Object[] etiquetas = new Object[numeroColumnas];//creamos de array de objetos dinamico
+                    for (int i = 0; i < numeroColumnas; i++) {
+                        etiquetas[i] = metaDatos.getColumnLabel(i + 1);//las etiquetas comienzan desde 1e
+                    }
+                    //enlazar las etiquetas con el modelo 
+                    modelo.setColumnIdentifiers(etiquetas);//asignamos identificadores de las columnas 
+                    while (rsDatos.next()) {
+                    //creamos un objeto para almacenar un registro
+                        Object[] datosFila = new Object[modelo.getColumnCount()];
+                    //rellenar cada posicion del objeto con una de las columans de la tabla 
+                        for (int i = 0; i < modelo.getColumnCount(); i++) {
+                            datosFila[i] = rsDatos.getObject(i + 1);
+                        }
+                    modelo.addRow(datosFila);
+                    }
+                     }
+                     else{
+                         modelo =new javax.swing.table.DefaultTableModel(
+                         new Object [][] {
+                             {null}
+                             },
+                        new String [] {
+                        "sin resultados"
+                        }
+                        );
+                     }
+        } catch (Exception e) {
+        }
+        return modelo;
+     }
          public static Connection getConexion() throws SQLException
          {
              try{
@@ -49,6 +130,7 @@ public class Conexion {
              return DriverManager.getConnection("jdbc:mysql://" + ipAddress + 
                 ":" + service + "/" + dbName, user, password);
          }
+         
     
     
 }

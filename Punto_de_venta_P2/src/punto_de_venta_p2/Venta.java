@@ -6,6 +6,8 @@
 package punto_de_venta_p2;
 import javax.swing.table.DefaultTableModel;
  import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.xml.sax.Attributes;
 import javax.swing.*;
@@ -14,14 +16,11 @@ import javax.swing.*;
  * @author pablotabales
  */
 public class Venta extends javax.swing.JFrame {
-    
-    ResultSet resultset;
     /**
      * Creates new form Venta
      */
     public Venta() {
         initComponents();
-        tablaProducto();
     }
 
     /**
@@ -34,106 +33,357 @@ public class Venta extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        btnPrecio = new javax.swing.JTextField();
-        btnCategoria = new javax.swing.JTextField();
-        btnNombre = new javax.swing.JTextField();
-        jScrollPane8 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
-        jButton14 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        Agregar_jTab = new javax.swing.JScrollPane();
+        tab_agregar = new javax.swing.JPanel();
+        label_titulo = new javax.swing.JLabel();
+        label_nombre = new javax.swing.JLabel();
+        label_categoria = new javax.swing.JLabel();
+        label_precio = new javax.swing.JLabel();
+        txtF_Precio = new javax.swing.JTextField();
+        txtF_Nombre = new javax.swing.JTextField();
+        combo_categorias = new javax.swing.JComboBox();
+        scrollP_productos = new javax.swing.JScrollPane();
+        tabla_agregarP = new javax.swing.JTable();
+        btn_cerrarSesion = new javax.swing.JButton();
+        btn_Agregar = new javax.swing.JButton();
+        logo = new javax.swing.JButton();
+        fondo_agregar = new javax.swing.JButton();
+        Usuarios_JTab = new javax.swing.JScrollPane();
+        tabUsuarios = new javax.swing.JPanel();
+        titulo_usuarios = new javax.swing.JLabel();
+        label_nombre_usuarios = new javax.swing.JLabel();
+        label_contrasenia = new javax.swing.JLabel();
+        label_apellido = new javax.swing.JLabel();
+        label_activo = new javax.swing.JLabel();
+        label_sucursal = new javax.swing.JLabel();
+        label_puesto = new javax.swing.JLabel();
+        txtF_ApellidoU = new javax.swing.JTextField();
+        txtF_ContraseñaU = new javax.swing.JTextField();
+        txtF_NombreU = new javax.swing.JTextField();
+        txtF_Puesto = new javax.swing.JTextField();
+        combo_sucursales = new javax.swing.JComboBox();
+        scrollP_Usuarios = new javax.swing.JScrollPane();
+        tabla_usuarios = new javax.swing.JTable();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        logo1 = new javax.swing.JButton();
+        btn_agregar_usuario = new javax.swing.JButton();
+        boton_cerrarSesion_usuarios = new javax.swing.JButton();
+        bckground_usuarios = new javax.swing.JButton();
+        Venta_JTab = new javax.swing.JScrollPane();
+        tab_venta = new javax.swing.JPanel();
+        label_ventas = new javax.swing.JLabel();
+        titulo_ventas = new javax.swing.JLabel();
+        label_codigoProd = new javax.swing.JLabel();
+        label_categoria_ventas = new javax.swing.JLabel();
+        label_cambio = new javax.swing.JLabel();
+        label_busquedas = new javax.swing.JLabel();
+        label_total = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jButton15 = new javax.swing.JButton();
-        jButton13 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton17 = new javax.swing.JButton();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        btnApellidoU = new javax.swing.JTextField();
-        btnActivoU = new javax.swing.JTextField();
-        btnContraseñaU = new javax.swing.JTextField();
-        btnNombreU = new javax.swing.JTextField();
-        btnPuesto = new javax.swing.JTextField();
-        jLabel21 = new javax.swing.JLabel();
-        btnSucursal = new javax.swing.JTextField();
-        jButton16 = new javax.swing.JButton();
-        jLabel20 = new javax.swing.JLabel();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
-        jLabel19 = new javax.swing.JLabel();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        label_recibo = new javax.swing.JLabel();
+        txtF_codproducto = new javax.swing.JTextField();
+        txtF_total = new javax.swing.JTextField();
+        txtF_recibo = new javax.swing.JTextField();
+        txtF_cambio = new javax.swing.JTextField();
+        combo_categorias_ventas = new javax.swing.JComboBox();
+        ScrollP_busquedas = new javax.swing.JScrollPane();
+        tabla_busquedas = new javax.swing.JTable();
+        ScrollP_Ventas = new javax.swing.JScrollPane();
+        tabla_ventas = new javax.swing.JTable();
+        jSpinner1 = new javax.swing.JSpinner();
+        logo2 = new javax.swing.JButton();
+        btn_buscar = new javax.swing.JButton();
+        cerrarSesion_venta = new javax.swing.JButton();
+        btn_pago = new javax.swing.JButton();
+        btn_agregar_venta = new javax.swing.JButton();
+        background_venta = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(102, 204, 255));
 
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jTabbedPane1.setBackground(new java.awt.Color(102, 204, 255));
 
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Agregar Productos");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, -1, -1));
+        tab_agregar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Nombre");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, -1, -1));
+        label_titulo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        label_titulo.setForeground(new java.awt.Color(255, 255, 255));
+        label_titulo.setText("Agregar Productos");
+        tab_agregar.add(label_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, -1, -1));
 
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Categoría");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, -1, -1));
+        label_nombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_nombre.setForeground(new java.awt.Color(255, 255, 255));
+        label_nombre.setText("Nombre");
+        tab_agregar.add(label_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
 
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Precio");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, -1));
+        label_categoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_categoria.setForeground(new java.awt.Color(255, 255, 255));
+        label_categoria.setText("Categoría");
+        tab_agregar.add(label_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, -1, -1));
 
-        jButton3.setText("Agregar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        label_precio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_precio.setForeground(new java.awt.Color(255, 255, 255));
+        label_precio.setText("Precio");
+        tab_agregar.add(label_precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, -1, -1));
+        tab_agregar.add(txtF_Precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 160, -1));
+        tab_agregar.add(txtF_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 160, -1));
+
+        try{
+            Connection con   = Conexion.getConexion();
+            ResultSet r = Conexion.consultValues(con, "select nombre from categoria");
+            r.last();
+            String[] c=new String[r.getRow()+1];
+            r.beforeFirst();
+            int i = 0;
+            for(i = 0 ; r.next();i++)
+            c[i]=r.getString(1);
+
+            c[i]="crear nueva categoria";
+            combo_categorias.setModel(new javax.swing.DefaultComboBoxModel(c));
+            con.close();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        combo_categorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                combo_categoriasActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 220, -1, -1));
+        tab_agregar.add(combo_categorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 160, -1));
 
-        jButton1.setText("Buscar");
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 170, -1, -1));
-        jPanel2.add(btnPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 160, -1));
-        jPanel2.add(btnCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 160, -1));
-        jPanel2.add(btnNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 160, -1));
+        try {
+            Connection con   = Conexion.getConexion();
+            String SQL = "SELECT nombre_articulo as Articulo ,precio as Precio,nombre as Categoria FROM articulo natural join categoria";
+            tabla_agregarP.setModel(Conexion.createTableModel(con,SQL));
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        scrollP_productos.setViewportView(tabla_agregarP);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tab_agregar.add(scrollP_productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, 520, 320));
+
+        btn_cerrarSesion.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_cerrarSesion.setText("Cerrar Sesión ");
+        btn_cerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cerrarSesionActionPerformed(evt);
+            }
+        });
+        tab_agregar.add(btn_cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 40, -1, -1));
+
+        btn_Agregar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_Agregar.setText("Agregar");
+        btn_Agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AgregarActionPerformed(evt);
+            }
+        });
+        tab_agregar.add(btn_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 360, -1, -1));
+
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
+        logo.setBorderPainted(false);
+        logo.setContentAreaFilled(false);
+        tab_agregar.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
+
+        fondo_agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/glazed-doughnut-atom.jpg"))); // NOI18N
+        fondo_agregar.setBorderPainted(false);
+        fondo_agregar.setContentAreaFilled(false);
+        tab_agregar.add(fondo_agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 540));
+
+        Agregar_jTab.setViewportView(tab_agregar);
+
+        jTabbedPane1.addTab("Productos", Agregar_jTab);
+
+        tabUsuarios.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        titulo_usuarios.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        titulo_usuarios.setForeground(new java.awt.Color(255, 255, 255));
+        titulo_usuarios.setText("Agregar Personal y Asignación Usuarios");
+        tabUsuarios.add(titulo_usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, -1, -1));
+
+        label_nombre_usuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_nombre_usuarios.setForeground(new java.awt.Color(255, 255, 255));
+        label_nombre_usuarios.setText("Nombre");
+        tabUsuarios.add(label_nombre_usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, -1));
+
+        label_contrasenia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_contrasenia.setForeground(new java.awt.Color(255, 255, 255));
+        label_contrasenia.setText("Contraseña");
+        tabUsuarios.add(label_contrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
+
+        label_apellido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_apellido.setForeground(new java.awt.Color(255, 255, 255));
+        label_apellido.setText("Apellido");
+        tabUsuarios.add(label_apellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, -1, -1));
+
+        label_activo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_activo.setForeground(new java.awt.Color(255, 255, 255));
+        label_activo.setText("Activo");
+        tabUsuarios.add(label_activo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, -1, -1));
+
+        label_sucursal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_sucursal.setForeground(new java.awt.Color(255, 255, 255));
+        label_sucursal.setText("Sucursal");
+        tabUsuarios.add(label_sucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, -1, -1));
+
+        label_puesto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_puesto.setForeground(new java.awt.Color(255, 255, 255));
+        label_puesto.setText("Puesto");
+        tabUsuarios.add(label_puesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, -1, -1));
+        tabUsuarios.add(txtF_ApellidoU, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 160, -1));
+        tabUsuarios.add(txtF_ContraseñaU, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, 160, -1));
+        tabUsuarios.add(txtF_NombreU, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 160, -1));
+
+        txtF_Puesto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtF_PuestoActionPerformed(evt);
+            }
+        });
+        tabUsuarios.add(txtF_Puesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 390, 160, -1));
+
+        try{
+            Connection con   = Conexion.getConexion();
+            ResultSet r = Conexion.consultValues(con, "select direccion from direccion");
+            r.last();
+            String[] c=new String[r.getRow()+1];
+            r.beforeFirst();
+            int i = 0;
+            for(i = 0 ; r.next();i++)
+            c[i]=r.getString(1);
+            c[i]="agregar nueva sucursal";
+            combo_sucursales.setModel(new javax.swing.DefaultComboBoxModel(c));
+            con.close();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        combo_sucursales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                combo_sucursalesActionPerformed(evt);
+            }
+        });
+        tabUsuarios.add(combo_sucursales, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 160, -1));
+
+        try {
+            Connection con   = Conexion.getConexion();
+            String SQL = "SELECT nombre,apellido,activo,puesto,direccion as sucursal from staff"
+            + " natural join sucursal natural join direccion";
+            tabla_usuarios.setModel(Conexion.createTableModel(con, SQL));
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        scrollP_Usuarios.setViewportView(tabla_usuarios);
+
+        tabUsuarios.add(scrollP_Usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 120, 400, 330));
+
+        jCheckBox1.setForeground(new java.awt.Color(204, 204, 204));
+        tabUsuarios.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, -1, -1));
+
+        logo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
+        logo1.setBorderPainted(false);
+        logo1.setContentAreaFilled(false);
+        tabUsuarios.add(logo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
+
+        btn_agregar_usuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_agregar_usuario.setText("Agregar");
+        btn_agregar_usuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_agregar_usuarioActionPerformed(evt);
+            }
+        });
+        tabUsuarios.add(btn_agregar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 440, -1, -1));
+
+        boton_cerrarSesion_usuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        boton_cerrarSesion_usuarios.setText("Cerrar Sesión");
+        boton_cerrarSesion_usuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boton_cerrarSesion_usuariosActionPerformed(evt);
+            }
+        });
+        tabUsuarios.add(boton_cerrarSesion_usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 50, -1, -1));
+
+        bckground_usuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/donuts_galaxy_wallpaper_by_annedelune-d6uhkc1.png"))); // NOI18N
+        bckground_usuarios.setBorderPainted(false);
+        bckground_usuarios.setContentAreaFilled(false);
+        tabUsuarios.add(bckground_usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 540));
+
+        Usuarios_JTab.setViewportView(tabUsuarios);
+
+        jTabbedPane1.addTab("Usuarios", Usuarios_JTab);
+
+        tab_venta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        label_ventas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_ventas.setForeground(new java.awt.Color(204, 204, 204));
+        label_ventas.setText("Ventas");
+        tab_venta.add(label_ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 70, -1));
+
+        titulo_ventas.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        titulo_ventas.setForeground(new java.awt.Color(204, 204, 204));
+        titulo_ventas.setText("Punto de Venta");
+        tab_venta.add(titulo_ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, -1, -1));
+
+        label_codigoProd.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_codigoProd.setForeground(new java.awt.Color(204, 204, 204));
+        label_codigoProd.setText("Nombre");
+        tab_venta.add(label_codigoProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 80, 130, -1));
+
+        label_categoria_ventas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_categoria_ventas.setForeground(new java.awt.Color(204, 204, 204));
+        label_categoria_ventas.setText("Categoría");
+        tab_venta.add(label_categoria_ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 139, -1));
+
+        label_cambio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_cambio.setForeground(new java.awt.Color(255, 255, 255));
+        label_cambio.setText("Cambio");
+        tab_venta.add(label_cambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 460, -1, -1));
+
+        label_busquedas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_busquedas.setForeground(new java.awt.Color(204, 204, 204));
+        label_busquedas.setText("Busquedas");
+        tab_venta.add(label_busquedas, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 180, 70, -1));
+
+        label_total.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_total.setForeground(new java.awt.Color(255, 255, 255));
+        label_total.setText("Total");
+        tab_venta.add(label_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 56, -1));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel2.setText("Cantidad");
+        tab_venta.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, -1, -1));
+
+        label_recibo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_recibo.setForeground(new java.awt.Color(255, 255, 255));
+        label_recibo.setText("Recibió");
+        tab_venta.add(label_recibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 420, -1, -1));
+        tab_venta.add(txtF_codproducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 238, -1));
+
+        txtF_total.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtF_totalActionPerformed(evt);
+            }
+        });
+        tab_venta.add(txtF_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 420, 76, -1));
+        tab_venta.add(txtF_recibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 420, 80, -1));
+        tab_venta.add(txtF_cambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 460, 80, -1));
+
+        try{
+            Connection con   = Conexion.getConexion();
+            ResultSet r = Conexion.consultValues(con, "select nombre from categoria");
+            r.last();
+            String[] c=new String[r.getRow()];
+            r.beforeFirst();
+            int i = 0;
+            for(i = 0 ; r.next();i++)
+            c[i]=r.getString(1);
+            combo_categorias_ventas.setModel(new javax.swing.DefaultComboBoxModel(c));
+            con.close();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        tab_venta.add(combo_categorias_ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 110, 240, -1));
+
+        tabla_busquedas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -144,256 +394,82 @@ public class Venta extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane8.setViewportView(jTable3);
+        ScrollP_busquedas.setViewportView(tabla_busquedas);
 
-        jPanel2.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 350, 520, 100));
+        tab_venta.add(ScrollP_busquedas, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, 400, 180));
 
-        jButton14.setText("Cerrar Sesión ");
-        jButton14.addActionListener(new java.awt.event.ActionListener() {
+        tabla_ventas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        ScrollP_Ventas.setViewportView(tabla_ventas);
+
+        tab_venta.add(ScrollP_Ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 440, 180));
+        tab_venta.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, 70, -1));
+
+        logo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
+        logo2.setBorderPainted(false);
+        logo2.setContentAreaFilled(false);
+        tab_venta.add(logo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
+
+        btn_buscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_buscar.setText("Buscar");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton14ActionPerformed(evt);
+                btn_buscarActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, -1, -1));
+        tab_venta.add(btn_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 130, 140, 30));
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
-        jButton6.setBorderPainted(false);
-        jButton6.setContentAreaFilled(false);
-        jPanel2.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
+        cerrarSesion_venta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cerrarSesion_venta.setText("Cerrar Sesión ");
+        cerrarSesion_venta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cerrarSesion_ventaActionPerformed(evt);
+            }
+        });
+        tab_venta.add(cerrarSesion_venta, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 20, -1, 30));
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Experience_Music_Project_Museum_uhd.jpg"))); // NOI18N
-        jButton8.setBorderPainted(false);
-        jButton8.setContentAreaFilled(false);
-        jPanel2.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 820, 560));
+        btn_pago.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_pago.setText("Pago");
+        btn_pago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_pagoActionPerformed(evt);
+            }
+        });
+        tab_venta.add(btn_pago, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 420, 100, -1));
 
-        jScrollPane3.setViewportView(jPanel2);
+        btn_agregar_venta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_agregar_venta.setText("Agregar a cuenta");
+        btn_agregar_venta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_agregar_ventaActionPerformed(evt);
+            }
+        });
+        tab_venta.add(btn_agregar_venta, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 70, 140, 30));
 
-        jTabbedPane1.addTab("Agregar", jScrollPane3);
+        background_venta.setBackground(new java.awt.Color(251, 251, 251));
+        background_venta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/nebula.png"))); // NOI18N
+        background_venta.setText("jButton7");
+        tab_venta.add(background_venta, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 530));
 
+        Venta_JTab.setViewportView(tab_venta);
+
+        jTabbedPane1.addTab("Ventas", Venta_JTab);
+
+        jPanel1.setMaximumSize(new java.awt.Dimension(987, 592));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton2.setText("Buscar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 105, 80, 30));
-
-        jLabel11.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel11.setText("Ventas");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, 70, -1));
-
-        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel1.setText("Punto de Venta");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, -1, -1));
-
-        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel2.setText("Nombre/Código");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 139, -1));
-
-        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel3.setText("Categoría");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 139, -1));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 238, -1));
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 238, -1));
-
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, 76, -1));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane6.setViewportView(jTable1);
-
-        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, 400, 180));
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane7.setViewportView(jTable2);
-
-        jPanel1.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 440, 180));
-
-        jLabel12.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel12.setText("Busquedas");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 170, 70, -1));
-
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Total");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 420, 56, -1));
-
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Recibió");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 460, -1, -1));
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 460, 80, -1));
-
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Cambio");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 420, -1, -1));
-        jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 420, 70, -1));
-
-        jButton15.setText("Cerrar Sesión ");
-        jButton15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton15ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton15, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 20, -1, -1));
-
-        jButton13.setText("Pago");
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 460, 100, -1));
-
-        jButton5.setText("Agregar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 70, -1, -1));
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
-        jButton4.setBorderPainted(false);
-        jButton4.setContentAreaFilled(false);
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 140, -1));
-
-        jButton7.setBackground(new java.awt.Color(251, 251, 251));
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/nebula.png"))); // NOI18N
-        jButton7.setText("jButton7");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1540, 650));
-
-        jButton17.setText("Cerrar Sesión");
-        jPanel1.add(jButton17, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 30, -1, -1));
-
-        jScrollPane2.setViewportView(jPanel1);
-
-        jTabbedPane1.addTab("Venta", jScrollPane2);
-
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Agregar Personal y Asignación Usuarios");
-        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, -1, -1));
-
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Nombre");
-        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, -1, -1));
-
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Contraseña");
-        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, -1, -1));
-
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setText("Apellido");
-        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, -1));
-
-        jButton9.setText("Agregar");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 230, -1, -1));
-
-        jButton10.setText("Buscar");
-        jPanel3.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 230, -1, -1));
-        jPanel3.add(btnApellidoU, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 160, -1));
-        jPanel3.add(btnActivoU, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 160, -1));
-        jPanel3.add(btnContraseñaU, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, 160, -1));
-        jPanel3.add(btnNombreU, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 160, -1));
-
-        btnPuesto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPuestoActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnPuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 180, 160, -1));
-
-        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setText("Puesto");
-        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 180, -1, -1));
-
-        btnSucursal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSucursalActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 140, 160, -1));
-
-        jButton16.setText("Cerrar Sesión");
-        jButton16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton16ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton16, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 30, -1, -1));
-
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setText("Sucursal");
-        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 140, -1, -1));
-
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane9.setViewportView(jTable4);
-
-        jPanel3.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 350, 520, 100));
-
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setText("Activo");
-        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, -1, -1));
-
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
-        jButton11.setBorderPainted(false);
-        jButton11.setContentAreaFilled(false);
-        jPanel3.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
-
-        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Experience_Music_Project_Museum_uhd.jpg"))); // NOI18N
-        jButton12.setBorderPainted(false);
-        jButton12.setContentAreaFilled(false);
-        jPanel3.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 820, 560));
-
-        jScrollPane4.setViewportView(jPanel3);
-
-        jTabbedPane1.addTab("Agregar usuarios", jScrollPane4);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/518079-background-hd.jpg"))); // NOI18N
+        jLabel1.setToolTipText("");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -401,15 +477,19 @@ public class Venta extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 967, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 987, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -421,163 +501,77 @@ public class Venta extends javax.swing.JFrame {
         this.dispose();
     }
     
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        // TODO add your handling code here:
-            DefaultTableModel modeloFotos;
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+   
         try {
-            Conetzion conectar = new Conetzion();
-            String codBuscar = jTextField1.getText();
-           // codBuscar = JOptionPane.showInputDialog("Ingrese el codigo a Buscar: ");
-            resultset = conectar.consulta("SELECT articulo_id  FROM articulo");
-            boolean encontro = false;
-            while (resultset.next()) {
-                if (codBuscar.equals(resultset.getObject("articulo_id"))) {
-                    encontro = true;
-                    break;
-                }
-            }
-            String SQL = "SELECT * FROM articulo where articulo_id ='" + codBuscar + "'";
-            modeloFotos = conectar.retornarDatosTabla(SQL);
-           
-            jTable1.setModel(modeloFotos);
-            jScrollPane6.getViewport().add(jTable1);
+            Connection con = Conexion.getConexion();
+            String query = "";
+            if(txtF_codproducto.equals(""))
+             query= "Select nombre_articulo as articulo,nombre as categoria,precio,cantidad_disponible as dsp,direccion as sucursal "
+                     + "from articulo a natural join categoria c natural join inventario  i natural join sucursal s natural join direccion d "
+                    +"where c.nombre = '"+combo_categorias_ventas.getSelectedItem().toString()+"'";
+            else
+             query = "Select nombre_articulo as articulo,nombre as categoria,precio,cantidad_disponible as dsp,direccion as sucursal "
+                    + "from articulo a natural join categoria c natural join inventario  i natural join sucursal s natural join direccion d "
+                    +"where c.nombre = '"+combo_categorias_ventas.getSelectedItem().toString()+"' AND a.nombre_articulo like '%"+txtF_codproducto.getText()+"%'";
+            //TODO es necesario un codigo de producto o solo el nombre?
+            tabla_busquedas.setModel(Conexion.createTableModel(con, query));
+            ScrollP_busquedas.getViewport().add(tabla_busquedas);
             
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btn_buscarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-      
-
-        try {
-                  
-           Conetzion conectar = new Conetzion();
+    private void btn_AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarActionPerformed
+         try {
           // String insertFoto="update table set foto="
-           String sentenciaInsert="INSERT INTO articulo VALUES(?,?,?,?)";
-            conectar.psPrepararSentencia=conectar.conectar.prepareStatement(sentenciaInsert);
            Connection con = Conexion.getConexion();
-           PreparedStatement psmt2 =con.prepareStatement(sentenciaInsert,Statement.RETURN_GENERATED_KEYS);
-           ResultSet tblkeys = psmt2.getGeneratedKeys();
-           int autoid=0;
-           if(tblkeys.next()){
-               autoid=tblkeys.getInt(1);
-           }
-            conectar.psPrepararSentencia.setInt(1,autoid);
-            conectar.psPrepararSentencia.setString(2,btnNombre.getText());
-            conectar.psPrepararSentencia.setString(3,btnPrecio.getText());
-            conectar.psPrepararSentencia.setString(4,btnCategoria.getText());
-            conectar.psPrepararSentencia.executeUpdate();
-            
-            DefaultTableModel modeloFotos;
-        String query =  "SELECT * From articulo ";
-           Statement st = con.createStatement();
-           ResultSet rs= st.executeQuery(query);
-           String codBuscar="";
-           while(rs.next()){if(rs.isLast())
-            codBuscar = rs.getInt(1)+"";}
-           // String codBuscar = btnID.getText();
-           // codBuscar = JOptionPane.showInputDialog("Ingrese el codigo a Buscar: ");
-            resultset = conectar.consulta("SELECT articulo_id  FROM articulo");
-            boolean encontro = false;
-            while (resultset.next()) {
-                if (codBuscar.equals(resultset.getObject("articulo_id"))) {
-                    encontro = true;
-                    break;
-                }
-            }
-            String SQL = "SELECT * FROM articulo where articulo_id ='" + codBuscar + "'";
-            modeloFotos = conectar.retornarDatosTabla(SQL);
            
-            jTable3.setModel(modeloFotos);
-            jScrollPane8.getViewport().add(jTable3);
-            
-        } catch (Exception ex) {
+           ResultSet r =Conexion.consultValues(con, "Select categoria_id from categoria where nombre = '"+combo_categorias.getSelectedItem()+"'");
+           r.last();
+           Object[] o = {Conexion.getAutonumericField(con, "INSERT INTO articulo VALUES(?,?,?,?)", 1),txtF_Nombre.getText(),txtF_Precio.getText(),r.getInt(1)};
+           Conexion.insertValues(con, "INSERT INTO articulo VALUES(?,?,?,?)", o);
+           String sql = "SELECT nombre_articulo as Articulo ,precio as Precio,nombre as Categoria FROM articulo natural join categoria";
+           Conexion.refreshTable(tabla_agregarP,sql,con);
+           con.close();
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-        }         
-    }//GEN-LAST:event_jButton3ActionPerformed
+        }
+    }//GEN-LAST:event_btn_AgregarActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    
+    private void btn_agregar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_usuarioActionPerformed
         // TODO add your handling code here:
-        
-        try {
-                  
-           Conetzion conectar = new Conetzion();
+          try {
           // String insertFoto="update table set foto="
-           String sentenciaInsert="INSERT INTO staff VALUES(?,?,?,?,?,?,?)";
-           
-            conectar.psPrepararSentencia=conectar.conectar.prepareStatement(sentenciaInsert);
-            Connection con = Conexion.getConexion();
-           PreparedStatement psmt2 =con.prepareStatement(sentenciaInsert,Statement.RETURN_GENERATED_KEYS);
-           ResultSet tblkeys = psmt2.getGeneratedKeys();
-           int autoid=0;
-           if(tblkeys.next()){
-               autoid=tblkeys.getInt(1);
-           }
-            //conectar.psPrepararSentencia.setString(1,btnID1.getText());
-            conectar.psPrepararSentencia.setInt(1, autoid);
-            conectar.psPrepararSentencia.setString(2,btnContraseñaU.getText());
-            conectar.psPrepararSentencia.setString(3,btnNombreU.getText());
-            conectar.psPrepararSentencia.setString(4,btnApellidoU.getText());
-            conectar.psPrepararSentencia.setInt(5, Integer.parseInt(btnActivoU.getText()));
-            //conectar.psPrepararSentencia.setString(5,btnActivoU.getText());
-            conectar.psPrepararSentencia.setInt(6, Integer.parseInt(btnSucursal.getText()));
-            //conectar.psPrepararSentencia.setString(6,btnSucursal.getText());
-            conectar.psPrepararSentencia.setString(7,btnPuesto.getText());
-
-            conectar.psPrepararSentencia.executeUpdate();
-            
-            DefaultTableModel modeloFotos;
-        String query =  "SELECT * From staff ";
-           Statement st = con.createStatement();
-           ResultSet rs= st.executeQuery(query);
-           String codBuscar="";
-           while(rs.next()){if(rs.isLast())
-            codBuscar = rs.getInt(1)+"";}
-           // codBuscar = JOptionPane.showInputDialog("Ingrese el codigo a Buscar: ");
-            resultset = conectar.consulta("SELECT staff_id  FROM staff");
-            boolean encontro = false;
-            while (resultset.next()) {
-                if (codBuscar.equals(resultset.getObject("staff_id"))) {
-                    encontro = true;
-                    break;
-                }
-            }
-            String SQL = "SELECT * FROM staff where staff_id ='" + codBuscar + "'";
-            modeloFotos = conectar.retornarDatosTabla(SQL);
-           
-            jTable4.setModel(modeloFotos);
-            jScrollPane9.getViewport().add(jTable4);
-            
-        } catch (Exception ex) {
+           Connection con = Conexion.getConexion();
+           ResultSet r =Conexion.consultValues(con, "Select sucursal_id from sucursal natural join direccion where direccion = '"+combo_sucursales.getSelectedItem()+"'");
+           r.last();
+           Object[] o = {Conexion.getAutonumericField(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?)", 1)
+                   ,txtF_ContraseñaU.getText(),txtF_NombreU.getText(),txtF_ApellidoU.getText()
+                   ,jCheckBox1.isSelected(),r.getInt(1),txtF_Puesto.getText()};
+           Conexion.insertValues(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?)", o);
+           String sql = "SELECT nombre,apellido,activo,puesto,direccion as sucursal from staff  natural join sucursal natural join direccion";
+           Conexion.refreshTable(tabla_usuarios,sql,con);
+            con.close();
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-        }        
-    }//GEN-LAST:event_jButton9ActionPerformed
+        }     
+    }//GEN-LAST:event_btn_agregar_usuarioActionPerformed
 
     
-    private DefaultTableModel rellenarTabla(JTable table, float cantidad, int articulo, String nombre, float precio, int categoria) {
-    
 
-    Object[] row = { cantidad, articulo, nombre, precio,categoria };
-
-    DefaultTableModel model = (DefaultTableModel) table.getModel();
-
-     model.addRow(row);
-    return model;
-    // clear the entries.
-}
     private void obtenerDatosTabla()
     {
         int column = 3;
         float total=0;
-        int row = jTable2.getRowCount();
+        int row = tabla_ventas.getRowCount();
         for(int i = 0; i < row; i++) {
-            float valor=(float)jTable2.getValueAt(i, 0);
-        total+= (float)jTable2.getValueAt(i, column)*valor;
+            float valor=(float)tabla_ventas.getValueAt(i, 0);
+        total+= (float)tabla_ventas.getValueAt(i, column)*valor;
 }
-        jTextField5.setText(Float.toString(total));
+        txtF_total.setText(Float.toString(total));
     }
     
      private void modificarTotal(float precio,int cantidad)
@@ -586,107 +580,36 @@ public class Venta extends javax.swing.JFrame {
         int valorAnterior;
         float total=0;
         
-        if(jTextField5.getText()!=null){
-        valorAnterior= Integer.parseInt(jTextField5.getText());
+        if(txtF_total.getText()!=null){
+        valorAnterior= Integer.parseInt(txtF_total.getText());
         total = (float)valorAnterior;
         total += precio * (float)cantidad;
         }else{
            total += precio * (float)cantidad; 
         }
         
-        jTextField5.setText(Float.toString(total));
+        txtF_total.setText(Float.toString(total));
     }
      
      
     
-        private void tablaProducto(){
-       jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                
-            },
-            new String [] {
-                "Cantidad", "Articulo ID", "Nombre", "Precio","Categoria"
-            }
-        ));
-       jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                
-            },
-            new String [] {
-                "Cantidad", "Articulo ID", "Nombre", "Precio","Categoria"
-            }
-        ));
-       jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                
-            },
-            new String [] {
-                "Cantidad", "Articulo ID", "Nombre", "Precio","Categoria"
-            }
-        ));
-       jTable4.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                
-            },
-            new String [] {
-                "Staff_id", "Contraseña", "Nombre", "Apellido","Sucursal ID","Puesto"
-            }
-        ));
-        }
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        
-          // TODO add your handling code here:
-       try { 
-           
-           String query =  "SELECT * From articulo";
-           int id= Integer.parseInt(jTextField1.getText());
-           int uno=0;
-           String dos="";
-           float tres=0;
-           int cuatro=0;
-           Connection cone = Conexion.getConexion();
-           Statement ste = cone.createStatement();
-            resultset = ste.executeQuery(query);
-           while(resultset.next()){
-               if(id==resultset.getInt(1)){
-           uno= resultset.getInt(1);
-           dos= resultset.getString(2);
-           tres= (float)resultset.getInt(3);
-           cuatro= resultset.getInt(4);
-           break;
-               }
-           
-       }
-           //String n =jTextField1.getText();
-           String ax = JOptionPane.showInputDialog("Ingrese la cantidad: ");
-        JOptionPane.showMessageDialog(null, "El numero ingresado es: "+ax);
-        float cantidad = Float.parseFloat(ax);
-           jTable2.setModel(rellenarTabla(jTable2,cantidad,uno,dos,tres,cuatro));
-           jScrollPane7.getViewport().add(jTable2);
-           ste.close();
-           cone.close(); 
-           obtenerDatosTabla();
-           
-       } catch (SQLException ex){
-           System.out.println(ex.getMessage());
-       }
        
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void btn_agregar_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_ventaActionPerformed
+        
+      //TODO agregar producto a vuanta cliente
+       
+    }//GEN-LAST:event_btn_agregar_ventaActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void txtF_totalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtF_totalActionPerformed
         // TODO add your handling code here:
         //textfield del total
         
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_txtF_totalActionPerformed
 
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+    private void btn_pagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagoActionPerformed
         // TODO add your handling code here:
-        float total=Float.parseFloat(jTextField5.getText());
-        float recibio=Float.parseFloat(jTextField6.getText());
+        float total=Float.parseFloat(txtF_total.getText());
+        float recibio=Float.parseFloat(txtF_recibo.getText());
         float cambio=0;
         cambio = recibio-total;
         if(cambio<0)
@@ -695,31 +618,38 @@ public class Venta extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Dinero insuficiente");
         }
         else 
-            jTextField7.setText(Float.toString(cambio));
-    }//GEN-LAST:event_jButton13ActionPerformed
+            txtF_cambio.setText(Float.toString(cambio));
+    }//GEN-LAST:event_btn_pagoActionPerformed
 
-    private void btnSucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSucursalActionPerformed
+    private void txtF_PuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtF_PuestoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnSucursalActionPerformed
+    }//GEN-LAST:event_txtF_PuestoActionPerformed
 
-    private void btnPuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuestoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnPuestoActionPerformed
-
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+    private void btn_cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarSesionActionPerformed
         // TODO add your handling code here:
         cambiarVentana(new login());
-    }//GEN-LAST:event_jButton14ActionPerformed
+    }//GEN-LAST:event_btn_cerrarSesionActionPerformed
 
-    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+    private void cerrarSesion_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesion_ventaActionPerformed
         // TODO add your handling code here:
         cambiarVentana(new login());
-    }//GEN-LAST:event_jButton15ActionPerformed
+    }//GEN-LAST:event_cerrarSesion_ventaActionPerformed
 
-    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+    private void boton_cerrarSesion_usuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_cerrarSesion_usuariosActionPerformed
         // TODO add your handling code here:
         cambiarVentana(new login());
-    }//GEN-LAST:event_jButton16ActionPerformed
+    }//GEN-LAST:event_boton_cerrarSesion_usuariosActionPerformed
+
+    private void combo_categoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_categoriasActionPerformed
+       if(combo_categorias.getSelectedItem().toString().equals("crear nueva categoria"))
+           cambiarVentana(new AgregarCategoria());
+    }//GEN-LAST:event_combo_categoriasActionPerformed
+
+    private void combo_sucursalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_sucursalesActionPerformed
+        // TODO add your handling code here:
+        if(combo_sucursales.getSelectedItem().toString().equals("agregar nueva sucursal"))
+           cambiarVentana(new AgregarSucursal());
+    }//GEN-LAST:event_combo_sucursalesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -758,70 +688,73 @@ public class Venta extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField btnActivoU;
-    private javax.swing.JTextField btnApellidoU;
-    private javax.swing.JTextField btnCategoria;
-    private javax.swing.JTextField btnContraseñaU;
-    private javax.swing.JTextField btnNombre;
-    private javax.swing.JTextField btnNombreU;
-    private javax.swing.JTextField btnPrecio;
-    private javax.swing.JTextField btnPuesto;
-    private javax.swing.JTextField btnSucursal;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JScrollPane Agregar_jTab;
+    private javax.swing.JScrollPane ScrollP_Ventas;
+    private javax.swing.JScrollPane ScrollP_busquedas;
+    private javax.swing.JScrollPane Usuarios_JTab;
+    private javax.swing.JScrollPane Venta_JTab;
+    private javax.swing.JButton background_venta;
+    private javax.swing.JButton bckground_usuarios;
+    private javax.swing.JButton boton_cerrarSesion_usuarios;
+    private javax.swing.JButton btn_Agregar;
+    private javax.swing.JButton btn_agregar_usuario;
+    private javax.swing.JButton btn_agregar_venta;
+    private javax.swing.JButton btn_buscar;
+    private javax.swing.JButton btn_cerrarSesion;
+    private javax.swing.JButton btn_pago;
+    private javax.swing.JButton cerrarSesion_venta;
+    private javax.swing.JComboBox combo_categorias;
+    private javax.swing.JComboBox combo_categorias_ventas;
+    private javax.swing.JComboBox combo_sucursales;
+    private javax.swing.JButton fondo_agregar;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JLabel label_activo;
+    private javax.swing.JLabel label_apellido;
+    private javax.swing.JLabel label_busquedas;
+    private javax.swing.JLabel label_cambio;
+    private javax.swing.JLabel label_categoria;
+    private javax.swing.JLabel label_categoria_ventas;
+    private javax.swing.JLabel label_codigoProd;
+    private javax.swing.JLabel label_contrasenia;
+    private javax.swing.JLabel label_nombre;
+    private javax.swing.JLabel label_nombre_usuarios;
+    private javax.swing.JLabel label_precio;
+    private javax.swing.JLabel label_puesto;
+    private javax.swing.JLabel label_recibo;
+    private javax.swing.JLabel label_sucursal;
+    private javax.swing.JLabel label_titulo;
+    private javax.swing.JLabel label_total;
+    private javax.swing.JLabel label_ventas;
+    private javax.swing.JButton logo;
+    private javax.swing.JButton logo1;
+    private javax.swing.JButton logo2;
+    private javax.swing.JScrollPane scrollP_Usuarios;
+    private javax.swing.JScrollPane scrollP_productos;
+    private javax.swing.JPanel tabUsuarios;
+    private javax.swing.JPanel tab_agregar;
+    private javax.swing.JPanel tab_venta;
+    private javax.swing.JTable tabla_agregarP;
+    private javax.swing.JTable tabla_busquedas;
+    private javax.swing.JTable tabla_usuarios;
+    private javax.swing.JTable tabla_ventas;
+    private javax.swing.JLabel titulo_usuarios;
+    private javax.swing.JLabel titulo_ventas;
+    private javax.swing.JTextField txtF_ApellidoU;
+    private javax.swing.JTextField txtF_ContraseñaU;
+    private javax.swing.JTextField txtF_Nombre;
+    private javax.swing.JTextField txtF_NombreU;
+    private javax.swing.JTextField txtF_Precio;
+    private javax.swing.JTextField txtF_Puesto;
+    private javax.swing.JTextField txtF_cambio;
+    private javax.swing.JTextField txtF_codproducto;
+    private javax.swing.JTextField txtF_recibo;
+    private javax.swing.JTextField txtF_total;
     // End of variables declaration//GEN-END:variables
+
+   
 }

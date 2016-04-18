@@ -22,7 +22,9 @@ public class login extends javax.swing.JFrame {
     /**
      * Creates new form login
      */
-    static int idCuenta=-1;
+    public static int idCuenta=-1;
+    public static String puesto="";
+    public static int idSucursal=-1;
     public login() {
         initComponents();
     }
@@ -96,6 +98,7 @@ public class login extends javax.swing.JFrame {
                
                if(Integer.parseInt(n)==rs.getInt(1)&&checkPassword(jPasswordField1.getPassword(),rs.getString(2))){
                    idCuenta=rs.getInt(1);
+                   puesto = rs.getString(7);
                    cambiarVentana(new Venta());
                }
            }
