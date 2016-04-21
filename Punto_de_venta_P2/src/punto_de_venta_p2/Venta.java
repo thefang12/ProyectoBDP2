@@ -39,11 +39,13 @@ public class Venta extends javax.swing.JFrame {
         label_nombre = new javax.swing.JLabel();
         label_categoria = new javax.swing.JLabel();
         label_precio = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         txtF_Precio = new javax.swing.JTextField();
         txtF_Nombre = new javax.swing.JTextField();
         combo_categorias = new javax.swing.JComboBox();
+        jSpinner2 = new javax.swing.JSpinner();
         scrollP_productos = new javax.swing.JScrollPane();
-        tabla_agregarP = new javax.swing.JTable();
+        tabla_agregarP = new javax.swing.JTable(new UneditableTableModel());
         btn_cerrarSesion = new javax.swing.JButton();
         btn_Agregar = new javax.swing.JButton();
         logo = new javax.swing.JButton();
@@ -57,13 +59,15 @@ public class Venta extends javax.swing.JFrame {
         label_activo = new javax.swing.JLabel();
         label_sucursal = new javax.swing.JLabel();
         label_puesto = new javax.swing.JLabel();
+        correo = new javax.swing.JLabel();
+        txtF_Correo = new javax.swing.JTextField();
         txtF_ApellidoU = new javax.swing.JTextField();
         txtF_ContraseñaU = new javax.swing.JTextField();
         txtF_NombreU = new javax.swing.JTextField();
         txtF_Puesto = new javax.swing.JTextField();
         combo_sucursales = new javax.swing.JComboBox();
         scrollP_Usuarios = new javax.swing.JScrollPane();
-        tabla_usuarios = new javax.swing.JTable();
+        tabla_usuarios = new javax.swing.JTable(new UneditableTableModel());
         jCheckBox1 = new javax.swing.JCheckBox();
         logo1 = new javax.swing.JButton();
         btn_agregar_usuario = new javax.swing.JButton();
@@ -86,7 +90,7 @@ public class Venta extends javax.swing.JFrame {
         txtF_cambio = new javax.swing.JTextField();
         combo_categorias_ventas = new javax.swing.JComboBox();
         ScrollP_busquedas = new javax.swing.JScrollPane();
-        tabla_busquedas = new javax.swing.JTable();
+        tabla_busquedas = new javax.swing.JTable(new UneditableTableModel());
         ScrollP_Ventas = new javax.swing.JScrollPane();
         tabla_ventas = new javax.swing.JTable();
         jSpinner1 = new javax.swing.JSpinner();
@@ -125,6 +129,11 @@ public class Venta extends javax.swing.JFrame {
         label_precio.setForeground(new java.awt.Color(255, 255, 255));
         label_precio.setText("Precio");
         tab_agregar.add(label_precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Cantidad");
+        tab_agregar.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, 60, -1));
         tab_agregar.add(txtF_Precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 160, -1));
         tab_agregar.add(txtF_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 160, -1));
 
@@ -150,6 +159,9 @@ public class Venta extends javax.swing.JFrame {
             }
         });
         tab_agregar.add(combo_categorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 160, -1));
+
+        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        tab_agregar.add(jSpinner2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, 70, -1));
 
         try {
             Connection con   = Conexion.getConexion();
@@ -178,7 +190,7 @@ public class Venta extends javax.swing.JFrame {
                 btn_AgregarActionPerformed(evt);
             }
         });
-        tab_agregar.add(btn_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 360, -1, -1));
+        tab_agregar.add(btn_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, -1, -1));
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
         logo.setBorderPainted(false);
@@ -199,7 +211,7 @@ public class Venta extends javax.swing.JFrame {
         titulo_usuarios.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         titulo_usuarios.setForeground(new java.awt.Color(255, 255, 255));
         titulo_usuarios.setText("Agregar Personal y Asignación Usuarios");
-        tabUsuarios.add(titulo_usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, -1, -1));
+        tabUsuarios.add(titulo_usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, -1, -1));
 
         label_nombre_usuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         label_nombre_usuarios.setForeground(new java.awt.Color(255, 255, 255));
@@ -209,7 +221,7 @@ public class Venta extends javax.swing.JFrame {
         label_contrasenia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         label_contrasenia.setForeground(new java.awt.Color(255, 255, 255));
         label_contrasenia.setText("Contraseña");
-        tabUsuarios.add(label_contrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
+        tabUsuarios.add(label_contrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, -1, -1));
 
         label_apellido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         label_apellido.setForeground(new java.awt.Color(255, 255, 255));
@@ -224,14 +236,20 @@ public class Venta extends javax.swing.JFrame {
         label_sucursal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         label_sucursal.setForeground(new java.awt.Color(255, 255, 255));
         label_sucursal.setText("Sucursal");
-        tabUsuarios.add(label_sucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, -1, -1));
+        tabUsuarios.add(label_sucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, -1, -1));
 
         label_puesto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         label_puesto.setForeground(new java.awt.Color(255, 255, 255));
         label_puesto.setText("Puesto");
-        tabUsuarios.add(label_puesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, -1, -1));
+        tabUsuarios.add(label_puesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, -1, -1));
+
+        correo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        correo.setForeground(new java.awt.Color(255, 255, 255));
+        correo.setText("Correo");
+        tabUsuarios.add(correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
+        tabUsuarios.add(txtF_Correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, 160, -1));
         tabUsuarios.add(txtF_ApellidoU, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 160, -1));
-        tabUsuarios.add(txtF_ContraseñaU, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, 160, -1));
+        tabUsuarios.add(txtF_ContraseñaU, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 160, -1));
         tabUsuarios.add(txtF_NombreU, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 160, -1));
 
         txtF_Puesto.addActionListener(new java.awt.event.ActionListener() {
@@ -239,7 +257,7 @@ public class Venta extends javax.swing.JFrame {
                 txtF_PuestoActionPerformed(evt);
             }
         });
-        tabUsuarios.add(txtF_Puesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 390, 160, -1));
+        tabUsuarios.add(txtF_Puesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 430, 160, -1));
 
         try{
             Connection con   = Conexion.getConexion();
@@ -261,19 +279,18 @@ public class Venta extends javax.swing.JFrame {
                 combo_sucursalesActionPerformed(evt);
             }
         });
-        tabUsuarios.add(combo_sucursales, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 160, -1));
+        tabUsuarios.add(combo_sucursales, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 390, 160, -1));
 
         try {
             Connection con   = Conexion.getConexion();
-            String SQL = "SELECT nombre,apellido,activo,puesto,direccion as sucursal from staff"
-            + " natural join sucursal natural join direccion";
+            String SQL = "SELECT nombre,apellido,activo,puesto,contrasenia,correo,direccion as sucursal from staff  natural join sucursal natural join direccion";
             tabla_usuarios.setModel(Conexion.createTableModel(con, SQL));
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         scrollP_Usuarios.setViewportView(tabla_usuarios);
 
-        tabUsuarios.add(scrollP_Usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 120, 400, 330));
+        tabUsuarios.add(scrollP_Usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 120, 590, 330));
 
         jCheckBox1.setForeground(new java.awt.Color(204, 204, 204));
         tabUsuarios.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, -1, -1));
@@ -290,7 +307,7 @@ public class Venta extends javax.swing.JFrame {
                 btn_agregar_usuarioActionPerformed(evt);
             }
         });
-        tabUsuarios.add(btn_agregar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 440, -1, -1));
+        tabUsuarios.add(btn_agregar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 460, -1, -1));
 
         boton_cerrarSesion_usuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         boton_cerrarSesion_usuarios.setText("Cerrar Sesión");
@@ -394,6 +411,11 @@ public class Venta extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabla_busquedas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_busquedasMouseClicked(evt);
+            }
+        });
         ScrollP_busquedas.setViewportView(tabla_busquedas);
 
         tab_venta.add(ScrollP_busquedas, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, 400, 180));
@@ -412,6 +434,8 @@ public class Venta extends javax.swing.JFrame {
         ScrollP_Ventas.setViewportView(tabla_ventas);
 
         tab_venta.add(ScrollP_Ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 440, 180));
+
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
         tab_venta.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, 70, -1));
 
         logo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
@@ -525,13 +549,23 @@ public class Venta extends javax.swing.JFrame {
 
     private void btn_AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarActionPerformed
          try {
-          // String insertFoto="update table set foto="
+             String select;
            Connection con = Conexion.getConexion();
-           
-           ResultSet r =Conexion.consultValues(con, "Select categoria_id from categoria where nombre = '"+combo_categorias.getSelectedItem()+"'");
+           select =  "Select categoria_id from categoria where nombre = '";
+           ResultSet r =Conexion.consultValues(con,select+combo_categorias.getSelectedItem().toString()+"'");
            r.last();
-           Object[] o = {Conexion.getAutonumericField(con, "INSERT INTO articulo VALUES(?,?,?,?)", 1),txtF_Nombre.getText(),txtF_Precio.getText(),r.getInt(1)};
-           Conexion.insertValues(con, "INSERT INTO articulo VALUES(?,?,?,?)", o);
+           String insert = "INSERT INTO articulo VALUES(?,?,?,?)";
+           Object[] o = {Conexion.getAutonumericField(con,insert , 1),txtF_Nombre.getText(),txtF_Precio.getText(),r.getInt(1)};
+           Conexion.insertValues(con, insert, o);
+           //se actualiza tabla inventario
+           //TODO hacer trigger para evitar duplicados
+           r.last();
+           select="Select  articulo_id from articulo where  nombre_articulo = '"+txtF_Nombre.getText()+"' AND precio = '"+txtF_Precio.getText()+"' AND categoria_id = "+r.getInt(1);
+           insert="INSERT INTO inventario VALUES(?,?,?,?)";
+           r = Conexion.consultValues(con, select);
+           r.last();
+           Object[] f = {Conexion.getAutonumericField(con, insert, 1),r.getInt(1),Login.idSucursal,jSpinner2.getValue()};
+           Conexion.insertValues(con, insert, f);
            String sql = "SELECT nombre_articulo as Articulo ,precio as Precio,nombre as Categoria FROM articulo natural join categoria";
            Conexion.refreshTable(tabla_agregarP,sql,con);
            con.close();
@@ -548,11 +582,11 @@ public class Venta extends javax.swing.JFrame {
            Connection con = Conexion.getConexion();
            ResultSet r =Conexion.consultValues(con, "Select sucursal_id from sucursal natural join direccion where direccion = '"+combo_sucursales.getSelectedItem()+"'");
            r.last();
-           Object[] o = {Conexion.getAutonumericField(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?)", 1)
+           Object[] o = {Conexion.getAutonumericField(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?,?)", 1)
                    ,txtF_ContraseñaU.getText(),txtF_NombreU.getText(),txtF_ApellidoU.getText()
-                   ,jCheckBox1.isSelected(),r.getInt(1),txtF_Puesto.getText()};
-           Conexion.insertValues(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?)", o);
-           String sql = "SELECT nombre,apellido,activo,puesto,direccion as sucursal from staff  natural join sucursal natural join direccion";
+                   ,jCheckBox1.isSelected(),r.getInt(1),txtF_Puesto.getText(),txtF_Correo.getText()};
+           Conexion.insertValues(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?,?)", o);
+           String sql = "SELECT nombre,apellido,activo,puesto,contrasenia,correo,direccion as sucursal from staff  natural join sucursal natural join direccion";
            Conexion.refreshTable(tabla_usuarios,sql,con);
             con.close();
         } catch (SQLException ex) {
@@ -597,7 +631,9 @@ public class Venta extends javax.swing.JFrame {
     private void btn_agregar_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_ventaActionPerformed
         
       //TODO agregar producto a vuanta cliente
-       
+      //TODO debe de agreegar solo los procutoscon el mismo idSucursal que Login.idSucursal
+      //actualizar la tabla ventas sera lo mismo que busqueda menos la columna sucursal
+      
     }//GEN-LAST:event_btn_agregar_ventaActionPerformed
 
     private void txtF_totalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtF_totalActionPerformed
@@ -608,6 +644,10 @@ public class Venta extends javax.swing.JFrame {
 
     private void btn_pagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagoActionPerformed
         // TODO add your handling code here:
+        //el pago se hace igualando todos los datos de tabla ventas a su id con la sucursal de Login.idsucursal mas la cantidad deseada
+        //restar la cantidad disponible
+        
+        
         float total=Float.parseFloat(txtF_total.getText());
         float recibio=Float.parseFloat(txtF_recibo.getText());
         float cambio=0;
@@ -627,17 +667,17 @@ public class Venta extends javax.swing.JFrame {
 
     private void btn_cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarSesionActionPerformed
         // TODO add your handling code here:
-        cambiarVentana(new login());
+        cambiarVentana(new Login());
     }//GEN-LAST:event_btn_cerrarSesionActionPerformed
 
     private void cerrarSesion_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesion_ventaActionPerformed
         // TODO add your handling code here:
-        cambiarVentana(new login());
+        cambiarVentana(new Login());
     }//GEN-LAST:event_cerrarSesion_ventaActionPerformed
 
     private void boton_cerrarSesion_usuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_cerrarSesion_usuariosActionPerformed
         // TODO add your handling code here:
-        cambiarVentana(new login());
+        cambiarVentana(new Login());
     }//GEN-LAST:event_boton_cerrarSesion_usuariosActionPerformed
 
     private void combo_categoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_categoriasActionPerformed
@@ -650,6 +690,16 @@ public class Venta extends javax.swing.JFrame {
         if(combo_sucursales.getSelectedItem().toString().equals("agregar nueva sucursal"))
            cambiarVentana(new AgregarSucursal());
     }//GEN-LAST:event_combo_sucursalesActionPerformed
+
+    private void tabla_busquedasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_busquedasMouseClicked
+        // TODO add your handling code here:
+        if(evt.getClickCount()>=2){
+            JOptionPane.showMessageDialog(null,"fila seleccionada: "+tabla_busquedas.getSelectedRow());
+            UneditableTableModel m = (UneditableTableModel) tabla_busquedas.getModel();
+            Object[] o = m.getRow(tabla_busquedas.getSelectedRow());
+            
+        }
+    }//GEN-LAST:event_tabla_busquedasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -706,12 +756,15 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JComboBox combo_categorias;
     private javax.swing.JComboBox combo_categorias_ventas;
     private javax.swing.JComboBox combo_sucursales;
+    private javax.swing.JLabel correo;
     private javax.swing.JButton fondo_agregar;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JSpinner jSpinner2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel label_activo;
     private javax.swing.JLabel label_apellido;
@@ -746,6 +799,7 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JLabel titulo_ventas;
     private javax.swing.JTextField txtF_ApellidoU;
     private javax.swing.JTextField txtF_ContraseñaU;
+    private javax.swing.JTextField txtF_Correo;
     private javax.swing.JTextField txtF_Nombre;
     private javax.swing.JTextField txtF_NombreU;
     private javax.swing.JTextField txtF_Precio;

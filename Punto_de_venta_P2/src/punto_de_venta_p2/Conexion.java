@@ -68,8 +68,8 @@ public class Conexion {
                  tabla.setModel(Conexion.createTableModel(con,querry));
                  //tabla.setViewportView(tabla);
              }
-           public static DefaultTableModel createTableModel(Connection con,String SentenciaSQL) {
-                DefaultTableModel modelo = new DefaultTableModel();
+           public static UneditableTableModel createTableModel(Connection con,String SentenciaSQL) {
+                UneditableTableModel modelo = new UneditableTableModel();
                 try {
                      ResultSet rsDatos = consultValues(con,SentenciaSQL);
                      if(rsDatos.next()){
@@ -92,12 +92,13 @@ public class Conexion {
                     //rellenar cada posicion del objeto con una de las columans de la tabla 
                         for (int i = 0; i < modelo.getColumnCount(); i++) {
                             datosFila[i] = rsDatos.getObject(i + 1);
+                            
                         }
                     modelo.addRow(datosFila);
                     }
                      }
                      else{
-                         modelo =new javax.swing.table.DefaultTableModel(
+                         modelo =new UneditableTableModel(
                          new Object [][] {
                              {null}
                              },
