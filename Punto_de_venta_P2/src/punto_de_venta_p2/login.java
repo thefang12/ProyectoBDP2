@@ -17,15 +17,15 @@ import javax.swing.JOptionPane;
  *
  * @author fangi
  */
-public class login extends javax.swing.JFrame {
+public class Login extends javax.swing.JFrame {
 
     /**
-     * Creates new form login
+     * Creates new form Login
      */
     public static int idCuenta=-1;
     public static String puesto="";
     public static int idSucursal=-1;
-    public login() {
+    public Login() {
         initComponents();
     }
 
@@ -93,23 +93,29 @@ public class login extends javax.swing.JFrame {
            Statement st = con.createStatement();
            ResultSet rs= st.executeQuery(query);
            String n =jTextField1.getText();
-           if(!n.matches(".*[a-zA-Z]+.*")&&!n.equals(""))
+           if(n.matches(".+@.+\\..+")&&!n.equals("")){
            while(rs.next()){
                
-               if(Integer.parseInt(n)==rs.getInt(1)&&checkPassword(jPasswordField1.getPassword(),rs.getString(2))){
+               if(n.equals(rs.getString(8))&&checkPassword(jPasswordField1.getPassword(),rs.getString(2))){
                    idCuenta=rs.getInt(1);
                    puesto = rs.getString(7);
+                   idSucursal = rs.getInt(6);
                    cambiarVentana(new Venta());
+                    break;
+               }else{
+                  JOptionPane.showMessageDialog(null,"ID o contraseña incorrectos"); 
+                  break;
                }
            }
+           } else{
+                   JOptionPane.showMessageDialog(null,"Ingrese ID y contraseña validos");
+               }
            st.close();
            con.close(); 
        } catch (SQLException ex){
            System.out.println(ex.getMessage());
        }
-       if(idCuenta==-1){
-                   JOptionPane.showMessageDialog(null,"Ingrese ID y contraseña validos");
-               }
+      
     }//GEN-LAST:event_jButton1ActionPerformed
   private void cambiarVentana(JFrame frame){
         frame.setVisible(true);
@@ -136,20 +142,21 @@ public class login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new login().setVisible(true);
+                new Login().setVisible(true);
             }
         });
     }
