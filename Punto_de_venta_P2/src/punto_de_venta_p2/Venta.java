@@ -43,7 +43,7 @@ public class Venta extends javax.swing.JFrame {
         combo_categorias = new javax.swing.JComboBox();
         jSpinner2 = new javax.swing.JSpinner();
         scrollP_productos = new javax.swing.JScrollPane();
-        tabla_agregarP = new javax.swing.JTable(new SQLTableModel());
+        tabla_agregarP = new javax.swing.JTable(new punto_de_venta_p2.SQLTableModel());
         btn_cerrarSesion = new javax.swing.JButton();
         btn_Agregar = new javax.swing.JButton();
         logo = new javax.swing.JButton();
@@ -65,7 +65,7 @@ public class Venta extends javax.swing.JFrame {
         txtF_Puesto = new javax.swing.JTextField();
         combo_sucursales = new javax.swing.JComboBox();
         scrollP_Usuarios = new javax.swing.JScrollPane();
-        tabla_usuarios = new javax.swing.JTable(new SQLTableModel());
+        tabla_usuarios = new javax.swing.JTable(new punto_de_venta_p2.SQLTableModel());
         jCheckBox1 = new javax.swing.JCheckBox();
         logo1 = new javax.swing.JButton();
         btn_agregar_usuario = new javax.swing.JButton();
@@ -88,7 +88,7 @@ public class Venta extends javax.swing.JFrame {
         txtF_cambio = new javax.swing.JTextField();
         combo_categorias_ventas = new javax.swing.JComboBox();
         ScrollP_busquedas = new javax.swing.JScrollPane();
-        tabla_busquedas = new javax.swing.JTable(new SQLTableModel());
+        tabla_busquedas = new javax.swing.JTable(new punto_de_venta_p2.SQLTableModel());
         ScrollP_Ventas = new javax.swing.JScrollPane();
         tabla_ventas = new javax.swing.JTable();
         jSpinner1 = new javax.swing.JSpinner();
@@ -164,7 +164,7 @@ public class Venta extends javax.swing.JFrame {
         try {
             Connection con   = Conexion.getConexion();
             String SQL = "SELECT nombre_articulo as Articulo ,precio as Precio,nombre as Categoria FROM articulo natural join categoria";
-            tabla_agregarP.setModel(Conexion.createTableModel(con,SQL));
+            tabla_agregarP.setModel(Conexion.createTableModel(con,SQL,"agregue un articulo"));
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -276,7 +276,7 @@ public class Venta extends javax.swing.JFrame {
         try {
             Connection con   = Conexion.getConexion();
             String SQL = "SELECT nombre,apellido,activo,puesto,contrasenia,correo,direccion as sucursal from staff  natural join sucursal natural join direccion";
-            tabla_usuarios.setModel(Conexion.createTableModel(con, SQL));
+            tabla_usuarios.setModel(Conexion.createTableModel(con, SQL,"agregue un usuario"));
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -531,7 +531,7 @@ public class Venta extends javax.swing.JFrame {
                     + "from articulo a natural join categoria c natural join inventario  i natural join sucursal s natural join direccion d "
                     +"where c.nombre = '"+combo_categorias_ventas.getSelectedItem().toString()+"' AND a.nombre_articulo like '%"+txtF_codproducto.getText()+"%'";
             //TODO es necesario un codigo de producto o solo el nombre?
-            tabla_busquedas.setModel(Conexion.createTableModel(con, query));
+            tabla_busquedas.setModel(Conexion.createTableModel(con, query,"sin resultados"));
             ScrollP_busquedas.getViewport().add(tabla_busquedas);
             
         } catch (Exception ex) {

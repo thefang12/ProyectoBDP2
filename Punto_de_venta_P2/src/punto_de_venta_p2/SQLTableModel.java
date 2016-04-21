@@ -17,17 +17,46 @@ public class SQLTableModel extends AbstractTableModel{
      private ArrayList columnNames ;
      private ArrayList rowData;
      private String select_query;
-     private String insert_query;
+      private String error_message;
 
     SQLTableModel(Object[][] object, Object[] string) {
         rowData=convetToArrayList(object);
         columnNames=convetToArrayList(string);
+        select_query = null;
+        error_message = null;
+        
     }
 
-    SQLTableModel() {
+    SQLTableModel(String error_mesage) {
+        columnNames = new ArrayList();
+        columnNames.add(error_mesage);
+        rowData = new ArrayList();
+        rowData.add(null);
+        select_query = null;
+        this.error_message=error_mesage;
+    }
+
+    public SQLTableModel() {
         columnNames = new ArrayList();
         rowData = new ArrayList();
+        select_query=null;
+        error_message=null;
     }
+    
+
+    public String getSelect_query() {
+        return select_query;
+    }
+
+    public void setSelect_query(String select_query) {
+        this.select_query = select_query;
+    }
+
+    public String getError_message() {
+        return error_message;
+    }
+    
+    
     
     @Override
     public int getRowCount() {
@@ -63,8 +92,10 @@ public class SQLTableModel extends AbstractTableModel{
     
     public void setColumnIdentifiers(Object[] o){
         this.columnNames=convetToArrayList(o);
+        
         if(columnNames!=null)
-       fireTableStructureChanged();
+           fireTableStructureChanged();
+       
     }
     
     @Override

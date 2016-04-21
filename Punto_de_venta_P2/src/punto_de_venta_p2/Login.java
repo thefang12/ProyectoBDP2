@@ -101,13 +101,14 @@ public class Login extends javax.swing.JFrame {
                    idSucursal = rs.getInt(6);
                    cambiarVentana(new Venta());
                     break;
-               }else{
-                  JOptionPane.showMessageDialog(null,"ID o contraseña incorrectos"); 
-                  break;
                }
            }
            } else{
-                   JOptionPane.showMessageDialog(null,"Ingrese ID y contraseña validos");
+                if(!n.matches(".+@.+\\..+")||n.equals(""))
+                JOptionPane.showMessageDialog(null,"Ingrese ID y contraseña validos");
+                 else  
+                JOptionPane.showMessageDialog(null,"ID o contraseña incorrectos"); 
+                
                }
            st.close();
            con.close(); 

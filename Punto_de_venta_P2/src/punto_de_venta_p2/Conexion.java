@@ -66,47 +66,40 @@ public class Conexion {
            return st.executeQuery(query);
          }
              public static  void refreshTable(JTable tabla,String querry,Connection con) {
-                 tabla.setModel(Conexion.createTableModel(con,querry));
+                 SQLTableModel model = ((SQLTableModel)tabla.getModel());
+                 tabla.setModel(Conexion.createTableModel(con,model.getSelect_query(),model.getError_message()));
                  //tabla.setViewportView(tabla);
              }
-           public static SQLTableModel createTableModel(Connection con,String SentenciaSQL) {
+           public static SQLTableModel createTableModel(Connection con,String SentenciaSQL,String fail_message) {
                 SQLTableModel modelo = new SQLTableModel();
                 try {
                      ResultSet rsDatos = consultValues(con,SentenciaSQL);
                      if(rsDatos.next()){
                      //optendremos lo metodos se la consulta 
-                    // del cual optenemos 
-                         rsDatos.beforeFirst();
-                    ResultSetMetaData metaDatos = rsDatos.getMetaData();
+                    // del cual obtenemos 
+                        modelo.setSelect_query(SentenciaSQL);
+                        rsDatos.beforeFirst();
+                        ResultSetMetaData metaDatos = rsDatos.getMetaData();
                     //optemos el nro de columnas
-                    int numeroColumnas = metaDatos.getColumnCount();//columnas
+                        int numeroColumnas = metaDatos.getColumnCount();//columnas
                     //optener las etiquetas  de la tabla 
-                    Object[] etiquetas = new Object[numeroColumnas];//creamos de array de objetos dinamico
-                    for (int i = 0; i < numeroColumnas; i++) {
-                        etiquetas[i] = metaDatos.getColumnLabel(i + 1);//las etiquetas comienzan desde 1e
-                    }
-                    //enlazar las etiquetas con el modelo 
-                    modelo.setColumnIdentifiers(etiquetas);//asignamos identificadores de las columnas 
-                    while (rsDatos.next()) {
-                    //creamos un objeto para almacenar un registro
-                        Object[] datosFila = new Object[modelo.getColumnCount()];
-                    //rellenar cada posicion del objeto con una de las columans de la tabla 
-                        for (int i = 0; i < modelo.getColumnCount(); i++) {
-                            datosFila[i] = rsDatos.getObject(i + 1);
-                            
+                        Object[] etiquetas = new Object[numeroColumnas];//creamos de array de objetos dinamico
+                        for (int i = 0; i < numeroColumnas; i++) {
+                            etiquetas[i] = metaDatos.getColumnLabel(i + 1);//las etiquetas comienzan desde 1e
                         }
-                    modelo.addRow(datosFila);
-                    }
+                    //enlazar las etiquetas con el modelo 
+                        modelo.setColumnIdentifiers(etiquetas);//asignamos identificadores de las columnas 
+                        while (rsDatos.next()) {
+                    //creamos un objeto para almacenar un registro
+                            Object[] datosFila = new Object[modelo.getColumnCount()];
+                    //rellenar cada posicion del objeto con una de las columans de la tabla 
+                            for (int i = 0; i < modelo.getColumnCount(); i++) 
+                                datosFila[i] = rsDatos.getObject(i + 1);
+                            modelo.addRow(datosFila);
+                            }
                      }
                      else{
-                         modelo =new SQLTableModel(
-                         new Object [][] {
-                             {null}
-                             },
-                        new String [] {
-                        "sin resultados"
-                        }
-                        );
+                         modelo =new SQLTableModel(fail_message);
                      }
         } catch (Exception e) {
         }
