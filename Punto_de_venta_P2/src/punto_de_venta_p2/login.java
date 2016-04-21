@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package punto_de_venta_p2;
-import org.xml.sax.Attributes;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

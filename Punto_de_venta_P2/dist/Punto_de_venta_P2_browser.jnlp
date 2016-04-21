@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Punto_de_venta_P2_browser.jnlp">
+  <information>
+    <title>Punto_de_venta_P2</title>
+    <vendor>fangi</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="Punto_de_venta_P2.jar" size="7112869" download="eager" />
+    <jar href="lib\AbsoluteLayout.jar" size="2903" download="eager" />
+    <jar href="lib\beansbinding-1.2.1.jar" size="631289" download="eager" />
+    <jar href="lib\mysql-connector-java-3.1.14-bin.jar" size="459094" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="punto_de_venta_p2.Login"  name="Punto_de_venta_P2" >
+  </applet-desc>
+  <update check="always"/>
+</jnlp>
