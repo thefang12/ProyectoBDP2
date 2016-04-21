@@ -4,12 +4,10 @@
  * and open the template in the editor.
  */
 package punto_de_venta_p2;
-import javax.swing.table.DefaultTableModel;
- import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import org.xml.sax.Attributes;
 import javax.swing.*;
 /**
  *

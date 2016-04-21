@@ -5,14 +5,15 @@
  */
 package punto_de_venta_p2;
 
-import java.awt.Rectangle;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
- import java.sql.*;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
