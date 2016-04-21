@@ -69,8 +69,8 @@ public class Conexion {
                  tabla.setModel(Conexion.createTableModel(con,querry));
                  //tabla.setViewportView(tabla);
              }
-           public static UneditableTableModel createTableModel(Connection con,String SentenciaSQL) {
-                UneditableTableModel modelo = new UneditableTableModel();
+           public static SQLTableModel createTableModel(Connection con,String SentenciaSQL) {
+                SQLTableModel modelo = new SQLTableModel();
                 try {
                      ResultSet rsDatos = consultValues(con,SentenciaSQL);
                      if(rsDatos.next()){
@@ -99,7 +99,7 @@ public class Conexion {
                     }
                      }
                      else{
-                         modelo =new UneditableTableModel(
+                         modelo =new SQLTableModel(
                          new Object [][] {
                              {null}
                              },

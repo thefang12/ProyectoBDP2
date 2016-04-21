@@ -13,16 +13,18 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author fangi
  */
-public class UneditableTableModel extends AbstractTableModel{
+public class SQLTableModel extends AbstractTableModel{
      private ArrayList columnNames ;
      private ArrayList rowData;
+     private String select_query;
+     private String insert_query;
 
-    UneditableTableModel(Object[][] object, Object[] string) {
+    SQLTableModel(Object[][] object, Object[] string) {
         rowData=convetToArrayList(object);
         columnNames=convetToArrayList(string);
     }
 
-    UneditableTableModel() {
+    SQLTableModel() {
         columnNames = new ArrayList();
         rowData = new ArrayList();
     }
@@ -75,7 +77,7 @@ public class UneditableTableModel extends AbstractTableModel{
         super.addTableModelListener(l); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public UneditableTableModel(ArrayList columnNames, ArrayList rowData) {
+    public SQLTableModel(ArrayList columnNames, ArrayList rowData) {
         this.columnNames = columnNames;
         this.rowData = rowData;
     }

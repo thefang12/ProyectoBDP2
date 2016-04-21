@@ -43,7 +43,7 @@ public class Venta extends javax.swing.JFrame {
         combo_categorias = new javax.swing.JComboBox();
         jSpinner2 = new javax.swing.JSpinner();
         scrollP_productos = new javax.swing.JScrollPane();
-        tabla_agregarP = new javax.swing.JTable(new UneditableTableModel());
+        tabla_agregarP = new javax.swing.JTable(new SQLTableModel());
         btn_cerrarSesion = new javax.swing.JButton();
         btn_Agregar = new javax.swing.JButton();
         logo = new javax.swing.JButton();
@@ -65,7 +65,7 @@ public class Venta extends javax.swing.JFrame {
         txtF_Puesto = new javax.swing.JTextField();
         combo_sucursales = new javax.swing.JComboBox();
         scrollP_Usuarios = new javax.swing.JScrollPane();
-        tabla_usuarios = new javax.swing.JTable(new UneditableTableModel());
+        tabla_usuarios = new javax.swing.JTable(new SQLTableModel());
         jCheckBox1 = new javax.swing.JCheckBox();
         logo1 = new javax.swing.JButton();
         btn_agregar_usuario = new javax.swing.JButton();
@@ -88,7 +88,7 @@ public class Venta extends javax.swing.JFrame {
         txtF_cambio = new javax.swing.JTextField();
         combo_categorias_ventas = new javax.swing.JComboBox();
         ScrollP_busquedas = new javax.swing.JScrollPane();
-        tabla_busquedas = new javax.swing.JTable(new UneditableTableModel());
+        tabla_busquedas = new javax.swing.JTable(new SQLTableModel());
         ScrollP_Ventas = new javax.swing.JScrollPane();
         tabla_ventas = new javax.swing.JTable();
         jSpinner1 = new javax.swing.JSpinner();
@@ -249,12 +249,6 @@ public class Venta extends javax.swing.JFrame {
         tabUsuarios.add(txtF_ApellidoU, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 160, -1));
         tabUsuarios.add(txtF_ContraseñaU, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 160, -1));
         tabUsuarios.add(txtF_NombreU, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 160, -1));
-
-        txtF_Puesto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtF_PuestoActionPerformed(evt);
-            }
-        });
         tabUsuarios.add(txtF_Puesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 430, 160, -1));
 
         try{
@@ -659,10 +653,6 @@ public class Venta extends javax.swing.JFrame {
             txtF_cambio.setText(Float.toString(cambio));
     }//GEN-LAST:event_btn_pagoActionPerformed
 
-    private void txtF_PuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtF_PuestoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtF_PuestoActionPerformed
-
     private void btn_cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarSesionActionPerformed
         // TODO add your handling code here:
         cambiarVentana(new Login());
@@ -692,8 +682,9 @@ public class Venta extends javax.swing.JFrame {
     private void tabla_busquedasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_busquedasMouseClicked
         // TODO add your handling code here:
         if(evt.getClickCount()>=2){
-            UneditableTableModel m = (UneditableTableModel) tabla_busquedas.getModel();
+            SQLTableModel m = (SQLTableModel) tabla_busquedas.getModel();
             Object[] o = m.getRow(tabla_busquedas.getSelectedRow());
+            //if() el producto esta en la sucursal actual ? stored procedure or another select?
             txtF_codproducto.setText(o[0].toString());
         }
     }//GEN-LAST:event_tabla_busquedasMouseClicked
