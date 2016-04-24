@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package punto_de_venta_p2;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,9 +22,10 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    public static int idCuenta=-1;
-    public static String puesto="";
-    public static int idSucursal=-1;
+    public static int idCuenta = -1;
+    public static String puesto = "";
+    public static int idSucursal = -1;
+
     public Login() {
         initComponents();
     }
@@ -84,40 +86,41 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-          // TODO add your handling code here:
-       try { 
-           String query =  "SELECT * From staff ";
-           
-           Connection con = Conexion.getConexion();
-           Statement st = con.createStatement();
-           ResultSet rs= st.executeQuery(query);
-           String n =jTextField1.getText();
-           if(n.matches(".+@.+\\..+")&&!n.equals("")){
-           while(rs.next()){
-               
-               if(n.equals(rs.getString(8))&&checkPassword(jPasswordField1.getPassword(),rs.getString(2))){
-                   idCuenta=rs.getInt(1);
-                   puesto = rs.getString(7);
-                   idSucursal = rs.getInt(6);
-                   cambiarVentana(new Venta());
-                    break;
-               }
-           }
-           } else{
-                if(!n.matches(".+@.+\\..+")||n.equals(""))
-                JOptionPane.showMessageDialog(null,"Ingrese ID y contraseña validos");
-                 else  
-                JOptionPane.showMessageDialog(null,"ID o contraseña incorrectos"); 
-                
-               }
-           st.close();
-           con.close(); 
-       } catch (SQLException ex){
-           System.out.println(ex.getMessage());
-       }
-      
+        // TODO add your handling code here:
+        try {
+            String query = "SELECT * From staff ";
+
+            Connection con = Conexion.getConexion();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            String n = jTextField1.getText();
+            if (n.matches(".+@.+\\..+") && !n.equals("")) {
+                while (rs.next()) {
+
+                    if (n.equals(rs.getString(8)) && checkPassword(jPasswordField1.getPassword(), rs.getString(2))) {
+                        idCuenta = rs.getInt(1);
+                        puesto = rs.getString(7);
+                        idSucursal = rs.getInt(6);
+                        cambiarVentana(new Venta());
+                        break;
+                    }
+                }
+            } else {
+                if (!n.matches(".+@.+\\..+") || n.equals("")) {
+                    JOptionPane.showMessageDialog(null, "Ingrese ID y contraseña validos");
+                } else {
+                    JOptionPane.showMessageDialog(null, "ID o contraseña incorrectos");
+                }
+
+            }
+            st.close();
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
-  private void cambiarVentana(JFrame frame){
+    private void cambiarVentana(JFrame frame) {
         frame.setVisible(true);
         this.dispose();
     }
@@ -160,8 +163,9 @@ public class Login extends javax.swing.JFrame {
             }
         });
     }
-      private boolean checkPassword(char[] epswd,String pswd) {
-              return Arrays.equals(epswd, pswd.toCharArray());
+
+    private boolean checkPassword(char[] epswd, String pswd) {
+        return Arrays.equals(epswd, pswd.toCharArray());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

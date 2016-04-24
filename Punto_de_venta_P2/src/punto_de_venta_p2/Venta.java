@@ -4,16 +4,22 @@
  * and open the template in the editor.
  */
 package punto_de_venta_p2;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.activation.CommandObject;
 import javax.swing.JOptionPane;
 import javax.swing.*;
+
 /**
  *
  * @author pablotabales
  */
 public class Venta extends javax.swing.JFrame {
+
     /**
      * Creates new form Venta
      */
@@ -43,7 +49,7 @@ public class Venta extends javax.swing.JFrame {
         combo_categorias = new javax.swing.JComboBox();
         jSpinner2 = new javax.swing.JSpinner();
         scrollP_productos = new javax.swing.JScrollPane();
-        tabla_agregarP = new javax.swing.JTable(new punto_de_venta_p2.SQLTableModel());
+        tabla_agregarP = new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel());
         btn_cerrarSesion = new javax.swing.JButton();
         btn_Agregar = new javax.swing.JButton();
         logo = new javax.swing.JButton();
@@ -65,7 +71,7 @@ public class Venta extends javax.swing.JFrame {
         txtF_Puesto = new javax.swing.JTextField();
         combo_sucursales = new javax.swing.JComboBox();
         scrollP_Usuarios = new javax.swing.JScrollPane();
-        tabla_usuarios = new javax.swing.JTable(new punto_de_venta_p2.SQLTableModel());
+        tabla_usuarios = new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel());
         jCheckBox1 = new javax.swing.JCheckBox();
         logo1 = new javax.swing.JButton();
         btn_agregar_usuario = new javax.swing.JButton();
@@ -88,7 +94,7 @@ public class Venta extends javax.swing.JFrame {
         txtF_cambio = new javax.swing.JTextField();
         combo_categorias_ventas = new javax.swing.JComboBox();
         ScrollP_busquedas = new javax.swing.JScrollPane();
-        tabla_busquedas = new javax.swing.JTable(new punto_de_venta_p2.SQLTableModel());
+        tabla_busquedas = new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel());
         ScrollP_Ventas = new javax.swing.JScrollPane();
         tabla_ventas = new javax.swing.JTable();
         jSpinner1 = new javax.swing.JSpinner();
@@ -366,12 +372,6 @@ public class Venta extends javax.swing.JFrame {
         label_recibo.setText("Recibió");
         tab_venta.add(label_recibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 420, -1, -1));
         tab_venta.add(txtF_codproducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 238, -1));
-
-        txtF_total.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtF_totalActionPerformed(evt);
-            }
-        });
         tab_venta.add(txtF_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 420, 76, -1));
         tab_venta.add(txtF_recibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 420, 80, -1));
         tab_venta.add(txtF_cambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 460, 80, -1));
@@ -392,17 +392,7 @@ public class Venta extends javax.swing.JFrame {
         }
         tab_venta.add(combo_categorias_ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 110, 240, -1));
 
-        tabla_busquedas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        tabla_busquedas.setModel(new CustomTableModel("busque por categoria o por nombre"));
         tabla_busquedas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabla_busquedasMouseClicked(evt);
@@ -412,22 +402,12 @@ public class Venta extends javax.swing.JFrame {
 
         tab_venta.add(ScrollP_busquedas, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, 400, 180));
 
-        tabla_ventas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        tabla_ventas.setModel(new CustomTableModel("agregar producto"));
         ScrollP_Ventas.setViewportView(tabla_ventas);
 
         tab_venta.add(ScrollP_Ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 440, 180));
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
         tab_venta.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, 70, -1));
 
         logo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
@@ -511,146 +491,171 @@ public class Venta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-     private void cambiarVentana(JFrame frame){
+    private void cambiarVentana(JFrame frame) {
         frame.setVisible(true);
         this.dispose();
     }
-    
+
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-   
+
         try {
             Connection con = Conexion.getConexion();
             String query = "";
-            if(txtF_codproducto.equals(""))
-             query= "Select nombre_articulo as articulo,nombre as categoria,precio,cantidad_disponible as dsp,direccion as sucursal "
-                     + "from articulo a natural join categoria c natural join inventario  i natural join sucursal s natural join direccion d "
-                    +"where c.nombre = '"+combo_categorias_ventas.getSelectedItem().toString()+"'";
-            else
-             query = "Select nombre_articulo as articulo,nombre as categoria,precio,cantidad_disponible as dsp,direccion as sucursal "
-                    + "from articulo a natural join categoria c natural join inventario  i natural join sucursal s natural join direccion d "
-                    +"where c.nombre = '"+combo_categorias_ventas.getSelectedItem().toString()+"' AND a.nombre_articulo like '%"+txtF_codproducto.getText()+"%'";
+            if (txtF_codproducto.equals("")) {
+                query = "Select nombre_articulo as articulo,nombre as categoria,precio,cantidad_disponible as dsp,direccion as sucursal "
+                        + "from articulo a natural join categoria c natural join inventario  i natural join sucursal s natural join direccion d "
+                        + "where c.nombre = '" + combo_categorias_ventas.getSelectedItem().toString() + "'";
+            } else {
+                query = "Select nombre_articulo as articulo,nombre as categoria,precio,cantidad_disponible as dsp,direccion as sucursal "
+                        + "from articulo a natural join categoria c natural join inventario  i natural join sucursal s natural join direccion d "
+                        + "where c.nombre = '" + combo_categorias_ventas.getSelectedItem().toString() + "' AND a.nombre_articulo like '%" + txtF_codproducto.getText() + "%'";
+            }
             //TODO es necesario un codigo de producto o solo el nombre?
-            tabla_busquedas.setModel(Conexion.createTableModel(con, query,"sin resultados"));
+            tabla_busquedas.setModel(Conexion.createTableModel(con, query, "sin resultados"));
             ScrollP_busquedas.getViewport().add(tabla_busquedas);
-            
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void btn_AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarActionPerformed
-         try {
-             String select;
-           Connection con = Conexion.getConexion();
-           select =  "Select categoria_id from categoria where nombre = '";
-           ResultSet r =Conexion.consultValues(con,select+combo_categorias.getSelectedItem().toString()+"'");
-           r.last();
-           String insert = "INSERT INTO articulo VALUES(?,?,?,?)";
-           Object[] o = {Conexion.getAutonumericField(con,insert , 1),txtF_Nombre.getText(),txtF_Precio.getText(),r.getInt(1)};
-           Conexion.insertValues(con, insert, o);
-           //se actualiza tabla inventario
-           //TODO hacer trigger para evitar duplicados
-           r.last();
-           select="Select  articulo_id from articulo where  nombre_articulo = '"+txtF_Nombre.getText()+"' AND precio = '"+txtF_Precio.getText()+"' AND categoria_id = "+r.getInt(1);
-           insert="INSERT INTO inventario VALUES(?,?,?,?)";
-           r = Conexion.consultValues(con, select);
-           r.last();
-           Object[] f = {Conexion.getAutonumericField(con, insert, 1),r.getInt(1),Login.idSucursal,jSpinner2.getValue()};
-           Conexion.insertValues(con, insert, f);
-           String sql = "SELECT nombre_articulo as Articulo ,precio as Precio,nombre as Categoria FROM articulo natural join categoria";
-           Conexion.refreshTable(tabla_agregarP,sql,con);
-           con.close();
+        try {
+            String select;
+            Connection con = Conexion.getConexion();
+            select = "Select categoria_id from categoria where nombre = '";
+            ResultSet r = Conexion.consultValues(con, select + combo_categorias.getSelectedItem().toString() + "'");
+            r.last();
+            String insert = "INSERT INTO articulo VALUES(?,?,?,?)";
+            Object[] o = {Conexion.getAutonumericField(con, insert, 1), txtF_Nombre.getText(), txtF_Precio.getText(), r.getInt(1)};
+            Conexion.insertValues(con, insert, o);
+            //se actualiza tabla inventario
+            //TODO hacer trigger para evitar duplicados
+            r.last();
+            select = "Select  articulo_id from articulo where  nombre_articulo = '" + txtF_Nombre.getText()
+                    + "' AND precio = '" + txtF_Precio.getText() + "' AND categoria_id = " + r.getInt(1);
+            insert = "INSERT INTO inventario VALUES(?,?,?,?)";
+            r = Conexion.consultValues(con, select);
+            r.last();
+            Object[] f = {Conexion.getAutonumericField(con, insert, 1), r.getInt(1), Login.idSucursal, jSpinner2.getValue()};
+            Conexion.insertValues(con, insert, f);
+            String sql = "SELECT nombre_articulo as Articulo ,precio as Precio,nombre as Categoria FROM articulo natural join categoria";
+            Conexion.refreshTable(tabla_agregarP, sql, con);
+            con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_btn_AgregarActionPerformed
 
-    
+
     private void btn_agregar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_usuarioActionPerformed
         // TODO add your handling code here:
-          try {
-          // String insertFoto="update table set foto="
-           Connection con = Conexion.getConexion();
-           ResultSet r =Conexion.consultValues(con, "Select sucursal_id from sucursal natural join direccion where direccion = '"+combo_sucursales.getSelectedItem()+"'");
-           r.last();
-           Object[] o = {Conexion.getAutonumericField(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?,?)", 1)
-                   ,txtF_ContraseñaU.getText(),txtF_NombreU.getText(),txtF_ApellidoU.getText()
-                   ,jCheckBox1.isSelected(),r.getInt(1),txtF_Puesto.getText(),txtF_Correo.getText()};
-           Conexion.insertValues(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?,?)", o);
-           String sql = "SELECT nombre,apellido,activo,puesto,contrasenia,correo,direccion as sucursal from staff  natural join sucursal natural join direccion";
-           Conexion.refreshTable(tabla_usuarios,sql,con);
+        try {
+            // String insertFoto="update table set foto="
+            Connection con = Conexion.getConexion();
+            ResultSet r = Conexion.consultValues(con, "Select sucursal_id from sucursal natural join direccion where direccion = '" + combo_sucursales.getSelectedItem() + "'");
+            r.last();
+            Object[] o = {Conexion.getAutonumericField(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?,?)", 1), txtF_ContraseñaU.getText(), txtF_NombreU.getText(), txtF_ApellidoU.getText(), jCheckBox1.isSelected(), r.getInt(1), txtF_Puesto.getText(), txtF_Correo.getText()};
+            Conexion.insertValues(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?,?)", o);
+            String sql = "SELECT nombre,apellido,activo,puesto,contrasenia,correo,direccion as sucursal from staff  natural join sucursal natural join direccion";
+            Conexion.refreshTable(tabla_usuarios, sql, con);
             con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-        }     
+        }
     }//GEN-LAST:event_btn_agregar_usuarioActionPerformed
 
-    
-
-    private void obtenerDatosTabla()
-    {
+    private void obtenerDatosTabla() {
         int column = 3;
-        float total=0;
+        float total = 0;
         int row = tabla_ventas.getRowCount();
-        for(int i = 0; i < row; i++) {
-            float valor=(float)tabla_ventas.getValueAt(i, 0);
-        total+= (float)tabla_ventas.getValueAt(i, column)*valor;
-}
-        txtF_total.setText(Float.toString(total));
-    }
-    
-     private void modificarTotal(float precio,int cantidad)
-    {
-     
-        int valorAnterior;
-        float total=0;
-        
-        if(txtF_total.getText()!=null){
-        valorAnterior= Integer.parseInt(txtF_total.getText());
-        total = (float)valorAnterior;
-        total += precio * (float)cantidad;
-        }else{
-           total += precio * (float)cantidad; 
+        for (int i = 0; i < row; i++) {
+            float valor = (float) tabla_ventas.getValueAt(i, 0);
+            total += (float) tabla_ventas.getValueAt(i, column) * valor;
         }
-        
         txtF_total.setText(Float.toString(total));
     }
-     
-     
-    
-       
-    private void btn_agregar_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_ventaActionPerformed
-        
-      //TODO agregar producto a vuanta cliente
-      //TODO debe de agreegar solo los procutoscon el mismo idSucursal que Login.idSucursal
-      //actualizar la tabla ventas sera lo mismo que busqueda menos la columna sucursal
-      
-    }//GEN-LAST:event_btn_agregar_ventaActionPerformed
 
-    private void txtF_totalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtF_totalActionPerformed
-        // TODO add your handling code here:
-        //textfield del total
-        
-    }//GEN-LAST:event_txtF_totalActionPerformed
+    private void modificarTotal(float precio, int cantidad) {
+
+        int valorAnterior;
+        float total = 0;
+
+        if (txtF_total.getText() != null) {
+            valorAnterior = Integer.parseInt(txtF_total.getText());
+            total = (float) valorAnterior;
+            total += precio * (float) cantidad;
+        } else {
+            total += precio * (float) cantidad;
+        }
+
+        txtF_total.setText(Float.toString(total));
+    }
+
+
+    private void btn_agregar_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_ventaActionPerformed
+
+        ResultSet r;
+        try {
+            r = Conexion.consultValues(Conexion.getConexion(),
+                    "Select nombre_articulo,nombre,cantidad_disponible,precio,sucursal_id from "
+                    + "articulo natural join categoria natural join inventario  natural join sucursal "
+                    + "where sucursal_id =" + Login.idSucursal + " AND nombre='" + combo_categorias_ventas.getSelectedItem().toString() + "'"
+                    + "AND nombre_articulo = '" + txtF_codproducto.getText() + "'");
+
+            if (r.last()) {
+                CustomTableModel model = ((CustomTableModel) tabla_ventas.getModel());
+                int cant = (int) jSpinner1.getValue();
+                Object[] o = {r.getObject(1), r.getObject(2), cant, r.getObject(4)};
+                boolean flag = false;
+                for (int i = 0; i < model.getRowCount(); i++) {
+                    if (o[0].equals(model.getValueAt(i, 0)) && o[1].equals(model.getValueAt(i, 1)) && o[3].equals(model.getValueAt(i, 3))) {
+                        if ((r.getInt(3) - (cant + (int) model.getValueAt(i, 2))) >= 0) {
+                            model.setValueAt(cant + (int) model.getValueAt(i, 2), i, 2);
+                            flag = true;
+                            break;
+                        } else {
+                            JOptionPane.showMessageDialog(this, "cantidad insuficiente de articulos");
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+                if (!flag) {
+                    if ((r.getInt(3) - cant) >= 0) {
+                        if (model.tableIsEmpty()) {
+                            model.setColumnIdentifiers(new String[]{"articulo", "categoria", "cantidad", "precio"});
+                        }
+                        ((CustomTableModel) tabla_ventas.getModel()).addRow(o);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "cantidad insuficiente de articulos");
+
+                    }
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "articulo no esta en esta  sucursal");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_agregar_ventaActionPerformed
 
     private void btn_pagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagoActionPerformed
         // TODO add your handling code here:
         //el pago se hace igualando todos los datos de tabla ventas a su id con la sucursal de Login.idsucursal mas la cantidad deseada
         //restar la cantidad disponible
-        
-        
-        float total=Float.parseFloat(txtF_total.getText());
-        float recibio=Float.parseFloat(txtF_recibo.getText());
-        float cambio=0;
-        cambio = recibio-total;
-        if(cambio<0)
-        {
-            
+
+        float total = Float.parseFloat(txtF_total.getText());
+        float recibio = Float.parseFloat(txtF_recibo.getText());
+        float cambio = 0;
+        cambio = recibio - total;
+        if (cambio < 0) {
+
             JOptionPane.showMessageDialog(null, "Dinero insuficiente");
-        }
-        else 
+        } else {
             txtF_cambio.setText(Float.toString(cambio));
+        }
     }//GEN-LAST:event_btn_pagoActionPerformed
 
     private void btn_cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarSesionActionPerformed
@@ -669,28 +674,42 @@ public class Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_boton_cerrarSesion_usuariosActionPerformed
 
     private void combo_categoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_categoriasActionPerformed
-       if(combo_categorias.getSelectedItem().toString().equals("crear nueva categoria"))
-           cambiarVentana(new AgregarCategoria());
+        if (combo_categorias.getSelectedItem().toString().equals("crear nueva categoria")) {
+            cambiarVentana(new AgregarCategoria());
+        }
     }//GEN-LAST:event_combo_categoriasActionPerformed
 
     private void combo_sucursalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_sucursalesActionPerformed
         // TODO add your handling code here:
-        if(combo_sucursales.getSelectedItem().toString().equals("agregar nueva sucursal"))
-           cambiarVentana(new AgregarSucursal());
+        if (combo_sucursales.getSelectedItem().toString().equals("agregar nueva sucursal")) {
+            cambiarVentana(new AgregarSucursal());
+        }
     }//GEN-LAST:event_combo_sucursalesActionPerformed
 
     private void tabla_busquedasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_busquedasMouseClicked
         // TODO add your handling code here:
-        if(evt.getClickCount()>=2){
-            SQLTableModel m = (SQLTableModel) tabla_busquedas.getModel();
+        if (evt.getClickCount() >= 2) {
+            CustomTableModel m = (CustomTableModel) tabla_busquedas.getModel();
             Object[] o = m.getRow(tabla_busquedas.getSelectedRow());
-            //if() el producto esta en la sucursal actual ? stored procedure or another select?
-            txtF_codproducto.setText(o[0].toString());
+            ResultSet r;
+            if (o != null) {
+                try {
+                    r = Conexion.consultValues(Conexion.getConexion(), "Select sucursal_id from sucursal natural join direccion where direccion = '" + o[4] + "'");
+
+                    r.last();
+                    if (r.getInt(1) == Login.idSucursal) {
+                        txtF_codproducto.setText(o[0].toString());
+                    } else {
+                        JOptionPane.showMessageDialog(this, "articulo no esta en esta  sucursal");
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }//GEN-LAST:event_tabla_busquedasMouseClicked
 
-  
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane Agregar_jTab;
     private javax.swing.JScrollPane ScrollP_Ventas;
@@ -764,5 +783,4 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JTextField txtF_total;
     // End of variables declaration//GEN-END:variables
 
-   
 }
