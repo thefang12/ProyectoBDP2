@@ -213,7 +213,7 @@
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(new punto_de_venta_p2.SQLTableModel())"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel())"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -502,7 +502,7 @@
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(new punto_de_venta_p2.SQLTableModel())"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel())"/>
                         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="} catch (SQLException ex) {&#xa;System.out.println(ex.getMessage());&#xa;}"/>
                         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="try {&#xa;Connection con   = Conexion.getConexion();&#xa;String SQL = &quot;SELECT nombre,apellido,activo,puesto,contrasenia,correo,direccion as sucursal from staff  natural join sucursal natural join direccion&quot;;"/>
                       </AuxValues>
@@ -754,9 +754,6 @@
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtF_total">
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtF_totalActionPerformed"/>
-                  </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="80" y="420" width="76" height="-1"/>
@@ -800,20 +797,15 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabla_busquedas">
                       <Properties>
-                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="4" rowCount="4">
-                            <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                            <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                            <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                            <Column editable="true" title="Title 4" type="java.lang.Object"/>
-                          </Table>
+                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="new punto_de_venta_p2.CustomTableModel(&quot;busque por categoria o por nombre&quot;)" type="code"/>
                         </Property>
                       </Properties>
                       <Events>
                         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabla_busquedasMouseClicked"/>
                       </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(new punto_de_venta_p2.SQLTableModel())"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel())"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -829,13 +821,8 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabla_ventas">
                       <Properties>
-                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="4" rowCount="4">
-                            <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                            <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                            <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                            <Column editable="true" title="Title 4" type="java.lang.Object"/>
-                          </Table>
+                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="new punto_de_venta_p2.CustomTableModel(&quot;agregar producto&quot;)" type="code"/>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
@@ -871,7 +858,7 @@
                 <Component class="javax.swing.JSpinner" name="jSpinner1">
                   <Properties>
                     <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                      <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                      <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
                     </Property>
                   </Properties>
                   <Constraints>
