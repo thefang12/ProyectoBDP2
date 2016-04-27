@@ -8,23 +8,36 @@ package punto_de_venta_p2;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.activation.CommandObject;
 import javax.swing.JOptionPane;
 import javax.swing.*;
 
 /**
  *
- * @author pablotabales
+ * @author pablotabales,Arturoalonso
  */
 public class Venta extends javax.swing.JFrame {
 
     /**
      * Creates new form Venta
      */
+    boolean refreshventas;
+
     public Venta() {
         initComponents();
+        if (Login.puesto == Usuarios.Empleado) {
+            jTabbedPane1.remove(Usuarios_JTab);
+        }
+        buttonGroup1.add(jRadioButton1);
+        buttonGroup1.add(jRadioButton2);
+        jRadioButton1.setSelected(true);
+        btn_eliminar_usuario.setVisible(false);
+        btn_modificar_usuario.setVisible(false);
+        btn_cancelar_usuario.setVisible(false);
     }
 
     /**
@@ -36,6 +49,7 @@ public class Venta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         Agregar_jTab = new javax.swing.JScrollPane();
         tab_agregar = new javax.swing.JPanel();
@@ -68,13 +82,17 @@ public class Venta extends javax.swing.JFrame {
         txtF_ApellidoU = new javax.swing.JTextField();
         txtF_ContraseñaU = new javax.swing.JTextField();
         txtF_NombreU = new javax.swing.JTextField();
-        txtF_Puesto = new javax.swing.JTextField();
         combo_sucursales = new javax.swing.JComboBox();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
         scrollP_Usuarios = new javax.swing.JScrollPane();
         tabla_usuarios = new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel());
         jCheckBox1 = new javax.swing.JCheckBox();
         logo1 = new javax.swing.JButton();
+        btn_eliminar_usuario = new javax.swing.JButton();
         btn_agregar_usuario = new javax.swing.JButton();
+        btn_cancelar_usuario = new javax.swing.JButton();
+        btn_modificar_usuario = new javax.swing.JButton();
         boton_cerrarSesion_usuarios = new javax.swing.JButton();
         bckground_usuarios = new javax.swing.JButton();
         Venta_JTab = new javax.swing.JScrollPane();
@@ -101,6 +119,7 @@ public class Venta extends javax.swing.JFrame {
         logo2 = new javax.swing.JButton();
         btn_buscar = new javax.swing.JButton();
         cerrarSesion_venta = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         btn_pago = new javax.swing.JButton();
         btn_agregar_venta = new javax.swing.JButton();
         background_venta = new javax.swing.JButton();
@@ -169,7 +188,7 @@ public class Venta extends javax.swing.JFrame {
 
         try {
             Connection con   = Conexion.getConexion();
-            String SQL = "SELECT nombre_articulo as Articulo ,precio as Precio,nombre as Categoria FROM articulo natural join categoria";
+            String SQL = "SELECT nombre_articulo as articulo ,precio,nombre as categoria, cantidad_disponible as dsp FROM articulo natural join categoria natural join inventario natural join sucursal where sucursal_id = "+Login.idSucursal;
             tabla_agregarP.setModel(Conexion.createTableModel(con,SQL,"agregue un articulo"));
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -255,7 +274,6 @@ public class Venta extends javax.swing.JFrame {
         tabUsuarios.add(txtF_ApellidoU, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 160, -1));
         tabUsuarios.add(txtF_ContraseñaU, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 160, -1));
         tabUsuarios.add(txtF_NombreU, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 160, -1));
-        tabUsuarios.add(txtF_Puesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 430, 160, -1));
 
         try{
             Connection con   = Conexion.getConexion();
@@ -279,6 +297,14 @@ public class Venta extends javax.swing.JFrame {
         });
         tabUsuarios.add(combo_sucursales, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 390, 160, -1));
 
+        jRadioButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jRadioButton1.setText("Gerente");
+        tabUsuarios.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 430, -1, -1));
+
+        jRadioButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jRadioButton2.setText("Empleado");
+        tabUsuarios.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 430, -1, -1));
+
         try {
             Connection con   = Conexion.getConexion();
             String SQL = "SELECT nombre,apellido,activo,puesto,contrasenia,correo,direccion as sucursal from staff  natural join sucursal natural join direccion";
@@ -286,6 +312,11 @@ public class Venta extends javax.swing.JFrame {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        tabla_usuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_usuariosMouseClicked(evt);
+            }
+        });
         scrollP_Usuarios.setViewportView(tabla_usuarios);
 
         tabUsuarios.add(scrollP_Usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 120, 590, 330));
@@ -298,6 +329,11 @@ public class Venta extends javax.swing.JFrame {
         logo1.setContentAreaFilled(false);
         tabUsuarios.add(logo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
 
+        btn_eliminar_usuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_eliminar_usuario.setText("Eliminar");
+        btn_eliminar_usuario.setEnabled(false);
+        tabUsuarios.add(btn_eliminar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 460, -1, -1));
+
         btn_agregar_usuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn_agregar_usuario.setText("Agregar");
         btn_agregar_usuario.addActionListener(new java.awt.event.ActionListener() {
@@ -306,6 +342,26 @@ public class Venta extends javax.swing.JFrame {
             }
         });
         tabUsuarios.add(btn_agregar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 460, -1, -1));
+
+        btn_cancelar_usuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_cancelar_usuario.setText("cancelar");
+        btn_cancelar_usuario.setEnabled(false);
+        btn_cancelar_usuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelar_usuarioActionPerformed(evt);
+            }
+        });
+        tabUsuarios.add(btn_cancelar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 460, -1, -1));
+
+        btn_modificar_usuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_modificar_usuario.setText("modificar");
+        btn_modificar_usuario.setEnabled(false);
+        btn_modificar_usuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modificar_usuarioActionPerformed(evt);
+            }
+        });
+        tabUsuarios.add(btn_modificar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 460, -1, -1));
 
         boton_cerrarSesion_usuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         boton_cerrarSesion_usuarios.setText("Cerrar Sesión");
@@ -350,12 +406,12 @@ public class Venta extends javax.swing.JFrame {
         label_cambio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         label_cambio.setForeground(new java.awt.Color(255, 255, 255));
         label_cambio.setText("Cambio");
-        tab_venta.add(label_cambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 460, -1, -1));
+        tab_venta.add(label_cambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 470, -1, -1));
 
         label_busquedas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         label_busquedas.setForeground(new java.awt.Color(204, 204, 204));
         label_busquedas.setText("Busquedas");
-        tab_venta.add(label_busquedas, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 180, 70, -1));
+        tab_venta.add(label_busquedas, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 180, 70, -1));
 
         label_total.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         label_total.setForeground(new java.awt.Color(255, 255, 255));
@@ -372,9 +428,17 @@ public class Venta extends javax.swing.JFrame {
         label_recibo.setText("Recibió");
         tab_venta.add(label_recibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 420, -1, -1));
         tab_venta.add(txtF_codproducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 238, -1));
+
+        txtF_total.setEditable(false);
+        txtF_total.setText("0");
         tab_venta.add(txtF_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 420, 76, -1));
+
+        txtF_recibo.setText("0");
         tab_venta.add(txtF_recibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 420, 80, -1));
-        tab_venta.add(txtF_cambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 460, 80, -1));
+
+        txtF_cambio.setEditable(false);
+        txtF_cambio.setText("0");
+        tab_venta.add(txtF_cambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 470, 80, -1));
 
         try{
             Connection con   = Conexion.getConexion();
@@ -392,7 +456,12 @@ public class Venta extends javax.swing.JFrame {
         }
         tab_venta.add(combo_categorias_ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 110, 240, -1));
 
-        tabla_busquedas.setModel(new CustomTableModel("busque por categoria o por nombre"));
+        tabla_busquedas.setModel(new punto_de_venta_p2.CustomTableModel("busque por categoria o por nombre"));
+        tabla_busquedas.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tabla_busquedasFocusLost(evt);
+            }
+        });
         tabla_busquedas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabla_busquedasMouseClicked(evt);
@@ -400,9 +469,19 @@ public class Venta extends javax.swing.JFrame {
         });
         ScrollP_busquedas.setViewportView(tabla_busquedas);
 
-        tab_venta.add(ScrollP_busquedas, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, 400, 180));
+        tab_venta.add(ScrollP_busquedas, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, 430, 180));
 
-        tabla_ventas.setModel(new CustomTableModel("agregar producto"));
+        tabla_ventas.setModel(new punto_de_venta_p2.CustomTableModel("agregar producto"));
+        tabla_ventas.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tabla_ventasFocusLost(evt);
+            }
+        });
+        tabla_ventas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_ventasMouseClicked(evt);
+            }
+        });
         ScrollP_Ventas.setViewportView(tabla_ventas);
 
         tab_venta.add(ScrollP_Ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 440, 180));
@@ -433,8 +512,19 @@ public class Venta extends javax.swing.JFrame {
         });
         tab_venta.add(cerrarSesion_venta, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 20, -1, 30));
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setText("Cancelar");
+        jButton1.setEnabled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        tab_venta.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 470, 100, -1));
+
         btn_pago.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn_pago.setText("Pago");
+        btn_pago.setEnabled(false);
         btn_pago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_pagoActionPerformed(evt);
@@ -532,15 +622,13 @@ public class Venta extends javax.swing.JFrame {
             //se actualiza tabla inventario
             //TODO hacer trigger para evitar duplicados
             r.last();
-            select = "Select  articulo_id from articulo where  nombre_articulo = '" + txtF_Nombre.getText()
-                    + "' AND precio = '" + txtF_Precio.getText() + "' AND categoria_id = " + r.getInt(1);
+            select = "Select  articulo_id from articulo where  nombre_articulo = '" + txtF_Nombre.getText() + "' AND categoria_id = " + r.getInt(1);
             insert = "INSERT INTO inventario VALUES(?,?,?,?)";
             r = Conexion.consultValues(con, select);
             r.last();
             Object[] f = {Conexion.getAutonumericField(con, insert, 1), r.getInt(1), Login.idSucursal, jSpinner2.getValue()};
             Conexion.insertValues(con, insert, f);
-            String sql = "SELECT nombre_articulo as Articulo ,precio as Precio,nombre as Categoria FROM articulo natural join categoria";
-            Conexion.refreshTable(tabla_agregarP, sql, con);
+            Conexion.refreshTable(tabla_agregarP, con);
             con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -550,52 +638,51 @@ public class Venta extends javax.swing.JFrame {
 
     private void btn_agregar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_usuarioActionPerformed
         // TODO add your handling code here:
-        try {
-            // String insertFoto="update table set foto="
-            Connection con = Conexion.getConexion();
-            ResultSet r = Conexion.consultValues(con, "Select sucursal_id from sucursal natural join direccion where direccion = '" + combo_sucursales.getSelectedItem() + "'");
-            r.last();
-            Object[] o = {Conexion.getAutonumericField(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?,?)", 1), txtF_ContraseñaU.getText(), txtF_NombreU.getText(), txtF_ApellidoU.getText(), jCheckBox1.isSelected(), r.getInt(1), txtF_Puesto.getText(), txtF_Correo.getText()};
-            Conexion.insertValues(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?,?)", o);
-            String sql = "SELECT nombre,apellido,activo,puesto,contrasenia,correo,direccion as sucursal from staff  natural join sucursal natural join direccion";
-            Conexion.refreshTable(tabla_usuarios, sql, con);
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+        if (txtF_ApellidoU.getText().equals("") || txtF_NombreU.getText().equals("") || txtF_ContraseñaU.getText().equals("") || txtF_Correo.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "llene campos requeridos", "error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                // String insertFoto="update table set foto="
+                Connection con = Conexion.getConexion();
+                ResultSet r = Conexion.consultValues(con, "Select sucursal_id from sucursal natural join direccion where direccion = '" + combo_sucursales.getSelectedItem() + "'");
+                r.last();
+                String puesto = null;
+                if (jRadioButton1.isSelected()) {
+                    puesto = jRadioButton1.getText();
+                } else {
+                    puesto = jRadioButton2.getText();
+                }
+                Object[] o = {Conexion.getAutonumericField(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?,?)", 1), txtF_ContraseñaU.getText(), txtF_NombreU.getText(), txtF_ApellidoU.getText(), jCheckBox1.isSelected(), r.getInt(1), puesto, txtF_Correo.getText()};
+                Conexion.insertValues(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?,?)", o);
+                String sql = "SELECT nombre,apellido,activo,puesto,contrasenia,correo,direccion as sucursal from staff  natural join sucursal natural join direccion";
+                Conexion.refreshTable(tabla_usuarios, con);
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
     }//GEN-LAST:event_btn_agregar_usuarioActionPerformed
 
-    private void obtenerDatosTabla() {
-        int column = 3;
+    private void calcularTotal(CustomTableModel model) {
         float total = 0;
-        int row = tabla_ventas.getRowCount();
-        for (int i = 0; i < row; i++) {
-            float valor = (float) tabla_ventas.getValueAt(i, 0);
-            total += (float) tabla_ventas.getValueAt(i, column) * valor;
+        for (int i = 0; i < model.getRowCount(); i++) {
+            total += (int) model.getValueAt(i, 2) * (float) model.getValueAt(i, 3);
         }
-        txtF_total.setText(Float.toString(total));
-    }
-
-    private void modificarTotal(float precio, int cantidad) {
-
-        int valorAnterior;
-        float total = 0;
-
-        if (txtF_total.getText() != null) {
-            valorAnterior = Integer.parseInt(txtF_total.getText());
-            total = (float) valorAnterior;
-            total += precio * (float) cantidad;
-        } else {
-            total += precio * (float) cantidad;
-        }
-
-        txtF_total.setText(Float.toString(total));
+        txtF_total.setText("" + total);
     }
 
 
     private void btn_agregar_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_ventaActionPerformed
 
+        if (refreshventas) {
+            ((CustomTableModel) tabla_ventas.getModel()).clearTable();
+            txtF_total.setText("0");
+            txtF_recibo.setText("0");
+            txtF_cambio.setText("0");
+        }
         ResultSet r;
+        jButton1.setEnabled(true);
+        btn_pago.setEnabled(true);
         try {
             r = Conexion.consultValues(Conexion.getConexion(),
                     "Select nombre_articulo,nombre,cantidad_disponible,precio,sucursal_id from "
@@ -613,6 +700,8 @@ public class Venta extends javax.swing.JFrame {
                         if ((r.getInt(3) - (cant + (int) model.getValueAt(i, 2))) >= 0) {
                             model.setValueAt(cant + (int) model.getValueAt(i, 2), i, 2);
                             flag = true;
+                            calcularTotal(model);
+
                             break;
                         } else {
                             JOptionPane.showMessageDialog(this, "cantidad insuficiente de articulos");
@@ -627,6 +716,7 @@ public class Venta extends javax.swing.JFrame {
                             model.setColumnIdentifiers(new String[]{"articulo", "categoria", "cantidad", "precio"});
                         }
                         ((CustomTableModel) tabla_ventas.getModel()).addRow(o);
+                        calcularTotal(model);
                     } else {
                         JOptionPane.showMessageDialog(this, "cantidad insuficiente de articulos");
 
@@ -650,10 +740,50 @@ public class Venta extends javax.swing.JFrame {
         float recibio = Float.parseFloat(txtF_recibo.getText());
         float cambio = 0;
         cambio = recibio - total;
+        CustomTableModel model = (CustomTableModel) tabla_ventas.getModel();
         if (cambio < 0) {
 
             JOptionPane.showMessageDialog(null, "Dinero insuficiente");
         } else {
+            try {
+                Connection con = Conexion.getConexion();
+                //necesito hacer un insert de una compra con detalles y su pago 
+                String cmd;
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Calendar cal = Calendar.getInstance();
+                String datetime = dateFormat.format(cal.getTime());
+                //insert compra
+
+                cmd = "insert into compra values(?,?,?)";
+                Conexion.insertValues(con, cmd, new Object[]{Conexion.getAutonumericField(con, cmd, 1), datetime, Login.idCuenta});
+                //sacar id compra
+                ResultSet r = Conexion.consultValues(con, "select compra_id from compra where fecha_compra = '" + datetime + "' AND staff_id = " + Login.idCuenta);
+                if (r.last()) {
+                    int compra_id = r.getInt(1);
+                    //insert pago
+                    cmd = "insert into pago values(?,?,?,?)";
+                    Conexion.insertValues(con, cmd, new Object[]{Conexion.getAutonumericField(con, cmd, 1), total, datetime, compra_id});
+                    //obtener ids inventarios e insert detalles
+                    for (int i = 0; i < model.getRowCount(); i++) {
+                        cmd = "insert into detalle_compra values(?,?,?,?)";
+                        ResultSet t = Conexion.consultValues(con, "select inventario_id,cantidad_disponible from inventario natural join articulo where nombre_articulo = '" + model.getValueAt(i, 0)
+                                + "' AND sucursal_id =" + Login.idSucursal);
+                        if (t.last()) {
+                            Conexion.insertValues(con, cmd, new Object[]{Conexion.getAutonumericField(con, cmd, 1), model.getValueAt(i, 2), compra_id, t.getInt(1)});
+                            cmd = "update inventario natural join articulo set cantidad_disponible = " + (t.getInt(2) - (int) model.getValueAt(i, 2)) + " where inventario_id = " + t.getInt(1);
+                            Conexion.excuteUpdate(con, cmd);
+                        }
+                    }
+
+                    Conexion.refreshTable(tabla_busquedas, con);
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            jButton1.setEnabled(false);
+            btn_pago.setEnabled(false);
+            refreshventas = true;
             txtF_cambio.setText(Float.toString(cambio));
         }
     }//GEN-LAST:event_btn_pagoActionPerformed
@@ -709,6 +839,129 @@ public class Venta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tabla_busquedasMouseClicked
 
+    private void tabla_busquedasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabla_busquedasFocusLost
+        tabla_busquedas.clearSelection();
+    }//GEN-LAST:event_tabla_busquedasFocusLost
+
+    private void tabla_ventasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabla_ventasFocusLost
+
+        tabla_ventas.clearSelection();
+    }//GEN-LAST:event_tabla_ventasFocusLost
+
+    private void tabla_ventasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_ventasMouseClicked
+        // TODO add your handling code here:
+        int row = tabla_ventas.getSelectedRow();
+        if (evt.getClickCount() > 1 && tabla_ventas.getSelectedRows().length > 0) {
+
+            CustomTableModel model = ((CustomTableModel) tabla_ventas.getModel());
+            int cantidad = (int) model.getValueAt(tabla_ventas.getSelectedRow(), 2);
+            String n = JOptionPane.showInputDialog(this, "Cuantos productos quieres eliminar?", "Eliminar productos", JOptionPane.ERROR_MESSAGE);
+            if (n.matches("[1-" + cantidad + "]")) {
+                int eliminar = Integer.parseInt(n);
+                if (eliminar < cantidad) {
+                    model.setValueAt(cantidad - eliminar, row, 2);
+                } else {
+                    model.removeRow(row);
+                    if (model.tableIsEmpty()) {
+                        ((CustomTableModel) tabla_ventas.getModel()).clearTable();
+                        txtF_total.setText("0");
+                        txtF_recibo.setText("0");
+                        txtF_cambio.setText("0");
+                        jButton1.setEnabled(false);
+                        btn_pago.setEnabled(false);
+                    }
+                }
+                calcularTotal(model);
+            } else {
+                JOptionPane.showMessageDialog(this, "introduzca un numero valido", null, JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+    }//GEN-LAST:event_tabla_ventasMouseClicked
+
+    private void btn_modificar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificar_usuarioActionPerformed
+        // TODO add your handling code here:
+        btn_agregar_usuario.setVisible(true);
+        btn_agregar_usuario.setEnabled(true);
+        btn_cancelar_usuario.setVisible(false);
+        btn_eliminar_usuario.setVisible(false);
+        btn_modificar_usuario.setVisible(false);
+        btn_cancelar_usuario.setEnabled(false);
+        btn_eliminar_usuario.setEnabled(false);
+        btn_modificar_usuario.setEnabled(false);
+        tabla_usuarios.clearSelection();
+    }//GEN-LAST:event_btn_modificar_usuarioActionPerformed
+
+    private void btn_cancelar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelar_usuarioActionPerformed
+        // TODO add your handling code here:
+
+        btn_agregar_usuario.setVisible(true);
+        btn_agregar_usuario.setEnabled(true);
+        btn_cancelar_usuario.setVisible(false);
+        btn_eliminar_usuario.setVisible(false);
+        btn_modificar_usuario.setVisible(false);
+        btn_cancelar_usuario.setEnabled(false);
+        btn_eliminar_usuario.setEnabled(false);
+        btn_modificar_usuario.setEnabled(false);
+        txtF_NombreU.setText(null);
+        txtF_ApellidoU.setText(null);
+        txtF_Correo.setText(null);
+        txtF_ContraseñaU.setText(null);
+        combo_sucursales.setSelectedIndex(0);
+        jCheckBox1.setSelected(false);
+        jRadioButton1.setSelected(true);
+        tabla_usuarios.clearSelection();
+
+    }//GEN-LAST:event_btn_cancelar_usuarioActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        ((CustomTableModel) tabla_ventas.getModel()).clearTable();
+        txtF_total.setText("0");
+        txtF_recibo.setText("0");
+        txtF_cambio.setText("0");
+        jButton1.setEnabled(false);
+        btn_pago.setEnabled(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tabla_usuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_usuariosMouseClicked
+        CustomTableModel model = (CustomTableModel) tabla_usuarios.getModel();
+        int row = tabla_usuarios.getSelectedRow();
+        int rows = tabla_usuarios.getSelectedRowCount();
+        if (rows > 0) {
+            //SELECT nombre,apellido,activo,puesto,contrasenia,correo,direccion
+            btn_agregar_usuario.setVisible(false);
+            btn_agregar_usuario.setEnabled(false);
+            btn_cancelar_usuario.setVisible(true);
+            btn_eliminar_usuario.setVisible(true);
+            btn_modificar_usuario.setVisible(true);
+            btn_cancelar_usuario.setEnabled(true);
+            btn_eliminar_usuario.setEnabled(true);
+            btn_modificar_usuario.setEnabled(true);
+            if (model.getValueAt(row, 3).equals("Gerente")) {
+                jRadioButton1.setSelected(true);
+            } else {
+                jRadioButton2.setSelected(true);
+            }
+            txtF_NombreU.setText((String) model.getValueAt(row, 0));
+            txtF_ApellidoU.setText((String) model.getValueAt(row, 1));
+            txtF_Correo.setText((String) model.getValueAt(row, 5));
+            txtF_ContraseñaU.setText((String) model.getValueAt(row, 4));
+            combo_sucursales.setSelectedItem(model.getValueAt(row, 6));
+            jCheckBox1.setSelected((boolean) model.getValueAt(row, 2));
+            if (rows > 1) {
+                btn_modificar_usuario.setEnabled(false);
+                txtF_NombreU.setText(null);
+                txtF_ApellidoU.setText(null);
+                txtF_Correo.setText(null);
+                txtF_ContraseñaU.setText(null);
+                combo_sucursales.setSelectedIndex(0);
+                jCheckBox1.setSelected(false);
+                jRadioButton1.setSelected(true);
+            }
+        }
+    }//GEN-LAST:event_tabla_usuariosMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane Agregar_jTab;
@@ -723,19 +976,26 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JButton btn_agregar_usuario;
     private javax.swing.JButton btn_agregar_venta;
     private javax.swing.JButton btn_buscar;
+    private javax.swing.JButton btn_cancelar_usuario;
     private javax.swing.JButton btn_cerrarSesion;
+    private javax.swing.JButton btn_eliminar_usuario;
+    private javax.swing.JButton btn_modificar_usuario;
     private javax.swing.JButton btn_pago;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cerrarSesion_venta;
     private javax.swing.JComboBox combo_categorias;
     private javax.swing.JComboBox combo_categorias_ventas;
     private javax.swing.JComboBox combo_sucursales;
     private javax.swing.JLabel correo;
     private javax.swing.JButton fondo_agregar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner2;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -776,7 +1036,6 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JTextField txtF_Nombre;
     private javax.swing.JTextField txtF_NombreU;
     private javax.swing.JTextField txtF_Precio;
-    private javax.swing.JTextField txtF_Puesto;
     private javax.swing.JTextField txtF_cambio;
     private javax.swing.JTextField txtF_codproducto;
     private javax.swing.JTextField txtF_recibo;

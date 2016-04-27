@@ -41,17 +41,7 @@ public class Conexion {
 
     }
 
-    public static Object getForeignKey(Connection con, String query, int column) throws SQLException {
-
-        int ai = 0;
-        PreparedStatement psmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        ResultSet tblkeys = psmt.getGeneratedKeys();
-        while (tblkeys.next()) {
-            ai = tblkeys.getInt(column);
-        }
-        return ai;
-
-    }
+   
 
     public static void insertValues(Connection con, String query, Object[] data) throws SQLException {
 
@@ -63,13 +53,18 @@ public class Conexion {
         }
         psmt.execute();
     }
+    public static void excuteUpdate(Connection con , String update) throws SQLException{
+        Statement st = con.createStatement();
+        st.executeUpdate(update);
+        
+    }
 
     public static ResultSet consultValues(Connection con, String query) throws SQLException {
         Statement st = con.createStatement();
         return st.executeQuery(query);
     }
 
-    public static void refreshTable(JTable tabla, String querry, Connection con) {
+    public static void refreshTable(JTable tabla, Connection con) {
         CustomTableModel model = ((CustomTableModel) tabla.getModel());
         tabla.setModel(Conexion.createTableModel(con, model.getSelect_query(), model.getError_message()));
         //tabla.setViewportView(tabla);

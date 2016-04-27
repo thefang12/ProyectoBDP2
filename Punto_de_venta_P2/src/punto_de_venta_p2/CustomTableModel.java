@@ -67,8 +67,8 @@ public class CustomTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-       ((ArrayList)rowData.get(rowIndex)).set(columnIndex, aValue);
-       fireTableDataChanged();//To change body of generated methods, choose Tools | Templates.
+        ((ArrayList) rowData.get(rowIndex)).set(columnIndex, aValue);
+        fireTableDataChanged();//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -87,6 +87,11 @@ public class CustomTableModel extends AbstractTableModel {
             rowData.add(convetToArrayList(o));
             fireTableDataChanged();
         }
+    }
+
+    public void removeRow(int rowIndex) {
+        rowData.remove(rowIndex);
+        fireTableDataChanged();
     }
 
     public Object[] getRow(int index) {
@@ -112,9 +117,17 @@ public class CustomTableModel extends AbstractTableModel {
     public void addTableModelListener(TableModelListener l) {
         super.addTableModelListener(l); //To change body of generated methods, choose Tools | Templates.
     }
-     public boolean tableIsEmpty(){
+
+    public void clearTable() {
+        columnNames.clear();
+        rowData.clear();
+        columnNames.add(error_message);
+        fireTableStructureChanged();
+    }
+
+    public boolean tableIsEmpty() {
         return rowData.isEmpty();
-     }
+    }
 
     public CustomTableModel(ArrayList columnNames, ArrayList rowData) {
         this.columnNames = columnNames;
