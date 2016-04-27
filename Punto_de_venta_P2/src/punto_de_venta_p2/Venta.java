@@ -123,6 +123,34 @@ public class Venta extends javax.swing.JFrame {
         btn_pago = new javax.swing.JButton();
         btn_agregar_venta = new javax.swing.JButton();
         background_venta = new javax.swing.JButton();
+        Agregar_jTab1 = new javax.swing.JScrollPane();
+        tab_agregar1 = new javax.swing.JPanel();
+        label_titulo1 = new javax.swing.JLabel();
+        label_nombre1 = new javax.swing.JLabel();
+        txt_NombreC = new javax.swing.JTextField();
+        scrollP_productos1 = new javax.swing.JScrollPane();
+        tabla_agregarP1 = new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel());
+        btn_cerrarSesion1 = new javax.swing.JButton();
+        btn_Agregar1 = new javax.swing.JButton();
+        logo3 = new javax.swing.JButton();
+        fondo_agregar1 = new javax.swing.JButton();
+        Agregar_jTab2 = new javax.swing.JScrollPane();
+        tab_agregar2 = new javax.swing.JPanel();
+        label_titulo2 = new javax.swing.JLabel();
+        label_nombre2 = new javax.swing.JLabel();
+        label_categoria2 = new javax.swing.JLabel();
+        label_precio2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txt_TelefonoS = new javax.swing.JTextField();
+        txt_ColoniaS = new javax.swing.JTextField();
+        txt_CPS = new javax.swing.JTextField();
+        txt_DireccionS = new javax.swing.JTextField();
+        scrollP_productos2 = new javax.swing.JScrollPane();
+        tabla_agregarP2 = new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel());
+        btn_cerrarSesion2 = new javax.swing.JButton();
+        btn_Agregar2 = new javax.swing.JButton();
+        logo4 = new javax.swing.JButton();
+        fondo_agregar2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -555,36 +583,166 @@ public class Venta extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Ventas", Venta_JTab);
 
-        jPanel1.setMaximumSize(new java.awt.Dimension(987, 592));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        tab_agregar1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/518079-background-hd.jpg"))); // NOI18N
-        jLabel1.setToolTipText("");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        label_titulo1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        label_titulo1.setForeground(new java.awt.Color(255, 255, 255));
+        label_titulo1.setText("Categorias");
+        tab_agregar1.add(label_titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 967, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 987, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        label_nombre1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_nombre1.setForeground(new java.awt.Color(255, 255, 255));
+        label_nombre1.setText("Nombre");
+        tab_agregar1.add(label_nombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
+        tab_agregar1.add(txt_NombreC, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 160, -1));
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+        try{
+            Connection con = new Conexion.getConexion();
+            String SQL ="SELECT categoria_id,nombre from categoria";
+            tabla_agregarP1.setModel(Conexion.createTableModel(con,SQL,new Object[]{Login.idSucursal}));
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        scrollP_productos1.setViewportView(tabla_agregarP1);
+
+        tab_agregar1.add(scrollP_productos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, 520, 320));
+
+        btn_cerrarSesion1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_cerrarSesion1.setText("Cerrar Sesión ");
+        btn_cerrarSesion1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cerrarSesion1ActionPerformed(evt);
+            }
+        });
+        tab_agregar1.add(btn_cerrarSesion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 40, -1, -1));
+
+        btn_Agregar1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_Agregar1.setText("Agregar");
+        btn_Agregar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Agregar1ActionPerformed(evt);
+            }
+        });
+        tab_agregar1.add(btn_Agregar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 280, -1, -1));
+
+        logo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
+        logo3.setBorderPainted(false);
+        logo3.setContentAreaFilled(false);
+        tab_agregar1.add(logo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
+
+        fondo_agregar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/glazed-doughnut-atom.jpg"))); // NOI18N
+        fondo_agregar1.setBorderPainted(false);
+        fondo_agregar1.setContentAreaFilled(false);
+        tab_agregar1.add(fondo_agregar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 540));
+
+        Agregar_jTab1.setViewportView(tab_agregar1);
+
+        jTabbedPane1.addTab("Categoria", Agregar_jTab1);
+
+        tab_agregar2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        label_titulo2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        label_titulo2.setForeground(new java.awt.Color(255, 255, 255));
+        label_titulo2.setText("Sucursales");
+        tab_agregar2.add(label_titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, -1, -1));
+
+        label_nombre2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_nombre2.setForeground(new java.awt.Color(255, 255, 255));
+        label_nombre2.setText("Direccion");
+        tab_agregar2.add(label_nombre2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
+
+        label_categoria2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_categoria2.setForeground(new java.awt.Color(255, 255, 255));
+        label_categoria2.setText("Código Postal");
+        tab_agregar2.add(label_categoria2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, -1, -1));
+
+        label_precio2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_precio2.setForeground(new java.awt.Color(255, 255, 255));
+        label_precio2.setText("Colonia");
+        tab_agregar2.add(label_precio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Telefono");
+        tab_agregar2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, 60, -1));
+        tab_agregar2.add(txt_TelefonoS, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, 160, -1));
+        tab_agregar2.add(txt_ColoniaS, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 160, -1));
+        tab_agregar2.add(txt_CPS, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 160, -1));
+        tab_agregar2.add(txt_DireccionS, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 160, -1));
+
+        try{
+            Connection con = new Conexion.getConexion();
+            String SQL ="select direccion,colonia,cp,telefono from direccion";
+            tabla_agregarP2.setModel(Conexion.createTableModel(con,SQL,new Object[]{Login.idSucursal},"Agregue una Sucursal"));
+            {catch(SQLException ex){
+                System.out.println(ex.getMessage());
+            }
+            scrollP_productos2.setViewportView(tabla_agregarP2);
+
+            tab_agregar2.add(scrollP_productos2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, 520, 320));
+
+            btn_cerrarSesion2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+            btn_cerrarSesion2.setText("Cerrar Sesión ");
+            btn_cerrarSesion2.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btn_cerrarSesion2ActionPerformed(evt);
+                }
+            });
+            tab_agregar2.add(btn_cerrarSesion2, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 40, -1, -1));
+
+            btn_Agregar2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+            btn_Agregar2.setText("Agregar");
+            btn_Agregar2.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btn_Agregar2ActionPerformed(evt);
+                }
+            });
+            tab_agregar2.add(btn_Agregar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, -1, -1));
+
+            logo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
+            logo4.setBorderPainted(false);
+            logo4.setContentAreaFilled(false);
+            tab_agregar2.add(logo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
+
+            fondo_agregar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/glazed-doughnut-atom.jpg"))); // NOI18N
+            fondo_agregar2.setBorderPainted(false);
+            fondo_agregar2.setContentAreaFilled(false);
+            tab_agregar2.add(fondo_agregar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 540));
+
+            Agregar_jTab2.setViewportView(tab_agregar2);
+
+            jTabbedPane1.addTab("Sucursales", Agregar_jTab2);
+
+            jPanel1.setMaximumSize(new java.awt.Dimension(987, 592));
+            jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/518079-background-hd.jpg"))); // NOI18N
+            jLabel1.setToolTipText("");
+            jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+            getContentPane().setLayout(layout);
+            layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 967, Short.MAX_VALUE)
+                    .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 987, javax.swing.GroupLayout.PREFERRED_SIZE))
+            );
+            layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jTabbedPane1)
+                    .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE))
+            );
+
+            pack();
+        }// </editor-fold>//GEN-END:initComponents
 
     private void cambiarVentana(JFrame frame) {
         frame.setVisible(true);
@@ -1015,9 +1173,71 @@ public class Venta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_eliminar_usuarioActionPerformed
 
+    private void btn_cerrarSesion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarSesion1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_cerrarSesion1ActionPerformed
+
+    private void btn_Agregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Agregar1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            String select;
+            Connection con = Conexion.getConexion();
+            
+            String insert = "INSERT INTO categoria VALUES(?,?)";
+            Object[] o = {Conexion.getAutonumericField(con, insert, 1), txt_NombreC.getText()};
+            Conexion.executeUpdate(con, insert, o);
+           
+            select = "Select  categoria_id from categoria where nombre = '" + txt_NombreC.getText() ;
+           
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }//GEN-LAST:event_btn_Agregar1ActionPerformed
+
+    private void btn_cerrarSesion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarSesion2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_cerrarSesion2ActionPerformed
+
+    private void btn_Agregar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Agregar2ActionPerformed
+        // TODO add your handling code here:
+        
+         try {
+            String select;
+            Connection con = Conexion.getConexion();
+            
+            String insert = "INSERT INTO direccion VALUES(?,?,?,?,?)";
+            Object[] o = {Conexion.getAutonumericField(con, insert, 1), txt_DireccionS.getText(), txt_ColoniaS.getText(),txt_CPS.getText(),txt_TelefonoS.getText()};
+            Conexion.executeUpdate(con, insert, o);
+            
+            select = "Select direccion_id from direccion where nombre = ? ";
+            ResultSet r = Conexion.consultValues(con, select, new Object[]{txt_DireccionS.getText()});
+            r.last();
+            insert = "INSERT INTO sucursal VALUES(?,?,)";
+            Object[] m = {Conexion.getAutonumericField(con, insert, 1), r.getInt(1)};
+            Conexion.executeUpdate(con, insert, m);
+            //se actualiza tabla inventario
+            //TODO hacer trigger para evitar duplicados
+            /*
+            r.last();
+            select = "Select  articulo_id from articulo where  nombre_articulo = ? AND categoria_id = ?";
+            insert = "INSERT INTO inventario VALUES(?,?,?,?)";
+            r = Conexion.consultValues(con, select, new Object[]{txtF_Nombre.getText(), r.getInt(1)});
+            r.last();
+            Object[] f = {Conexion.getAutonumericField(con, insert, 1), r.getInt(1), Login.idSucursal, jSpinner2.getValue()};
+            Conexion.executeUpdate(con, insert, f);
+            Conexion.refreshTable(tabla_agregarP, con);*/
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }//GEN-LAST:event_btn_Agregar2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane Agregar_jTab;
+    private javax.swing.JScrollPane Agregar_jTab1;
+    private javax.swing.JScrollPane Agregar_jTab2;
     private javax.swing.JScrollPane ScrollP_Ventas;
     private javax.swing.JScrollPane ScrollP_busquedas;
     private javax.swing.JScrollPane Usuarios_JTab;
@@ -1026,11 +1246,15 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JButton bckground_usuarios;
     private javax.swing.JButton boton_cerrarSesion_usuarios;
     private javax.swing.JButton btn_Agregar;
+    private javax.swing.JButton btn_Agregar1;
+    private javax.swing.JButton btn_Agregar2;
     private javax.swing.JButton btn_agregar_usuario;
     private javax.swing.JButton btn_agregar_venta;
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_cancelar_usuario;
     private javax.swing.JButton btn_cerrarSesion;
+    private javax.swing.JButton btn_cerrarSesion1;
+    private javax.swing.JButton btn_cerrarSesion2;
     private javax.swing.JButton btn_eliminar_usuario;
     private javax.swing.JButton btn_modificar_usuario;
     private javax.swing.JButton btn_pago;
@@ -1041,11 +1265,14 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JComboBox combo_sucursales;
     private javax.swing.JLabel correo;
     private javax.swing.JButton fondo_agregar;
+    private javax.swing.JButton fondo_agregar1;
+    private javax.swing.JButton fondo_agregar2;
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
@@ -1057,27 +1284,41 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JLabel label_busquedas;
     private javax.swing.JLabel label_cambio;
     private javax.swing.JLabel label_categoria;
+    private javax.swing.JLabel label_categoria2;
     private javax.swing.JLabel label_categoria_ventas;
     private javax.swing.JLabel label_codigoProd;
     private javax.swing.JLabel label_contrasenia;
     private javax.swing.JLabel label_nombre;
+    private javax.swing.JLabel label_nombre1;
+    private javax.swing.JLabel label_nombre2;
     private javax.swing.JLabel label_nombre_usuarios;
     private javax.swing.JLabel label_precio;
+    private javax.swing.JLabel label_precio2;
     private javax.swing.JLabel label_puesto;
     private javax.swing.JLabel label_recibo;
     private javax.swing.JLabel label_sucursal;
     private javax.swing.JLabel label_titulo;
+    private javax.swing.JLabel label_titulo1;
+    private javax.swing.JLabel label_titulo2;
     private javax.swing.JLabel label_total;
     private javax.swing.JLabel label_ventas;
     private javax.swing.JButton logo;
     private javax.swing.JButton logo1;
     private javax.swing.JButton logo2;
+    private javax.swing.JButton logo3;
+    private javax.swing.JButton logo4;
     private javax.swing.JScrollPane scrollP_Usuarios;
     private javax.swing.JScrollPane scrollP_productos;
+    private javax.swing.JScrollPane scrollP_productos1;
+    private javax.swing.JScrollPane scrollP_productos2;
     private javax.swing.JPanel tabUsuarios;
     private javax.swing.JPanel tab_agregar;
+    private javax.swing.JPanel tab_agregar1;
+    private javax.swing.JPanel tab_agregar2;
     private javax.swing.JPanel tab_venta;
     private javax.swing.JTable tabla_agregarP;
+    private javax.swing.JTable tabla_agregarP1;
+    private javax.swing.JTable tabla_agregarP2;
     private javax.swing.JTable tabla_busquedas;
     private javax.swing.JTable tabla_usuarios;
     private javax.swing.JTable tabla_ventas;
@@ -1093,6 +1334,11 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JTextField txtF_codproducto;
     private javax.swing.JTextField txtF_recibo;
     private javax.swing.JTextField txtF_total;
+    private javax.swing.JTextField txt_CPS;
+    private javax.swing.JTextField txt_ColoniaS;
+    private javax.swing.JTextField txt_DireccionS;
+    private javax.swing.JTextField txt_NombreC;
+    private javax.swing.JTextField txt_TelefonoS;
     // End of variables declaration//GEN-END:variables
 
 }
