@@ -1219,8 +1219,8 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabla_agregarP1">
                       <Properties>
-                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" preCode="try{&#xa;Connection con = new Conexion.getConexion();&#xa;String SQL =&quot;SELECT categoria_id,nombre from categoria&quot;;" postCode="}catch(SQLException ex){&#xa;System.out.println(ex.getMessage());&#xa;}">
-                          <Connection code="Conexion.createTableModel(con,SQL,new Object[]{Login.idSucursal})" type="code"/>
+                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" preCode="try{&#xa;Connection con =  Conexion.getConexion();&#xa;String SQL =&quot;SELECT nombre from categoria&quot;;" postCode="}catch(SQLException ex){&#xa;System.out.println(ex.getMessage());&#xa;}">
+                          <Connection code="Conexion.createTableModel(con,SQL,null,&quot;agregue una categoria&quot;)" type="code"/>
                         </Property>
                       </Properties>
                       <AuxValues>
@@ -1429,8 +1429,8 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabla_agregarP2">
                       <Properties>
-                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" preCode="try{&#xa;Connection con = new Conexion.getConexion();&#xa;String SQL =&quot;select direccion,colonia,cp,telefono from direccion&quot;;" postCode="{catch(SQLException ex){&#xa;System.out.println(ex.getMessage());&#xa;}">
-                          <Connection code="Conexion.createTableModel(con,SQL,new Object[]{Login.idSucursal},&quot;Agregue una Sucursal&quot;)" type="code"/>
+                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" preCode="try{&#xa;Connection con =  Conexion.getConexion();&#xa;String SQL =&quot;select direccion,colonia,cp,telefono from direccion&quot;;" postCode="}catch(SQLException ex){&#xa;System.out.println(ex.getMessage());&#xa;}">
+                          <Connection code="Conexion.createTableModel(con,SQL,null,&quot;agregue una sucursal&quot;)" type="code"/>
                         </Property>
                       </Properties>
                       <AuxValues>

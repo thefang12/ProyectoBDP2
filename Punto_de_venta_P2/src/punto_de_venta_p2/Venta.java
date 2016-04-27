@@ -660,9 +660,9 @@ public class Venta extends javax.swing.JFrame {
         tab_agregar1.add(txt_NombreC, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 160, -1));
 
         try{
-            Connection con = new Conexion.getConexion();
-            String SQL ="SELECT categoria_id,nombre from categoria";
-            tabla_agregarP1.setModel(Conexion.createTableModel(con,SQL,new Object[]{Login.idSucursal}));
+            Connection con =  Conexion.getConexion();
+            String SQL ="SELECT nombre from categoria";
+            tabla_agregarP1.setModel(Conexion.createTableModel(con,SQL,null,"agregue una categoria"));
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
         }
@@ -734,80 +734,80 @@ public class Venta extends javax.swing.JFrame {
         tab_agregar2.add(txt_DireccionS, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 160, -1));
 
         try{
-            Connection con = new Conexion.getConexion();
+            Connection con =  Conexion.getConexion();
             String SQL ="select direccion,colonia,cp,telefono from direccion";
-            tabla_agregarP2.setModel(Conexion.createTableModel(con,SQL,new Object[]{Login.idSucursal},"Agregue una Sucursal"));
-            {catch(SQLException ex){
-                System.out.println(ex.getMessage());
+            tabla_agregarP2.setModel(Conexion.createTableModel(con,SQL,null,"agregue una sucursal"));
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        scrollP_productos2.setViewportView(tabla_agregarP2);
+
+        tab_agregar2.add(scrollP_productos2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, 520, 320));
+
+        btn_cerrarSesion2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_cerrarSesion2.setText("Cerrar Sesión ");
+        btn_cerrarSesion2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cerrarSesion2ActionPerformed(evt);
             }
-            scrollP_productos2.setViewportView(tabla_agregarP2);
+        });
+        tab_agregar2.add(btn_cerrarSesion2, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 40, -1, -1));
 
-            tab_agregar2.add(scrollP_productos2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, 520, 320));
+        btn_Agregar2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_Agregar2.setText("Agregar");
+        btn_Agregar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Agregar2ActionPerformed(evt);
+            }
+        });
+        tab_agregar2.add(btn_Agregar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, -1, -1));
 
-            btn_cerrarSesion2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-            btn_cerrarSesion2.setText("Cerrar Sesión ");
-            btn_cerrarSesion2.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    btn_cerrarSesion2ActionPerformed(evt);
-                }
-            });
-            tab_agregar2.add(btn_cerrarSesion2, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 40, -1, -1));
+        logo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
+        logo4.setBorderPainted(false);
+        logo4.setContentAreaFilled(false);
+        tab_agregar2.add(logo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
 
-            btn_Agregar2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-            btn_Agregar2.setText("Agregar");
-            btn_Agregar2.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    btn_Agregar2ActionPerformed(evt);
-                }
-            });
-            tab_agregar2.add(btn_Agregar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, -1, -1));
+        fondo_agregar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/glazed-doughnut-atom.jpg"))); // NOI18N
+        fondo_agregar2.setBorderPainted(false);
+        fondo_agregar2.setContentAreaFilled(false);
+        tab_agregar2.add(fondo_agregar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 540));
 
-            logo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
-            logo4.setBorderPainted(false);
-            logo4.setContentAreaFilled(false);
-            tab_agregar2.add(logo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
+        Agregar_jTab2.setViewportView(tab_agregar2);
 
-            fondo_agregar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/glazed-doughnut-atom.jpg"))); // NOI18N
-            fondo_agregar2.setBorderPainted(false);
-            fondo_agregar2.setContentAreaFilled(false);
-            tab_agregar2.add(fondo_agregar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 540));
+        jTabbedPane1.addTab("Sucursales", Agregar_jTab2);
 
-            Agregar_jTab2.setViewportView(tab_agregar2);
+        jPanel1.setMaximumSize(new java.awt.Dimension(987, 592));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-            jTabbedPane1.addTab("Sucursales", Agregar_jTab2);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/518079-background-hd.jpg"))); // NOI18N
+        jLabel1.setToolTipText("");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-            jPanel1.setMaximumSize(new java.awt.Dimension(987, 592));
-            jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 967, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 987, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
-            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/518079-background-hd.jpg"))); // NOI18N
-            jLabel1.setToolTipText("");
-            jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
 
-            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-            getContentPane().setLayout(layout);
-            layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 967, Short.MAX_VALUE)
-                    .addContainerGap())
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 987, javax.swing.GroupLayout.PREFERRED_SIZE))
-            );
-            layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jTabbedPane1)
-                    .addContainerGap())
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE))
-            );
-
-            pack();
-        }// </editor-fold>//GEN-END:initComponents
-
-    private void cambiarVentana(JFrame frame) {
+    public  void cambiarVentana(JFrame frame) {
         frame.setVisible(true);
         this.dispose();
     }
