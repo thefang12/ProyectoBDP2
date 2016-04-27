@@ -90,11 +90,9 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
-            String query = "SELECT * From staff ";
-
             Connection con = Conexion.getConexion();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            String query = "SELECT * From staff where activo = ?";
+            ResultSet rs = Conexion.consultValues(con, query, new Object[]{true});
             String n = jTextField1.getText();
             int i=0;
             if (n.matches(".+@.+\\..+")) {
@@ -121,8 +119,6 @@ public class Login extends javax.swing.JFrame {
             if (i == -1) {
                 JOptionPane.showMessageDialog(null, "ID o contraseña incorrectos");
             }
-
-            st.close();
             con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

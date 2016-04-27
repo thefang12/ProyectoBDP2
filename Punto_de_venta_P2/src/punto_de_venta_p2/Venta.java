@@ -32,12 +32,18 @@ public class Venta extends javax.swing.JFrame {
         if (Login.puesto == Usuarios.Empleado) {
             jTabbedPane1.remove(Usuarios_JTab);
         }
-        buttonGroup1.add(jRadioButton1);
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton1.setSelected(true);
+        btnGroup_activoU.add(radioBtn_activoU);
+        btnGroup_activoU.add(radioBtn_inactivoU);
+        btnGroup_PuestoU.add(radioBtn_puesto_U);
+        btnGroup_PuestoU.add(radioBtn_puesto_U2);
+        radioBtn_puesto_U.setSelected(true);
+        radioBtn_activoU.setSelected(true);
         btn_eliminar_usuario.setVisible(false);
         btn_modificar_usuario.setVisible(false);
         btn_cancelar_usuario.setVisible(false);
+        btn_eliminar_productos.setVisible(false);
+        btn_modificar_productos.setVisible(false);
+        btn_cancelar_productos.setVisible(false);
     }
 
     /**
@@ -49,7 +55,8 @@ public class Venta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        btnGroup_PuestoU = new javax.swing.ButtonGroup();
+        btnGroup_activoU = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         Agregar_jTab = new javax.swing.JScrollPane();
         tab_agregar = new javax.swing.JPanel();
@@ -66,6 +73,9 @@ public class Venta extends javax.swing.JFrame {
         tabla_agregarP = new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel());
         btn_cerrarSesion = new javax.swing.JButton();
         btn_Agregar = new javax.swing.JButton();
+        btn_cancelar_productos = new javax.swing.JButton();
+        btn_eliminar_productos = new javax.swing.JButton();
+        btn_modificar_productos = new javax.swing.JButton();
         logo = new javax.swing.JButton();
         fondo_agregar = new javax.swing.JButton();
         Usuarios_JTab = new javax.swing.JScrollPane();
@@ -74,7 +84,6 @@ public class Venta extends javax.swing.JFrame {
         label_nombre_usuarios = new javax.swing.JLabel();
         label_contrasenia = new javax.swing.JLabel();
         label_apellido = new javax.swing.JLabel();
-        label_activo = new javax.swing.JLabel();
         label_sucursal = new javax.swing.JLabel();
         label_puesto = new javax.swing.JLabel();
         correo = new javax.swing.JLabel();
@@ -83,12 +92,14 @@ public class Venta extends javax.swing.JFrame {
         txtF_ContraseñaU = new javax.swing.JTextField();
         txtF_NombreU = new javax.swing.JTextField();
         combo_sucursales = new javax.swing.JComboBox();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        radioBtn_puesto_U = new javax.swing.JRadioButton();
+        radioBtn_puesto_U2 = new javax.swing.JRadioButton();
+        radioBtn_activoU = new javax.swing.JRadioButton();
+        radioBtn_inactivoU = new javax.swing.JRadioButton();
         scrollP_Usuarios = new javax.swing.JScrollPane();
         tabla_usuarios = new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel());
-        jCheckBox1 = new javax.swing.JCheckBox();
         logo1 = new javax.swing.JButton();
+        btn_help_usuarios = new javax.swing.JButton();
         btn_eliminar_usuario = new javax.swing.JButton();
         btn_agregar_usuario = new javax.swing.JButton();
         btn_cancelar_usuario = new javax.swing.JButton();
@@ -190,6 +201,7 @@ public class Venta extends javax.swing.JFrame {
             Connection con   = Conexion.getConexion();
             String SQL = "SELECT nombre_articulo as articulo ,precio,nombre as categoria, cantidad_disponible as dsp FROM articulo natural join categoria natural join inventario natural join sucursal where sucursal_id = ?";
             tabla_agregarP.setModel(Conexion.createTableModel(con,SQL,new Object[]{Login.idSucursal},"agregue un articulo"));
+            con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -215,6 +227,36 @@ public class Venta extends javax.swing.JFrame {
         });
         tab_agregar.add(btn_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, -1, -1));
 
+        btn_cancelar_productos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_cancelar_productos.setText("cancelar");
+        btn_cancelar_productos.setEnabled(false);
+        btn_cancelar_productos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelar_productosActionPerformed(evt);
+            }
+        });
+        tab_agregar.add(btn_cancelar_productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, -1, -1));
+
+        btn_eliminar_productos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_eliminar_productos.setText("Eliminar");
+        btn_eliminar_productos.setEnabled(false);
+        btn_eliminar_productos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_eliminar_productosActionPerformed(evt);
+            }
+        });
+        tab_agregar.add(btn_eliminar_productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 380, -1, -1));
+
+        btn_modificar_productos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_modificar_productos.setText("modificar");
+        btn_modificar_productos.setEnabled(false);
+        btn_modificar_productos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modificar_productosActionPerformed(evt);
+            }
+        });
+        tab_agregar.add(btn_modificar_productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 380, -1, -1));
+
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
         logo.setBorderPainted(false);
         logo.setContentAreaFilled(false);
@@ -233,7 +275,7 @@ public class Venta extends javax.swing.JFrame {
 
         titulo_usuarios.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         titulo_usuarios.setForeground(new java.awt.Color(255, 255, 255));
-        titulo_usuarios.setText("Agregar Personal y Asignación Usuarios");
+        titulo_usuarios.setText("Agregar Personal y Asignación Empleados");
         tabUsuarios.add(titulo_usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, -1, -1));
 
         label_nombre_usuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -244,35 +286,30 @@ public class Venta extends javax.swing.JFrame {
         label_contrasenia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         label_contrasenia.setForeground(new java.awt.Color(255, 255, 255));
         label_contrasenia.setText("Contraseña");
-        tabUsuarios.add(label_contrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, -1, -1));
+        tabUsuarios.add(label_contrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
 
         label_apellido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         label_apellido.setForeground(new java.awt.Color(255, 255, 255));
         label_apellido.setText("Apellido");
         tabUsuarios.add(label_apellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, -1, -1));
 
-        label_activo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        label_activo.setForeground(new java.awt.Color(255, 255, 255));
-        label_activo.setText("Activo");
-        tabUsuarios.add(label_activo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, -1, -1));
-
         label_sucursal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         label_sucursal.setForeground(new java.awt.Color(255, 255, 255));
         label_sucursal.setText("Sucursal");
-        tabUsuarios.add(label_sucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, -1, -1));
+        tabUsuarios.add(label_sucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, -1, -1));
 
         label_puesto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         label_puesto.setForeground(new java.awt.Color(255, 255, 255));
         label_puesto.setText("Puesto");
-        tabUsuarios.add(label_puesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, -1, -1));
+        tabUsuarios.add(label_puesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, -1, -1));
 
         correo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         correo.setForeground(new java.awt.Color(255, 255, 255));
         correo.setText("Correo");
-        tabUsuarios.add(correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
-        tabUsuarios.add(txtF_Correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, 160, -1));
+        tabUsuarios.add(correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, -1, -1));
+        tabUsuarios.add(txtF_Correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 160, -1));
         tabUsuarios.add(txtF_ApellidoU, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 160, -1));
-        tabUsuarios.add(txtF_ContraseñaU, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 160, -1));
+        tabUsuarios.add(txtF_ContraseñaU, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, 160, -1));
         tabUsuarios.add(txtF_NombreU, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 160, -1));
 
         try{
@@ -295,20 +332,41 @@ public class Venta extends javax.swing.JFrame {
                 combo_sucursalesActionPerformed(evt);
             }
         });
-        tabUsuarios.add(combo_sucursales, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 390, 160, -1));
+        tabUsuarios.add(combo_sucursales, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 160, -1));
 
-        jRadioButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton1.setText("Gerente");
-        tabUsuarios.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 430, -1, -1));
+        radioBtn_puesto_U.setForeground(new java.awt.Color(255, 255, 255));
+        radioBtn_puesto_U.setText("Gerente");
+        tabUsuarios.add(radioBtn_puesto_U, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 390, -1, -1));
 
-        jRadioButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton2.setText("Empleado");
-        tabUsuarios.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 430, -1, -1));
+        radioBtn_puesto_U2.setForeground(new java.awt.Color(255, 255, 255));
+        radioBtn_puesto_U2.setText("Empleado");
+        tabUsuarios.add(radioBtn_puesto_U2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 390, -1, -1));
+
+        radioBtn_activoU.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioBtn_activoU.setForeground(new java.awt.Color(255, 255, 255));
+        radioBtn_activoU.setText("Activos");
+        radioBtn_activoU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioBtn_activoUActionPerformed(evt);
+            }
+        });
+        tabUsuarios.add(radioBtn_activoU, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 140, -1, -1));
+
+        radioBtn_inactivoU.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioBtn_inactivoU.setForeground(new java.awt.Color(255, 255, 255));
+        radioBtn_inactivoU.setText("Inactivos");
+        radioBtn_inactivoU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioBtn_inactivoUActionPerformed(evt);
+            }
+        });
+        tabUsuarios.add(radioBtn_inactivoU, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 140, -1, -1));
 
         try {
             Connection con   = Conexion.getConexion();
-            String SQL = "SELECT nombre,apellido,activo,puesto,contrasenia,correo,direccion as sucursal from staff  natural join sucursal natural join direccion";
-            tabla_usuarios.setModel(Conexion.createTableModel(con, SQL,null,"agregue un usuario"));
+            String SQL = "SELECT nombre,apellido,puesto,contrasenia,correo,direccion as sucursal from staff  natural join sucursal natural join direccion where activo = ?";
+            tabla_usuarios.setModel(Conexion.createTableModel(con, SQL,new Object[]{true},"agregue un usuario"));
+            con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -319,15 +377,20 @@ public class Venta extends javax.swing.JFrame {
         });
         scrollP_Usuarios.setViewportView(tabla_usuarios);
 
-        tabUsuarios.add(scrollP_Usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 120, 590, 330));
-
-        jCheckBox1.setForeground(new java.awt.Color(204, 204, 204));
-        tabUsuarios.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, -1, -1));
+        tabUsuarios.add(scrollP_Usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 180, 590, 270));
 
         logo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
         logo1.setBorderPainted(false);
         logo1.setContentAreaFilled(false);
         tabUsuarios.add(logo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
+
+        btn_help_usuarios.setText("?");
+        btn_help_usuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_help_usuariosActionPerformed(evt);
+            }
+        });
+        tabUsuarios.add(btn_help_usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 460, -1, -1));
 
         btn_eliminar_usuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn_eliminar_usuario.setText("Eliminar");
@@ -337,7 +400,7 @@ public class Venta extends javax.swing.JFrame {
                 btn_eliminar_usuarioActionPerformed(evt);
             }
         });
-        tabUsuarios.add(btn_eliminar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 460, -1, -1));
+        tabUsuarios.add(btn_eliminar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 440, -1, -1));
 
         btn_agregar_usuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn_agregar_usuario.setText("Agregar");
@@ -346,7 +409,7 @@ public class Venta extends javax.swing.JFrame {
                 btn_agregar_usuarioActionPerformed(evt);
             }
         });
-        tabUsuarios.add(btn_agregar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 460, -1, -1));
+        tabUsuarios.add(btn_agregar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 440, -1, -1));
 
         btn_cancelar_usuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn_cancelar_usuario.setText("cancelar");
@@ -356,7 +419,7 @@ public class Venta extends javax.swing.JFrame {
                 btn_cancelar_usuarioActionPerformed(evt);
             }
         });
-        tabUsuarios.add(btn_cancelar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 460, -1, -1));
+        tabUsuarios.add(btn_cancelar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, -1, -1));
 
         btn_modificar_usuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn_modificar_usuario.setText("modificar");
@@ -366,7 +429,7 @@ public class Venta extends javax.swing.JFrame {
                 btn_modificar_usuarioActionPerformed(evt);
             }
         });
-        tabUsuarios.add(btn_modificar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 460, -1, -1));
+        tabUsuarios.add(btn_modificar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 440, -1, -1));
 
         boton_cerrarSesion_usuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         boton_cerrarSesion_usuarios.setText("Cerrar Sesión");
@@ -384,7 +447,7 @@ public class Venta extends javax.swing.JFrame {
 
         Usuarios_JTab.setViewportView(tabUsuarios);
 
-        jTabbedPane1.addTab("Usuarios", Usuarios_JTab);
+        jTabbedPane1.addTab("Empleados", Usuarios_JTab);
 
         tab_venta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -610,6 +673,7 @@ public class Venta extends javax.swing.JFrame {
             tabla_busquedas.setModel(Conexion.createTableModel(con, query, o, "sin resultados"));
             ScrollP_busquedas.getViewport().add(tabla_busquedas);
 
+        con.close();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -653,12 +717,12 @@ public class Venta extends javax.swing.JFrame {
                 ResultSet r = Conexion.consultValues(con, "Select sucursal_id from sucursal natural join direccion where direccion = ?", new Object[]{combo_sucursales.getSelectedItem()});
                 r.last();
                 String puesto = null;
-                if (jRadioButton1.isSelected()) {
-                    puesto = jRadioButton1.getText();
+                if (radioBtn_puesto_U.isSelected()) {
+                    puesto = radioBtn_puesto_U.getText();
                 } else {
-                    puesto = jRadioButton2.getText();
+                    puesto = radioBtn_puesto_U2.getText();
                 }
-                Object[] o = {Conexion.getAutonumericField(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?,?)", 1), txtF_ContraseñaU.getText(), txtF_NombreU.getText(), txtF_ApellidoU.getText(), jCheckBox1.isSelected(), r.getInt(1), puesto, txtF_Correo.getText()};
+                Object[] o = {Conexion.getAutonumericField(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?,?)", 1), txtF_ContraseñaU.getText(), txtF_NombreU.getText(), txtF_ApellidoU.getText(), true, r.getInt(1), puesto, txtF_Correo.getText()};
                 Conexion.executeUpdate(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?,?)", o);
                 String sql = "SELECT nombre,apellido,activo,puesto,contrasenia,correo,direccion as sucursal from staff  natural join sucursal natural join direccion";
                 Conexion.refreshTable(tabla_usuarios, con);
@@ -780,7 +844,7 @@ public class Venta extends javax.swing.JFrame {
 
                     Conexion.refreshTable(tabla_busquedas, con);
                 }
-
+                con.close();
             } catch (SQLException ex) {
                 Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -827,7 +891,8 @@ public class Venta extends javax.swing.JFrame {
             ResultSet r;
             if (o != null) {
                 try {
-                    r = Conexion.consultValues(Conexion.getConexion(), "Select sucursal_id from sucursal natural join direccion where direccion = ?", new Object[]{o[4]});
+                    Connection con = Conexion.getConexion();
+                    r = Conexion.consultValues(con, "Select sucursal_id from sucursal natural join direccion where direccion = ?", new Object[]{o[4]});
 
                     r.last();
                     if (r.getInt(1) == Login.idSucursal) {
@@ -835,6 +900,7 @@ public class Venta extends javax.swing.JFrame {
                     } else {
                         JOptionPane.showMessageDialog(this, "articulo no esta en esta  sucursal");
                     }
+                con.close();
                 } catch (SQLException ex) {
                     Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -888,18 +954,19 @@ public class Venta extends javax.swing.JFrame {
             // TODO add your handling code here:
 
             String puesto = null;
-            if (jRadioButton1.isSelected()) {
-                puesto = jRadioButton1.getText();
+            if (radioBtn_puesto_U.isSelected()) {
+                puesto = radioBtn_puesto_U.getText();
             } else {
-                puesto = jRadioButton2.getText();
+                puesto = radioBtn_puesto_U2.getText();
             }
             ResultSet r = Conexion.consultValues(con, "Select sucursal_id from sucursal natural join direccion where direccion = ?", new Object[]{combo_sucursales.getSelectedItem()});
             if (r.last()) {
                 Conexion.executeUpdate(con, "Update staff set contrasenia = ?,nombre =?,apellido=?,activo=?,sucursal_id=?,puesto=?,correo=? where correo = ?",
-                        new Object[]{txtF_ContraseñaU.getText(), txtF_NombreU.getText(), txtF_ApellidoU.getText(), jCheckBox1.isSelected(), r.getInt(1), puesto, txtF_Correo.getText(), ((CustomTableModel) tabla_usuarios.getModel()).getValueAt(tabla_usuarios.getSelectedRow(), 5)});
+                        new Object[]{txtF_ContraseñaU.getText(), txtF_NombreU.getText(), txtF_ApellidoU.getText(), true, r.getInt(1), puesto, txtF_Correo.getText(), ((CustomTableModel) tabla_usuarios.getModel()).getValueAt(tabla_usuarios.getSelectedRow(), 4)});
             }
 
             Conexion.refreshTable(tabla_usuarios, con);
+            con.close();
         } catch (SQLException ex) {
             Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -916,8 +983,7 @@ public class Venta extends javax.swing.JFrame {
         txtF_Correo.setText(null);
         txtF_ContraseñaU.setText(null);
         combo_sucursales.setSelectedIndex(0);
-        jCheckBox1.setSelected(false);
-        jRadioButton1.setSelected(true);
+        radioBtn_puesto_U.setSelected(true);
         tabla_usuarios.clearSelection();
     }//GEN-LAST:event_btn_modificar_usuarioActionPerformed
 
@@ -937,8 +1003,7 @@ public class Venta extends javax.swing.JFrame {
         txtF_Correo.setText(null);
         txtF_ContraseñaU.setText(null);
         combo_sucursales.setSelectedIndex(0);
-        jCheckBox1.setSelected(false);
-        jRadioButton1.setSelected(true);
+        radioBtn_puesto_U.setSelected(true);
         tabla_usuarios.clearSelection();
 
     }//GEN-LAST:event_btn_cancelar_usuarioActionPerformed
@@ -972,22 +1037,20 @@ public class Venta extends javax.swing.JFrame {
             txtF_Correo.setText(null);
             txtF_ContraseñaU.setText(null);
             combo_sucursales.setSelectedIndex(0);
-            jCheckBox1.setSelected(false);
-            jRadioButton1.setSelected(true);
+            radioBtn_puesto_U.setSelected(true);
             if (evt.getClickCount() > 1 && rows == 1) {
 
                 btn_modificar_usuario.setEnabled(true);
-                if (model.getValueAt(row, 3).equals("Gerente")) {
-                    jRadioButton1.setSelected(true);
+                if (model.getValueAt(row, 2).equals("Gerente")) {
+                    radioBtn_puesto_U.setSelected(true);
                 } else {
-                    jRadioButton2.setSelected(true);
+                    radioBtn_puesto_U2.setSelected(true);
                 }
                 txtF_NombreU.setText((String) model.getValueAt(row, 0));
                 txtF_ApellidoU.setText((String) model.getValueAt(row, 1));
-                txtF_Correo.setText((String) model.getValueAt(row, 5));
-                txtF_ContraseñaU.setText((String) model.getValueAt(row, 4));
-                combo_sucursales.setSelectedItem(model.getValueAt(row, 6));
-                jCheckBox1.setSelected((boolean) model.getValueAt(row, 2));
+                txtF_Correo.setText((String) model.getValueAt(row, 4));
+                txtF_ContraseñaU.setText((String) model.getValueAt(row, 3));
+                combo_sucursales.setSelectedItem(model.getValueAt(row, 5));
             }
 
         }
@@ -998,7 +1061,7 @@ public class Venta extends javax.swing.JFrame {
             CustomTableModel model = (CustomTableModel) tabla_usuarios.getModel();
             Connection con = Conexion.getConexion();
             for (int i = 0; i < tabla_usuarios.getSelectedRowCount(); i++) {
-                Conexion.executeUpdate(con, "Delete from staff where correo = ?", new Object[]{model.getValueAt((int) tabla_usuarios.getSelectedRows()[i], 5)});
+                Conexion.executeUpdate(con, "Update  staff set activo = ? where correo = ?", new Object[]{false, model.getValueAt((int) tabla_usuarios.getSelectedRows()[i], 4)});
             }
             btn_agregar_usuario.setVisible(true);
             btn_agregar_usuario.setEnabled(true);
@@ -1010,10 +1073,54 @@ public class Venta extends javax.swing.JFrame {
             btn_modificar_usuario.setEnabled(false);
             tabla_usuarios.clearSelection();
             Conexion.refreshTable(tabla_usuarios, con);
+            con.close();
         } catch (SQLException ex) {
             Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_eliminar_usuarioActionPerformed
+
+    private void btn_cancelar_productosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelar_productosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_cancelar_productosActionPerformed
+
+    private void btn_eliminar_productosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminar_productosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_eliminar_productosActionPerformed
+
+    private void btn_modificar_productosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificar_productosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_modificar_productosActionPerformed
+
+    private void btn_help_usuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_help_usuariosActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "En esta pestaña puedes agregar,modificar y eliminar empleados: \n"
+                + "-para agregar un usuario llena los campos y da clic en 'agregar' \n"
+                + "-para eliminar uno o mas usuarios seleccionalos en la tabla y da clic en 'eliminar'\n"
+                + "-para modificar un usuario da 'doble clic' sobre un usuario y presiona 'modificar' ", "Ayuda: ", JOptionPane.QUESTION_MESSAGE);
+    }//GEN-LAST:event_btn_help_usuariosActionPerformed
+
+    private void radioBtn_activoUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBtn_activoUActionPerformed
+        
+        String SQL = "SELECT nombre,apellido,puesto,contrasenia,correo,direccion as sucursal from staff  natural join sucursal natural join direccion where activo = ?";
+        try {
+            Connection con = Conexion.getConexion();
+            tabla_usuarios.setModel(Conexion.createTableModel(con, SQL, new Object[]{true}, "agregue un usuario"));
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_radioBtn_activoUActionPerformed
+
+    private void radioBtn_inactivoUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBtn_inactivoUActionPerformed
+        String SQL = "SELECT nombre,apellido,puesto,contrasenia,correo,direccion as sucursal from staff  natural join sucursal natural join direccion where activo = ?";
+        try {
+            Connection con = Conexion.getConexion();
+            tabla_usuarios.setModel(Conexion.createTableModel(con, SQL, new Object[]{false}, "agregue un usuario"));
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_radioBtn_inactivoUActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1025,16 +1132,21 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JButton background_venta;
     private javax.swing.JButton bckground_usuarios;
     private javax.swing.JButton boton_cerrarSesion_usuarios;
+    private javax.swing.ButtonGroup btnGroup_PuestoU;
+    private javax.swing.ButtonGroup btnGroup_activoU;
     private javax.swing.JButton btn_Agregar;
     private javax.swing.JButton btn_agregar_usuario;
     private javax.swing.JButton btn_agregar_venta;
     private javax.swing.JButton btn_buscar;
+    private javax.swing.JButton btn_cancelar_productos;
     private javax.swing.JButton btn_cancelar_usuario;
     private javax.swing.JButton btn_cerrarSesion;
+    private javax.swing.JButton btn_eliminar_productos;
     private javax.swing.JButton btn_eliminar_usuario;
+    private javax.swing.JButton btn_help_usuarios;
+    private javax.swing.JButton btn_modificar_productos;
     private javax.swing.JButton btn_modificar_usuario;
     private javax.swing.JButton btn_pago;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cerrarSesion_venta;
     private javax.swing.JComboBox combo_categorias;
     private javax.swing.JComboBox combo_categorias_ventas;
@@ -1042,17 +1154,13 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JLabel correo;
     private javax.swing.JButton fondo_agregar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JLabel label_activo;
     private javax.swing.JLabel label_apellido;
     private javax.swing.JLabel label_busquedas;
     private javax.swing.JLabel label_cambio;
@@ -1072,6 +1180,10 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JButton logo;
     private javax.swing.JButton logo1;
     private javax.swing.JButton logo2;
+    private javax.swing.JRadioButton radioBtn_activoU;
+    private javax.swing.JRadioButton radioBtn_inactivoU;
+    private javax.swing.JRadioButton radioBtn_puesto_U;
+    private javax.swing.JRadioButton radioBtn_puesto_U2;
     private javax.swing.JScrollPane scrollP_Usuarios;
     private javax.swing.JScrollPane scrollP_productos;
     private javax.swing.JPanel tabUsuarios;
