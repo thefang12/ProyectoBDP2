@@ -18,6 +18,7 @@ public class CustomTableModel extends AbstractTableModel {
     private ArrayList columnNames;
     private ArrayList rowData;
     private String select_query;
+    private Object[] query_data;
     private String error_message;
 
     CustomTableModel(Object[][] object, Object[] string) {
@@ -165,6 +166,14 @@ public class CustomTableModel extends AbstractTableModel {
             o[i] = d.get(i);
         }
         return o;
+    }
+
+     Object[] getQueryData() {
+        return query_data;
+    }
+
+    void setQueryData(Object[] data) {
+        query_data=data;
     }
 
 }

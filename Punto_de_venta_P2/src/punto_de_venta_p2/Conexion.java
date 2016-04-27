@@ -43,7 +43,7 @@ public class Conexion {
 
    
 
-    public static void insertValues(Connection con, String query, Object[] data) throws SQLException {
+    public static void executeUpdate(Connection con, String query, Object[] data) throws SQLException {
 
         PreparedStatement psmt = con.prepareStatement(query);
         int i = 1;
@@ -53,31 +53,33 @@ public class Conexion {
         }
         psmt.execute();
     }
-    public static void excuteUpdate(Connection con , String update) throws SQLException{
-        Statement st = con.createStatement();
-        st.executeUpdate(update);
-        
-    }
 
-    public static ResultSet consultValues(Connection con, String query) throws SQLException {
-        Statement st = con.createStatement();
-        return st.executeQuery(query);
+    public static ResultSet consultValues(Connection con, String query, Object[] data) throws SQLException {
+           PreparedStatement psmt = con.prepareStatement(query);
+        int i = 1;
+        if(data!=null)
+        for (Object t : data) {
+            psmt.setObject(i, t);
+            i++;
+        }
+        return psmt.executeQuery();
     }
 
     public static void refreshTable(JTable tabla, Connection con) {
         CustomTableModel model = ((CustomTableModel) tabla.getModel());
-        tabla.setModel(Conexion.createTableModel(con, model.getSelect_query(), model.getError_message()));
+        tabla.setModel(Conexion.createTableModel(con, model.getSelect_query(),model.getQueryData(), model.getError_message()));
         //tabla.setViewportView(tabla);
     }
 
-    public static CustomTableModel createTableModel(Connection con, String SentenciaSQL, String fail_message) {
+    public static CustomTableModel createTableModel(Connection con, String SentenciaSQL, Object[] data, String fail_message) {
         CustomTableModel modelo = new CustomTableModel();
         try {
-            ResultSet rsDatos = consultValues(con, SentenciaSQL);
+            ResultSet rsDatos = consultValues(con, SentenciaSQL, data);
             if (rsDatos.next()) {
                 //optendremos lo metodos se la consulta 
                 // del cual obtenemos 
                 modelo.setSelect_query(SentenciaSQL);
+                modelo.setQueryData(data);
                 rsDatos.beforeFirst();
                 ResultSetMetaData metaDatos = rsDatos.getMetaData();
                 //optemos el nro de columnas

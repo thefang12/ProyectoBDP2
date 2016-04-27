@@ -162,7 +162,7 @@ public class Venta extends javax.swing.JFrame {
 
         try{
             Connection con   = Conexion.getConexion();
-            ResultSet r = Conexion.consultValues(con, "select nombre from categoria");
+            ResultSet r = Conexion.consultValues(con, "select nombre from categoria",null);
             r.last();
             String[] c=new String[r.getRow()+1];
             r.beforeFirst();
@@ -188,8 +188,8 @@ public class Venta extends javax.swing.JFrame {
 
         try {
             Connection con   = Conexion.getConexion();
-            String SQL = "SELECT nombre_articulo as articulo ,precio,nombre as categoria, cantidad_disponible as dsp FROM articulo natural join categoria natural join inventario natural join sucursal where sucursal_id = "+Login.idSucursal;
-            tabla_agregarP.setModel(Conexion.createTableModel(con,SQL,"agregue un articulo"));
+            String SQL = "SELECT nombre_articulo as articulo ,precio,nombre as categoria, cantidad_disponible as dsp FROM articulo natural join categoria natural join inventario natural join sucursal where sucursal_id = ?";
+            tabla_agregarP.setModel(Conexion.createTableModel(con,SQL,new Object[]{Login.idSucursal},"agregue un articulo"));
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -277,7 +277,7 @@ public class Venta extends javax.swing.JFrame {
 
         try{
             Connection con   = Conexion.getConexion();
-            ResultSet r = Conexion.consultValues(con, "select direccion from direccion");
+            ResultSet r = Conexion.consultValues(con, "select direccion from direccion",null);
             r.last();
             String[] c=new String[r.getRow()+1];
             r.beforeFirst();
@@ -308,7 +308,7 @@ public class Venta extends javax.swing.JFrame {
         try {
             Connection con   = Conexion.getConexion();
             String SQL = "SELECT nombre,apellido,activo,puesto,contrasenia,correo,direccion as sucursal from staff  natural join sucursal natural join direccion";
-            tabla_usuarios.setModel(Conexion.createTableModel(con, SQL,"agregue un usuario"));
+            tabla_usuarios.setModel(Conexion.createTableModel(con, SQL,null,"agregue un usuario"));
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -332,6 +332,11 @@ public class Venta extends javax.swing.JFrame {
         btn_eliminar_usuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn_eliminar_usuario.setText("Eliminar");
         btn_eliminar_usuario.setEnabled(false);
+        btn_eliminar_usuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_eliminar_usuarioActionPerformed(evt);
+            }
+        });
         tabUsuarios.add(btn_eliminar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 460, -1, -1));
 
         btn_agregar_usuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -442,7 +447,7 @@ public class Venta extends javax.swing.JFrame {
 
         try{
             Connection con   = Conexion.getConexion();
-            ResultSet r = Conexion.consultValues(con, "select nombre from categoria");
+            ResultSet r = Conexion.consultValues(con, "select nombre from categoria",null);
             r.last();
             String[] c=new String[r.getRow()];
             r.beforeFirst();
@@ -591,17 +596,18 @@ public class Venta extends javax.swing.JFrame {
         try {
             Connection con = Conexion.getConexion();
             String query = "";
+            Object[] o = null;
             if (txtF_codproducto.equals("")) {
-                query = "Select nombre_articulo as articulo,nombre as categoria,precio,cantidad_disponible as dsp,direccion as sucursal "
-                        + "from articulo a natural join categoria c natural join inventario  i natural join sucursal s natural join direccion d "
-                        + "where c.nombre = '" + combo_categorias_ventas.getSelectedItem().toString() + "'";
+                query = "Select nombre_articulo as articulo,nombre as categoria,precio,cantidad_disponible as dsp,direccion as sucursal from articulo a natural join categoria c natural join inventario  i natural join sucursal s natural join direccion d where c.nombre = ? ";
+                o = new Object[]{combo_categorias_ventas.getSelectedItem().toString()};
             } else {
                 query = "Select nombre_articulo as articulo,nombre as categoria,precio,cantidad_disponible as dsp,direccion as sucursal "
                         + "from articulo a natural join categoria c natural join inventario  i natural join sucursal s natural join direccion d "
-                        + "where c.nombre = '" + combo_categorias_ventas.getSelectedItem().toString() + "' AND a.nombre_articulo like '%" + txtF_codproducto.getText() + "%'";
+                        + "where c.nombre = ? AND a.nombre_articulo like ? ";
+                o = new Object[]{combo_categorias_ventas.getSelectedItem().toString(), "%" + txtF_codproducto.getText() + "%"};
             }
             //TODO es necesario un codigo de producto o solo el nombre?
-            tabla_busquedas.setModel(Conexion.createTableModel(con, query, "sin resultados"));
+            tabla_busquedas.setModel(Conexion.createTableModel(con, query, o, "sin resultados"));
             ScrollP_busquedas.getViewport().add(tabla_busquedas);
 
         } catch (Exception ex) {
@@ -613,21 +619,21 @@ public class Venta extends javax.swing.JFrame {
         try {
             String select;
             Connection con = Conexion.getConexion();
-            select = "Select categoria_id from categoria where nombre = '";
-            ResultSet r = Conexion.consultValues(con, select + combo_categorias.getSelectedItem().toString() + "'");
+            select = "Select categoria_id from categoria where nombre = ? ";
+            ResultSet r = Conexion.consultValues(con, select, new Object[]{combo_categorias.getSelectedItem().toString()});
             r.last();
             String insert = "INSERT INTO articulo VALUES(?,?,?,?)";
             Object[] o = {Conexion.getAutonumericField(con, insert, 1), txtF_Nombre.getText(), txtF_Precio.getText(), r.getInt(1)};
-            Conexion.insertValues(con, insert, o);
+            Conexion.executeUpdate(con, insert, o);
             //se actualiza tabla inventario
             //TODO hacer trigger para evitar duplicados
             r.last();
-            select = "Select  articulo_id from articulo where  nombre_articulo = '" + txtF_Nombre.getText() + "' AND categoria_id = " + r.getInt(1);
+            select = "Select  articulo_id from articulo where  nombre_articulo = ? AND categoria_id = ?";
             insert = "INSERT INTO inventario VALUES(?,?,?,?)";
-            r = Conexion.consultValues(con, select);
+            r = Conexion.consultValues(con, select, new Object[]{txtF_Nombre.getText(), r.getInt(1)});
             r.last();
             Object[] f = {Conexion.getAutonumericField(con, insert, 1), r.getInt(1), Login.idSucursal, jSpinner2.getValue()};
-            Conexion.insertValues(con, insert, f);
+            Conexion.executeUpdate(con, insert, f);
             Conexion.refreshTable(tabla_agregarP, con);
             con.close();
         } catch (SQLException ex) {
@@ -644,7 +650,7 @@ public class Venta extends javax.swing.JFrame {
             try {
                 // String insertFoto="update table set foto="
                 Connection con = Conexion.getConexion();
-                ResultSet r = Conexion.consultValues(con, "Select sucursal_id from sucursal natural join direccion where direccion = '" + combo_sucursales.getSelectedItem() + "'");
+                ResultSet r = Conexion.consultValues(con, "Select sucursal_id from sucursal natural join direccion where direccion = ?", new Object[]{combo_sucursales.getSelectedItem()});
                 r.last();
                 String puesto = null;
                 if (jRadioButton1.isSelected()) {
@@ -653,7 +659,7 @@ public class Venta extends javax.swing.JFrame {
                     puesto = jRadioButton2.getText();
                 }
                 Object[] o = {Conexion.getAutonumericField(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?,?)", 1), txtF_ContraseñaU.getText(), txtF_NombreU.getText(), txtF_ApellidoU.getText(), jCheckBox1.isSelected(), r.getInt(1), puesto, txtF_Correo.getText()};
-                Conexion.insertValues(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?,?)", o);
+                Conexion.executeUpdate(con, "INSERT INTO staff VALUES(?,?,?,?,?,?,?,?)", o);
                 String sql = "SELECT nombre,apellido,activo,puesto,contrasenia,correo,direccion as sucursal from staff  natural join sucursal natural join direccion";
                 Conexion.refreshTable(tabla_usuarios, con);
                 con.close();
@@ -685,10 +691,8 @@ public class Venta extends javax.swing.JFrame {
         btn_pago.setEnabled(true);
         try {
             r = Conexion.consultValues(Conexion.getConexion(),
-                    "Select nombre_articulo,nombre,cantidad_disponible,precio,sucursal_id from "
-                    + "articulo natural join categoria natural join inventario  natural join sucursal "
-                    + "where sucursal_id =" + Login.idSucursal + " AND nombre='" + combo_categorias_ventas.getSelectedItem().toString() + "'"
-                    + "AND nombre_articulo = '" + txtF_codproducto.getText() + "'");
+                    "Select nombre_articulo,nombre,cantidad_disponible,precio,sucursal_id from articulo natural join categoria natural join inventario  natural join sucursal "
+                    + "where sucursal_id = ? AND nombre = ? AND nombre_articulo = ?", new Object[]{Login.idSucursal, combo_categorias_ventas.getSelectedItem().toString(), txtF_codproducto.getText()});
 
             if (r.last()) {
                 CustomTableModel model = ((CustomTableModel) tabla_ventas.getModel());
@@ -755,23 +759,22 @@ public class Venta extends javax.swing.JFrame {
                 //insert compra
 
                 cmd = "insert into compra values(?,?,?)";
-                Conexion.insertValues(con, cmd, new Object[]{Conexion.getAutonumericField(con, cmd, 1), datetime, Login.idCuenta});
+                Conexion.executeUpdate(con, cmd, new Object[]{Conexion.getAutonumericField(con, cmd, 1), datetime, Login.idCuenta});
                 //sacar id compra
-                ResultSet r = Conexion.consultValues(con, "select compra_id from compra where fecha_compra = '" + datetime + "' AND staff_id = " + Login.idCuenta);
+                ResultSet r = Conexion.consultValues(con, "select compra_id from compra where fecha_compra = ? AND staff_id = ?", new Object[]{datetime, Login.idCuenta});
                 if (r.last()) {
                     int compra_id = r.getInt(1);
                     //insert pago
                     cmd = "insert into pago values(?,?,?,?)";
-                    Conexion.insertValues(con, cmd, new Object[]{Conexion.getAutonumericField(con, cmd, 1), total, datetime, compra_id});
+                    Conexion.executeUpdate(con, cmd, new Object[]{Conexion.getAutonumericField(con, cmd, 1), total, datetime, compra_id});
                     //obtener ids inventarios e insert detalles
                     for (int i = 0; i < model.getRowCount(); i++) {
                         cmd = "insert into detalle_compra values(?,?,?,?)";
-                        ResultSet t = Conexion.consultValues(con, "select inventario_id,cantidad_disponible from inventario natural join articulo where nombre_articulo = '" + model.getValueAt(i, 0)
-                                + "' AND sucursal_id =" + Login.idSucursal);
+                        ResultSet t = Conexion.consultValues(con, "select inventario_id,cantidad_disponible from inventario natural join articulo where nombre_articulo = ? AND sucursal_id = ?", new Object[]{model.getValueAt(i, 0), Login.idSucursal});
                         if (t.last()) {
-                            Conexion.insertValues(con, cmd, new Object[]{Conexion.getAutonumericField(con, cmd, 1), model.getValueAt(i, 2), compra_id, t.getInt(1)});
-                            cmd = "update inventario natural join articulo set cantidad_disponible = " + (t.getInt(2) - (int) model.getValueAt(i, 2)) + " where inventario_id = " + t.getInt(1);
-                            Conexion.excuteUpdate(con, cmd);
+                            Conexion.executeUpdate(con, cmd, new Object[]{Conexion.getAutonumericField(con, cmd, 1), model.getValueAt(i, 2), compra_id, t.getInt(1)});
+                            cmd = "update inventario natural join articulo set cantidad_disponible = ? where inventario_id = " + t.getInt(1);
+                            Conexion.executeUpdate(con, cmd, new Object[]{(t.getInt(2) - (int) model.getValueAt(i, 2))});
                         }
                     }
 
@@ -824,7 +827,7 @@ public class Venta extends javax.swing.JFrame {
             ResultSet r;
             if (o != null) {
                 try {
-                    r = Conexion.consultValues(Conexion.getConexion(), "Select sucursal_id from sucursal natural join direccion where direccion = '" + o[4] + "'");
+                    r = Conexion.consultValues(Conexion.getConexion(), "Select sucursal_id from sucursal natural join direccion where direccion = ?", new Object[]{o[4]});
 
                     r.last();
                     if (r.getInt(1) == Login.idSucursal) {
@@ -880,7 +883,26 @@ public class Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_tabla_ventasMouseClicked
 
     private void btn_modificar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificar_usuarioActionPerformed
-        // TODO add your handling code here:
+        try {
+            Connection con = Conexion.getConexion();
+            // TODO add your handling code here:
+
+            String puesto = null;
+            if (jRadioButton1.isSelected()) {
+                puesto = jRadioButton1.getText();
+            } else {
+                puesto = jRadioButton2.getText();
+            }
+            ResultSet r = Conexion.consultValues(con, "Select sucursal_id from sucursal natural join direccion where direccion = ?", new Object[]{combo_sucursales.getSelectedItem()});
+            if (r.last()) {
+                Conexion.executeUpdate(con, "Update staff set contrasenia = ?,nombre =?,apellido=?,activo=?,sucursal_id=?,puesto=?,correo=? where correo = ?",
+                        new Object[]{txtF_ContraseñaU.getText(), txtF_NombreU.getText(), txtF_ApellidoU.getText(), jCheckBox1.isSelected(), r.getInt(1), puesto, txtF_Correo.getText(), ((CustomTableModel) tabla_usuarios.getModel()).getValueAt(tabla_usuarios.getSelectedRow(), 5)});
+            }
+
+            Conexion.refreshTable(tabla_usuarios, con);
+        } catch (SQLException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        }
         btn_agregar_usuario.setVisible(true);
         btn_agregar_usuario.setEnabled(true);
         btn_cancelar_usuario.setVisible(false);
@@ -889,6 +911,13 @@ public class Venta extends javax.swing.JFrame {
         btn_cancelar_usuario.setEnabled(false);
         btn_eliminar_usuario.setEnabled(false);
         btn_modificar_usuario.setEnabled(false);
+        txtF_NombreU.setText(null);
+        txtF_ApellidoU.setText(null);
+        txtF_Correo.setText(null);
+        txtF_ContraseñaU.setText(null);
+        combo_sucursales.setSelectedIndex(0);
+        jCheckBox1.setSelected(false);
+        jRadioButton1.setSelected(true);
         tabla_usuarios.clearSelection();
     }//GEN-LAST:event_btn_modificar_usuarioActionPerformed
 
@@ -937,30 +966,54 @@ public class Venta extends javax.swing.JFrame {
             btn_modificar_usuario.setVisible(true);
             btn_cancelar_usuario.setEnabled(true);
             btn_eliminar_usuario.setEnabled(true);
-            btn_modificar_usuario.setEnabled(true);
-            if (model.getValueAt(row, 3).equals("Gerente")) {
-                jRadioButton1.setSelected(true);
-            } else {
-                jRadioButton2.setSelected(true);
+            btn_modificar_usuario.setEnabled(false);
+            txtF_NombreU.setText(null);
+            txtF_ApellidoU.setText(null);
+            txtF_Correo.setText(null);
+            txtF_ContraseñaU.setText(null);
+            combo_sucursales.setSelectedIndex(0);
+            jCheckBox1.setSelected(false);
+            jRadioButton1.setSelected(true);
+            if (evt.getClickCount() > 1 && rows == 1) {
+
+                btn_modificar_usuario.setEnabled(true);
+                if (model.getValueAt(row, 3).equals("Gerente")) {
+                    jRadioButton1.setSelected(true);
+                } else {
+                    jRadioButton2.setSelected(true);
+                }
+                txtF_NombreU.setText((String) model.getValueAt(row, 0));
+                txtF_ApellidoU.setText((String) model.getValueAt(row, 1));
+                txtF_Correo.setText((String) model.getValueAt(row, 5));
+                txtF_ContraseñaU.setText((String) model.getValueAt(row, 4));
+                combo_sucursales.setSelectedItem(model.getValueAt(row, 6));
+                jCheckBox1.setSelected((boolean) model.getValueAt(row, 2));
             }
-            txtF_NombreU.setText((String) model.getValueAt(row, 0));
-            txtF_ApellidoU.setText((String) model.getValueAt(row, 1));
-            txtF_Correo.setText((String) model.getValueAt(row, 5));
-            txtF_ContraseñaU.setText((String) model.getValueAt(row, 4));
-            combo_sucursales.setSelectedItem(model.getValueAt(row, 6));
-            jCheckBox1.setSelected((boolean) model.getValueAt(row, 2));
-            if (rows > 1) {
-                btn_modificar_usuario.setEnabled(false);
-                txtF_NombreU.setText(null);
-                txtF_ApellidoU.setText(null);
-                txtF_Correo.setText(null);
-                txtF_ContraseñaU.setText(null);
-                combo_sucursales.setSelectedIndex(0);
-                jCheckBox1.setSelected(false);
-                jRadioButton1.setSelected(true);
-            }
+
         }
     }//GEN-LAST:event_tabla_usuariosMouseClicked
+
+    private void btn_eliminar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminar_usuarioActionPerformed
+        try {
+            CustomTableModel model = (CustomTableModel) tabla_usuarios.getModel();
+            Connection con = Conexion.getConexion();
+            for (int i = 0; i < tabla_usuarios.getSelectedRowCount(); i++) {
+                Conexion.executeUpdate(con, "Delete from staff where correo = ?", new Object[]{model.getValueAt((int) tabla_usuarios.getSelectedRows()[i], 5)});
+            }
+            btn_agregar_usuario.setVisible(true);
+            btn_agregar_usuario.setEnabled(true);
+            btn_cancelar_usuario.setVisible(false);
+            btn_eliminar_usuario.setVisible(false);
+            btn_modificar_usuario.setVisible(false);
+            btn_cancelar_usuario.setEnabled(false);
+            btn_eliminar_usuario.setEnabled(false);
+            btn_modificar_usuario.setEnabled(false);
+            tabla_usuarios.clearSelection();
+            Conexion.refreshTable(tabla_usuarios, con);
+        } catch (SQLException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_eliminar_usuarioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
