@@ -17,13 +17,18 @@ import javax.swing.JOptionPane;
  *
  * @author fangi
  */
+enum Usuarios {
+
+    Gerente, Empleado
+}
+
 public class Login extends javax.swing.JFrame {
 
     /**
      * Creates new form Login
      */
     public static int idCuenta = -1;
-    public static String puesto = "";
+    public static Usuarios puesto;
     public static int idSucursal = -1;
 
     public Login() {
@@ -42,12 +47,13 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jPasswordField1 = new javax.swing.JPasswordField();
-        jButton2 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setForeground(new java.awt.Color(204, 204, 204));
@@ -59,11 +65,6 @@ public class Login extends javax.swing.JFrame {
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 222, -1, -1));
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(284, 158, 181, -1));
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
-        jButton4.setBorderPainted(false);
-        jButton4.setContentAreaFilled(false);
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
-
         jButton1.setText("Ingresar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,14 +74,15 @@ public class Login extends javax.swing.JFrame {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, -1, -1));
         getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(289, 220, 180, -1));
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Architecture_EMP_Museum_uhd.jpg"))); // NOI18N
-        jButton2.setToolTipText("");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 470));
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
+        jButton5.setBorderPainted(false);
+        jButton5.setContentAreaFilled(false);
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Experience_Music_Project_Museum_uhd.jpg"))); // NOI18N
+        jButton4.setBorderPainted(false);
+        jButton4.setContentAreaFilled(false);
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 470));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -94,25 +96,32 @@ public class Login extends javax.swing.JFrame {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
             String n = jTextField1.getText();
-            if (n.matches(".+@.+\\..+") && !n.equals("")) {
+            int i=0;
+            if (n.matches(".+@.+\\..+")) {
                 while (rs.next()) {
 
                     if (n.equals(rs.getString(8)) && checkPassword(jPasswordField1.getPassword(), rs.getString(2))) {
                         idCuenta = rs.getInt(1);
-                        puesto = rs.getString(7);
+                        if (rs.getString(7).equals("Empleado")) {
+                            puesto = Usuarios.Empleado;
+                        } else {
+                            puesto = Usuarios.Gerente;
+                        }
                         idSucursal = rs.getInt(6);
                         cambiarVentana(new Venta());
+                        i=0;
                         break;
-                    }
+                    } 
+                    else
+                        i=-1;
                 }
             } else {
-                if (!n.matches(".+@.+\\..+") || n.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Ingrese ID y contraseña validos");
-                } else {
-                    JOptionPane.showMessageDialog(null, "ID o contraseña incorrectos");
-                }
-
+                JOptionPane.showMessageDialog(null, "Ingrese ID y contraseña validos");
             }
+            if (i == -1) {
+                JOptionPane.showMessageDialog(null, "ID o contraseña incorrectos");
+            }
+
             st.close();
             con.close();
         } catch (SQLException ex) {
@@ -124,9 +133,6 @@ public class Login extends javax.swing.JFrame {
         frame.setVisible(true);
         this.dispose();
     }
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,8 +176,8 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField jPasswordField1;
