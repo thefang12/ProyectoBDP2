@@ -140,7 +140,7 @@ public class Venta extends javax.swing.JFrame {
         label_nombre1 = new javax.swing.JLabel();
         txt_NombreC = new javax.swing.JTextField();
         scrollP_productos1 = new javax.swing.JScrollPane();
-        tabla_agregarP1 = new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel());
+        tabla_Categoria = new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel());
         btn_cerrarSesion1 = new javax.swing.JButton();
         btn_Agregar1 = new javax.swing.JButton();
         logo3 = new javax.swing.JButton();
@@ -157,7 +157,7 @@ public class Venta extends javax.swing.JFrame {
         txt_CPS = new javax.swing.JTextField();
         txt_DireccionS = new javax.swing.JTextField();
         scrollP_productos2 = new javax.swing.JScrollPane();
-        tabla_agregarP2 = new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel());
+        tabla_Sucursal = new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel());
         btn_cerrarSesion2 = new javax.swing.JButton();
         btn_Agregar2 = new javax.swing.JButton();
         logo4 = new javax.swing.JButton();
@@ -253,7 +253,7 @@ public class Venta extends javax.swing.JFrame {
                 btn_AgregarActionPerformed(evt);
             }
         });
-        tab_agregar.add(btn_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, -1, -1));
+        tab_agregar.add(btn_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 380, -1, -1));
 
         btn_cancelar_productos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn_cancelar_productos.setText("cancelar");
@@ -662,11 +662,16 @@ public class Venta extends javax.swing.JFrame {
         try{
             Connection con =  Conexion.getConexion();
             String SQL ="SELECT nombre from categoria";
-            tabla_agregarP1.setModel(Conexion.createTableModel(con,SQL,null,"agregue una categoria"));
+            tabla_Categoria.setModel(Conexion.createTableModel(con,SQL,null,"agregue una categoria"));
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
         }
-        scrollP_productos1.setViewportView(tabla_agregarP1);
+        tabla_Categoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_CategoriaMouseClicked(evt);
+            }
+        });
+        scrollP_productos1.setViewportView(tabla_Categoria);
 
         tab_agregar1.add(scrollP_productos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, 520, 320));
 
@@ -736,11 +741,16 @@ public class Venta extends javax.swing.JFrame {
         try{
             Connection con =  Conexion.getConexion();
             String SQL ="select direccion,colonia,cp,telefono from direccion";
-            tabla_agregarP2.setModel(Conexion.createTableModel(con,SQL,null,"agregue una sucursal"));
+            tabla_Sucursal.setModel(Conexion.createTableModel(con,SQL,null,"agregue una sucursal"));
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
         }
-        scrollP_productos2.setViewportView(tabla_agregarP2);
+        tabla_Sucursal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_SucursalMouseClicked(evt);
+            }
+        });
+        scrollP_productos2.setViewportView(tabla_Sucursal);
 
         tab_agregar2.add(scrollP_productos2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, 520, 320));
 
@@ -1339,6 +1349,25 @@ public class Venta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_radioBtn_inactivoUActionPerformed
 
+    private void tabla_CategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_CategoriaMouseClicked
+        // TODO add your handling code here:
+        CustomTableModel model = (CustomTableModel) tabla_Categoria.getModel();
+       int row = tabla_Categoria.getSelectedRow();
+       int rows = tabla_Categoria.getSelectedRowCount();
+       txt_NombreC.setText((String) model.getValueAt(row, 0));
+    }//GEN-LAST:event_tabla_CategoriaMouseClicked
+
+    private void tabla_SucursalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_SucursalMouseClicked
+        // TODO add your handling code here:
+        CustomTableModel model = (CustomTableModel) tabla_Sucursal.getModel();
+       int row = tabla_Sucursal.getSelectedRow();
+       int rows = tabla_Sucursal.getSelectedRowCount();
+       txt_DireccionS.setText((String) model.getValueAt(row, 0));
+        txt_ColoniaS.setText((String) model.getValueAt(row, 1));
+         txt_CPS.setText((String) model.getValueAt(row, 2));
+          txt_TelefonoS.setText((String) model.getValueAt(row, 3));
+    }//GEN-LAST:event_tabla_SucursalMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane Agregar_jTab;
     private javax.swing.JScrollPane Agregar_jTab1;
@@ -1426,9 +1455,9 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JPanel tab_agregar1;
     private javax.swing.JPanel tab_agregar2;
     private javax.swing.JPanel tab_venta;
+    private javax.swing.JTable tabla_Categoria;
+    private javax.swing.JTable tabla_Sucursal;
     private javax.swing.JTable tabla_agregarP;
-    private javax.swing.JTable tabla_agregarP1;
-    private javax.swing.JTable tabla_agregarP2;
     private javax.swing.JTable tabla_busquedas;
     private javax.swing.JTable tabla_usuarios;
     private javax.swing.JTable tabla_ventas;
