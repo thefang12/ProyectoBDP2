@@ -162,6 +162,18 @@ public class Venta extends javax.swing.JFrame {
         btn_Agregar2 = new javax.swing.JButton();
         logo4 = new javax.swing.JButton();
         fondo_agregar2 = new javax.swing.JButton();
+        Agregar_jTab3 = new javax.swing.JScrollPane();
+        tab_agregar3 = new javax.swing.JPanel();
+        label_titulo3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jComboBox1 = new javax.swing.JComboBox();
+        label_nombre3 = new javax.swing.JLabel();
+        label_precio3 = new javax.swing.JLabel();
+        btn_cerrarSesion3 = new javax.swing.JButton();
+        btn_BuscarHistorial = new javax.swing.JButton();
+        logo5 = new javax.swing.JButton();
+        jComboBox2 = new javax.swing.JComboBox();
+        fondo_agregar3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -550,6 +562,11 @@ public class Venta extends javax.swing.JFrame {
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
+        combo_categorias_ventas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                combo_categorias_ventasActionPerformed(evt);
+            }
+        });
         tab_venta.add(combo_categorias_ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 110, 240, -1));
 
         tabla_busquedas.setModel(new punto_de_venta_p2.CustomTableModel("busque por categoria o por nombre"));
@@ -776,6 +793,67 @@ public class Venta extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Sucursales", Agregar_jTab2);
 
+        tab_agregar3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        label_titulo3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        label_titulo3.setForeground(new java.awt.Color(255, 255, 255));
+        label_titulo3.setText("Historial de Ventas");
+        tab_agregar3.add(label_titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, -1, -1));
+        tab_agregar3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 620, 300));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        tab_agregar3.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 150, -1));
+
+        label_nombre3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_nombre3.setForeground(new java.awt.Color(255, 255, 255));
+        label_nombre3.setText("Mes");
+        tab_agregar3.add(label_nombre3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, -1, -1));
+
+        label_precio3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_precio3.setForeground(new java.awt.Color(255, 255, 255));
+        label_precio3.setText("Año");
+        tab_agregar3.add(label_precio3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, -1, -1));
+
+        btn_cerrarSesion3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_cerrarSesion3.setText("Cerrar Sesión ");
+        btn_cerrarSesion3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cerrarSesion3ActionPerformed(evt);
+            }
+        });
+        tab_agregar3.add(btn_cerrarSesion3, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 40, -1, -1));
+
+        btn_BuscarHistorial.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_BuscarHistorial.setText("Buscar");
+        btn_BuscarHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_BuscarHistorialActionPerformed(evt);
+            }
+        });
+        tab_agregar3.add(btn_BuscarHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 450, -1, -1));
+
+        logo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
+        logo5.setBorderPainted(false);
+        logo5.setContentAreaFilled(false);
+        tab_agregar3.add(logo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2016" }));
+        tab_agregar3.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, 140, -1));
+
+        fondo_agregar3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/donuts_galaxy_wallpaper_by_annedelune-d6uhkc1.png"))); // NOI18N
+        fondo_agregar3.setBorderPainted(false);
+        fondo_agregar3.setContentAreaFilled(false);
+        tab_agregar3.add(fondo_agregar3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 540));
+
+        Agregar_jTab3.setViewportView(tab_agregar3);
+
+        jTabbedPane1.addTab("Historial de Ventas", Agregar_jTab3);
+
         jPanel1.setMaximumSize(new java.awt.Dimension(987, 592));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -789,7 +867,7 @@ public class Venta extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 967, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 987, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1339,10 +1417,27 @@ public class Venta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_radioBtn_inactivoUActionPerformed
 
+    private void btn_cerrarSesion3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarSesion3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_cerrarSesion3ActionPerformed
+
+    private void btn_BuscarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_BuscarHistorialActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_BuscarHistorialActionPerformed
+
+    private void combo_categorias_ventasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_categorias_ventasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_combo_categorias_ventasActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane Agregar_jTab;
     private javax.swing.JScrollPane Agregar_jTab1;
     private javax.swing.JScrollPane Agregar_jTab2;
+    private javax.swing.JScrollPane Agregar_jTab3;
     private javax.swing.JScrollPane ScrollP_Ventas;
     private javax.swing.JScrollPane ScrollP_busquedas;
     private javax.swing.JScrollPane Usuarios_JTab;
@@ -1355,6 +1450,7 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JButton btn_Agregar;
     private javax.swing.JButton btn_Agregar1;
     private javax.swing.JButton btn_Agregar2;
+    private javax.swing.JButton btn_BuscarHistorial;
     private javax.swing.JButton btn_agregar_usuario;
     private javax.swing.JButton btn_agregar_venta;
     private javax.swing.JButton btn_buscar;
@@ -1363,6 +1459,7 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JButton btn_cerrarSesion;
     private javax.swing.JButton btn_cerrarSesion1;
     private javax.swing.JButton btn_cerrarSesion2;
+    private javax.swing.JButton btn_cerrarSesion3;
     private javax.swing.JButton btn_eliminar_productos;
     private javax.swing.JButton btn_eliminar_usuario;
     private javax.swing.JButton btn_help_usuarios;
@@ -1377,12 +1474,16 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JButton fondo_agregar;
     private javax.swing.JButton fondo_agregar1;
     private javax.swing.JButton fondo_agregar2;
+    private javax.swing.JButton fondo_agregar3;
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner2;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -1397,15 +1498,18 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JLabel label_nombre;
     private javax.swing.JLabel label_nombre1;
     private javax.swing.JLabel label_nombre2;
+    private javax.swing.JLabel label_nombre3;
     private javax.swing.JLabel label_nombre_usuarios;
     private javax.swing.JLabel label_precio;
     private javax.swing.JLabel label_precio2;
+    private javax.swing.JLabel label_precio3;
     private javax.swing.JLabel label_puesto;
     private javax.swing.JLabel label_recibo;
     private javax.swing.JLabel label_sucursal;
     private javax.swing.JLabel label_titulo;
     private javax.swing.JLabel label_titulo1;
     private javax.swing.JLabel label_titulo2;
+    private javax.swing.JLabel label_titulo3;
     private javax.swing.JLabel label_total;
     private javax.swing.JLabel label_ventas;
     private javax.swing.JButton logo;
@@ -1413,6 +1517,7 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JButton logo2;
     private javax.swing.JButton logo3;
     private javax.swing.JButton logo4;
+    private javax.swing.JButton logo5;
     private javax.swing.JRadioButton radioBtn_activoU;
     private javax.swing.JRadioButton radioBtn_inactivoU;
     private javax.swing.JRadioButton radioBtn_puesto_U;
@@ -1425,6 +1530,7 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JPanel tab_agregar;
     private javax.swing.JPanel tab_agregar1;
     private javax.swing.JPanel tab_agregar2;
+    private javax.swing.JPanel tab_agregar3;
     private javax.swing.JPanel tab_venta;
     private javax.swing.JTable tabla_agregarP;
     private javax.swing.JTable tabla_agregarP1;
