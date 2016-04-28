@@ -1,10 +1,4 @@
-﻿/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package punto_de_venta_p2;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +14,8 @@ import javax.swing.*;
  *
  * @author pablotabales,Arturoalonso
  */
+
+
 public class Venta extends javax.swing.JFrame {
 
     /**
@@ -49,7 +45,7 @@ public class Venta extends javax.swing.JFrame {
         for (JComponent c : components) {
             btnGroup_activoS.add((AbstractButton) c);
         }
-        components = new JComponent[]{btn_eliminar_usuario, btn_modificar_usuario, btn_cancelar_usuario, btn_eliminar_productos, btn_modificar_productos, btn_cancelar_productos, btn_reactivar_U, btn_restaurarP,btn_eliminarS,btn_modificarS,btn_cancelarS,btn_restaurarS};
+        components = new JComponent[]{btn_eliminar_usuario, btn_modificar_usuario, btn_cancelar_usuario, btn_eliminar_productos, btn_modificar_productos, btn_cancelar_productos, btn_reactivar_U, btn_restaurarP, btn_eliminarS, btn_modificarS, btn_cancelarS, btn_restaurarS};
         for (JComponent c : components) {
             c.setVisible(false);
         }
@@ -193,7 +189,6 @@ public class Venta extends javax.swing.JFrame {
         radioBtn_activoS = new javax.swing.JRadioButton();
         radioBtn_inactivoS = new javax.swing.JRadioButton();
         fondo_agregarS = new javax.swing.JButton();
-        fondo_agregar2 = new javax.swing.JButton();
         Agregar_jTab3 = new javax.swing.JScrollPane();
         tab_agregar3 = new javax.swing.JPanel();
         label_titulo3 = new javax.swing.JLabel();
@@ -205,6 +200,7 @@ public class Venta extends javax.swing.JFrame {
         btn_BuscarHistorial = new javax.swing.JButton();
         logo5 = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox();
+        fondo_agregar3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -317,7 +313,7 @@ public class Venta extends javax.swing.JFrame {
                 btn_cerrarSesionActionPerformed(evt);
             }
         });
-        tab_agregar.add(btn_cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 40, -1, -1));
+        tab_agregar.add(btn_cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 40, -1, -1));
 
         btn_restaurarP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn_restaurarP.setText("Restaurar Productos");
@@ -885,7 +881,6 @@ public class Venta extends javax.swing.JFrame {
             }
         });
         scrollP_S.setViewportView(tabla_agregarS);
-
 
         tab_S.add(scrollP_S, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 190, 520, 260));
 
@@ -1524,9 +1519,9 @@ public class Venta extends javax.swing.JFrame {
             Connection con = Conexion.getConexion();
             //aqui te falt un campo que agregamos de ultimo moemnto 
             String insert = "INSERT INTO categoria VALUES(?,?,?)";
-            Object[] o = {Conexion.getAutonumericField(con, insert, 1), txt_NombreC.getText(),true};
+            Object[] o = {Conexion.getAutonumericField(con, insert, 1), txt_NombreC.getText(), true};
             Conexion.executeUpdate(con, insert, o);
-           Conexion.refreshTable(tabla_Categoria,con);
+            Conexion.refreshTable(tabla_Categoria, con);
             con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -1534,7 +1529,7 @@ public class Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_agregar_categoriaActionPerformed
 
     private void btn_cerrarSesionSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarSesionSActionPerformed
-       cambiarVentana(new Login());
+        cambiarVentana(new Login());
     }//GEN-LAST:event_btn_cerrarSesionSActionPerformed
 
     private void btn_AgregarSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarSActionPerformed
@@ -1545,14 +1540,14 @@ public class Venta extends javax.swing.JFrame {
             Connection con = Conexion.getConexion();
 
             String insert = "INSERT INTO direccion VALUES(?,?,?,?,?,?)";
-            Object[] o = {Conexion.getAutonumericField(con, insert, 1), txt_DireccionS.getText(),"", txt_ColoniaS.getText(), txt_CPS.getText(), txt_TelefonoS.getText()};
+            Object[] o = {Conexion.getAutonumericField(con, insert, 1), txt_DireccionS.getText(), "", txt_ColoniaS.getText(), txt_CPS.getText(), txt_TelefonoS.getText()};
             Conexion.executeUpdate(con, insert, o);
 
             select = "Select direccion_id from direccion where direccion = ? ";
             ResultSet r = Conexion.consultValues(con, select, new Object[]{txt_DireccionS.getText()});
             r.last();
             insert = "INSERT INTO sucursal VALUES(?,?,?)";
-            Object[] m = {Conexion.getAutonumericField(con, insert, 1), r.getInt(1),true};
+            Object[] m = {Conexion.getAutonumericField(con, insert, 1), r.getInt(1), true};
             Conexion.executeUpdate(con, insert, m);
             Conexion.refreshTable(tabla_agregarS, con);
             con.close();
@@ -1864,10 +1859,10 @@ public class Venta extends javax.swing.JFrame {
                 Conexion.executeUpdate(con, "Update  direccion natural join sucursal set activa = ? where direccion = ? ", new Object[]{false, model.getValueAt((int) tabla_agregarS.getSelectedRows()[i], 0)});
             }
             txt_DireccionS.setText(null);
-        txt_ColoniaS.setText(null);
-        txt_CPS.setText(null);
-        txt_TelefonoS.setText(null);
-        tabla_agregarS.clearSelection();
+            txt_ColoniaS.setText(null);
+            txt_CPS.setText(null);
+            txt_TelefonoS.setText(null);
+            tabla_agregarS.clearSelection();
             Conexion.refreshTable(tabla_agregarS, con);
             con.close();
         } catch (SQLException ex) {
@@ -2001,14 +1996,14 @@ public class Venta extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
-	
+
     private void tabla_CategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_CategoriaMouseClicked
         // TODO add your handling code here:
         CustomTableModel model = (CustomTableModel) tabla_Categoria.getModel();
-       int row = tabla_Categoria.getSelectedRow();
-       int rows = tabla_Categoria.getSelectedRowCount();
-       
-       if (rows > 0) {
+        int row = tabla_Categoria.getSelectedRow();
+        int rows = tabla_Categoria.getSelectedRowCount();
+
+        if (rows > 0) {
             //SELECT nombre,apellido,activo,puesto,contrasenia,correo,direccion
             btn_agregar_categoria.setVisible(false);
             btn_agregar_categoria.setEnabled(false);
@@ -2018,25 +2013,16 @@ public class Venta extends javax.swing.JFrame {
             btn_cancelar_categoria.setEnabled(true);
             btn_eliminar_categoria.setEnabled(true);
             btn_modificar_categoria.setEnabled(false);
-            txt_NombreC.setText(null);            
+            txt_NombreC.setText(null);
             if (evt.getClickCount() > 1 && rows == 1) {
 
-                btn_modificar_categoria.setEnabled(true);                
+                btn_modificar_categoria.setEnabled(true);
                 txt_NombreC.setText((String) model.getValueAt(row, 0));
             }
-       }
+        }
     }//GEN-LAST:event_tabla_CategoriaMouseClicked
 
-    private void tabla_SucursalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_SucursalMouseClicked
-        // TODO add your handling code here:
-        CustomTableModel model = (CustomTableModel) tabla_Sucursal.getModel();
-       int row = tabla_Sucursal.getSelectedRow();
-       int rows = tabla_Sucursal.getSelectedRowCount();
-       txt_DireccionS.setText((String) model.getValueAt(row, 0));
-        txt_ColoniaS.setText((String) model.getValueAt(row, 1));
-         txt_CPS.setText((String) model.getValueAt(row, 2));
-          txt_TelefonoS.setText((String) model.getValueAt(row, 3));
-    }//GEN-LAST:event_tabla_SucursalMouseClicked
+   
 
     private void btn_cancelar_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelar_categoriaActionPerformed
         // TODO add your handling code here:
@@ -2060,8 +2046,8 @@ public class Venta extends javax.swing.JFrame {
 
             //ResultSet r = Conexion.consultValues(con, "Select categoria_id from categoria where nombre = ?", new Object[]{combo_sucursales.getSelectedItem()});
             //if (r.last()) {
-                Conexion.executeUpdate(con, "Update categoria set nombre =? where nombre = ?", //aqui esta el error uri la columna donde esta el nombre es la 0 no la 4
-                        new Object[]{txt_NombreC.getText(), ((CustomTableModel) tabla_Categoria.getModel()).getValueAt(tabla_Categoria.getSelectedRow(), 0)});
+            Conexion.executeUpdate(con, "Update categoria set nombre =? where nombre = ?", //aqui esta el error uri la columna donde esta el nombre es la 0 no la 4
+                    new Object[]{txt_NombreC.getText(), ((CustomTableModel) tabla_Categoria.getModel()).getValueAt(tabla_Categoria.getSelectedRow(), 0)});
             //}
 
             Conexion.refreshTable(tabla_Categoria, con);
@@ -2086,8 +2072,8 @@ public class Venta extends javax.swing.JFrame {
         try {
             CustomTableModel model = (CustomTableModel) tabla_Categoria.getModel();
             Connection con = Conexion.getConexion();
-	    for (int i = 0; i < tabla_Categoria.getSelectedRowCount(); i++) {
-                Conexion.executeUpdate(con, "Update  categoria set activa= ? where nombre= ?", new Object[]{false, model.getValueAt( tabla_Categoria.getSelectedRows()[i], 0)});
+            for (int i = 0; i < tabla_Categoria.getSelectedRowCount(); i++) {
+                Conexion.executeUpdate(con, "Update  categoria set activa= ? where nombre= ?", new Object[]{false, model.getValueAt(tabla_Categoria.getSelectedRows()[i], 0)});
             }
             btn_agregar_categoria.setVisible(true);
             btn_agregar_categoria.setEnabled(true);
@@ -2108,7 +2094,6 @@ public class Venta extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane Agregar_jTab;
     private javax.swing.JScrollPane Agregar_jTab1;
-    private javax.swing.JScrollPane Agregar_jTab2;
     private javax.swing.JScrollPane Agregar_jTab3;
     private javax.swing.JScrollPane ScrollP_Ventas;
     private javax.swing.JScrollPane ScrollP_busquedas;
@@ -2123,36 +2108,27 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btnGroup_activoS;
     private javax.swing.ButtonGroup btnGroup_activoU;
     private javax.swing.JButton btn_Agregar;
-    private javax.swing.JButton btn_Agregar1;
     private javax.swing.JButton btn_AgregarS;
+    private javax.swing.JButton btn_BuscarHistorial;
     private javax.swing.JButton btn_CancelarV;
+    private javax.swing.JButton btn_agregar_categoria;
     private javax.swing.JButton btn_agregar_usuario;
     private javax.swing.JButton btn_agregar_venta;
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_cancelarS;
-    private javax.swing.JButton btn_Agregar2;
-    private javax.swing.JButton btn_agregar_categoria;
-    private javax.swing.JButton btn_BuscarHistorial;
-    private javax.swing.JButton btn_agregar_usuario;
-    private javax.swing.JButton btn_agregar_venta;
-    private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_cancelar_categoria;
     private javax.swing.JButton btn_cancelar_productos;
     private javax.swing.JButton btn_cancelar_usuario;
     private javax.swing.JButton btn_cerrarSesion;
     private javax.swing.JButton btn_cerrarSesion1;
+    private javax.swing.JButton btn_cerrarSesion3;
     private javax.swing.JButton btn_cerrarSesionS;
     private javax.swing.JButton btn_eliminarS;
+    private javax.swing.JButton btn_eliminar_categoria;
     private javax.swing.JButton btn_eliminar_productos;
     private javax.swing.JButton btn_eliminar_usuario;
     private javax.swing.JButton btn_help_usuarios;
     private javax.swing.JButton btn_modificarS;
-    private javax.swing.JButton btn_cerrarSesion2;
-    private javax.swing.JButton btn_eliminar_categoria;
-    private javax.swing.JButton btn_cerrarSesion3;
-    private javax.swing.JButton btn_eliminar_productos;
-    private javax.swing.JButton btn_eliminar_usuario;
-    private javax.swing.JButton btn_help_usuarios;
     private javax.swing.JButton btn_modificar_categoria;
     private javax.swing.JButton btn_modificar_productos;
     private javax.swing.JButton btn_modificar_usuario;
@@ -2167,10 +2143,8 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JLabel correo;
     private javax.swing.JButton fondo_agregar;
     private javax.swing.JButton fondo_agregar1;
-    private javax.swing.JButton fondo_agregarS;
-    private javax.swing.JButton fondo_agregar2;
     private javax.swing.JButton fondo_agregar3;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton fondo_agregarS;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -2195,8 +2169,10 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JLabel label_estatusU;
     private javax.swing.JLabel label_nombre;
     private javax.swing.JLabel label_nombre1;
+    private javax.swing.JLabel label_nombre3;
     private javax.swing.JLabel label_nombre_usuarios;
     private javax.swing.JLabel label_precio;
+    private javax.swing.JLabel label_precio3;
     private javax.swing.JLabel label_puesto;
     private javax.swing.JLabel label_recibo;
     private javax.swing.JLabel label_sucursal;
@@ -2204,9 +2180,8 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JLabel label_telefonoS;
     private javax.swing.JLabel label_titulo;
     private javax.swing.JLabel label_titulo1;
-    private javax.swing.JLabel label_tituloS;
-    private javax.swing.JLabel label_titulo2;
     private javax.swing.JLabel label_titulo3;
+    private javax.swing.JLabel label_tituloS;
     private javax.swing.JLabel label_total;
     private javax.swing.JLabel label_ventas;
     private javax.swing.JButton logo;
@@ -2214,9 +2189,9 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JButton logo2;
     private javax.swing.JButton logo3;
     private javax.swing.JButton logo4;
+    private javax.swing.JButton logo5;
     private javax.swing.JRadioButton radioBtn_activoP;
     private javax.swing.JRadioButton radioBtn_activoS;
-    private javax.swing.JButton logo5;
     private javax.swing.JRadioButton radioBtn_activoU;
     private javax.swing.JRadioButton radioBtn_inactivoP;
     private javax.swing.JRadioButton radioBtn_inactivoS;
@@ -2231,13 +2206,10 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JPanel tab_S;
     private javax.swing.JPanel tab_agregar;
     private javax.swing.JPanel tab_agregar1;
-    private javax.swing.JPanel tab_agregar2;
     private javax.swing.JPanel tab_agregar3;
     private javax.swing.JPanel tab_venta;
     private javax.swing.JTable tabla_Categoria;
-    private javax.swing.JTable tabla_Sucursal;
     private javax.swing.JTable tabla_agregarP;
-    private javax.swing.JTable tabla_agregarP1;
     private javax.swing.JTable tabla_agregarS;
     private javax.swing.JTable tabla_busquedas;
     private javax.swing.JTable tabla_usuarios;
