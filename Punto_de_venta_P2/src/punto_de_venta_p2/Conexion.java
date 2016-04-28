@@ -5,6 +5,7 @@
  */
 package punto_de_venta_p2;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 import javax.swing.JTable;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -41,7 +43,15 @@ public class Conexion {
 
     }
 
-   
+    public static ResultSet callStoredProcedure(Connection con, String query, Object[] data) throws SQLException {
+        CallableStatement cs = con.prepareCall("{" + query + "}");
+        int i = 1;
+        for (Object t : data) {
+            cs.setObject(i, t);
+            i++;
+        }
+        return cs.executeQuery();
+    }
 
     public static void executeUpdate(Connection con, String query, Object[] data) throws SQLException {
 
@@ -55,19 +65,24 @@ public class Conexion {
     }
 
     public static ResultSet consultValues(Connection con, String query, Object[] data) throws SQLException {
-           PreparedStatement psmt = con.prepareStatement(query);
+        PreparedStatement psmt = con.prepareStatement(query);
         int i = 1;
-        if(data!=null)
-        for (Object t : data) {
-            psmt.setObject(i, t);
-            i++;
+        if (data != null) {
+            for (Object t : data) {
+                psmt.setObject(i, t);
+                i++;
+            }
         }
         return psmt.executeQuery();
     }
 
     public static void refreshTable(JTable tabla, Connection con) {
         CustomTableModel model = ((CustomTableModel) tabla.getModel());
-        tabla.setModel(Conexion.createTableModel(con, model.getSelect_query(),model.getQueryData(), model.getError_message()));
+        if (model.getSelect_query().equals("")) {
+            System.err.println("la tabla no tiene una consulta asociada, cheque que no alla sido creada con un Result Set");
+        } else {
+            tabla.setModel(Conexion.createTableModel(con, model.getSelect_query(), model.getQueryData(), model.getError_message()));
+        }
         //tabla.setViewportView(tabla);
     }
 
@@ -126,6 +141,43 @@ public class Conexion {
 
         return DriverManager.getConnection("jdbc:mysql://" + ipAddress
                 + ":" + service + "/" + dbName, user, password);
+    }
+
+    static TableModel createTableModel(Connection con, ResultSet r, String fail_message) {
+        CustomTableModel modelo = new CustomTableModel();
+        try {
+            modelo.setError_message(fail_message);
+            if (r.next()) {
+                //optendremos lo metodos se la consulta 
+                // del cual obtenemos 
+                modelo.setSelect_query(null);
+                modelo.setQueryData(null);
+                r.beforeFirst();
+                ResultSetMetaData metaDatos = r.getMetaData();
+                //optemos el nro de columnas
+                int numeroColumnas = metaDatos.getColumnCount();//columnas
+                //optener las etiquetas  de la tabla 
+                Object[] etiquetas = new Object[numeroColumnas];//creamos de array de objetos dinamico
+                for (int i = 0; i < numeroColumnas; i++) {
+                    etiquetas[i] = metaDatos.getColumnLabel(i + 1);//las etiquetas comienzan desde 1e
+                }
+                //enlazar las etiquetas con el modelo 
+                modelo.setColumnIdentifiers(etiquetas);//asignamos identificadores de las columnas 
+                while (r.next()) {
+                    //creamos un objeto para almacenar un registro
+                    Object[] datosFila = new Object[modelo.getColumnCount()];
+                    //rellenar cada posicion del objeto con una de las columans de la tabla 
+                    for (int i = 0; i < modelo.getColumnCount(); i++) {
+                        datosFila[i] = r.getObject(i + 1);
+                    }
+                    modelo.addRow(datosFila);
+                }
+            } else {
+                modelo = new CustomTableModel(fail_message);
+            }
+        } catch (Exception e) {
+        }
+        return modelo;
     }
 
 }

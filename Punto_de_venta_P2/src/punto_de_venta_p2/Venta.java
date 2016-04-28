@@ -1,4 +1,5 @@
 package punto_de_venta_p2;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,8 +15,6 @@ import javax.swing.*;
  *
  * @author pablotabales,Arturoalonso
  */
-
-
 public class Venta extends javax.swing.JFrame {
 
     /**
@@ -37,6 +36,10 @@ public class Venta extends javax.swing.JFrame {
         for (JComponent c : components) {
             btnGroup_activoP.add((AbstractButton) c);
         }
+        components = new JComponent[]{radioBtn_activoC, radioBtn_inactivoC};
+        for (JComponent c : components) {
+            btnGroup_activoC.add((AbstractButton) c);
+        }
         components = new JComponent[]{radioBtn_puesto_U, radioBtn_puesto_U2};
         for (JComponent c : components) {
             btnGroup_PuestoU.add((AbstractButton) c);
@@ -45,10 +48,16 @@ public class Venta extends javax.swing.JFrame {
         for (JComponent c : components) {
             btnGroup_activoS.add((AbstractButton) c);
         }
-        components = new JComponent[]{btn_eliminar_usuario, btn_modificar_usuario, btn_cancelar_usuario, btn_eliminar_productos, btn_modificar_productos, btn_cancelar_productos, btn_reactivar_U, btn_restaurarP, btn_eliminarS, btn_modificarS, btn_cancelarS, btn_restaurarS};
+        components = new JComponent[]{radioBtn_detallesSi, radioBtn_detallesNo};
+        for (JComponent c : components) {
+            btnGroup_detallesPagos.add((AbstractButton) c);
+        }
+        components = new JComponent[]{btn_eliminar_usuario, btn_modificar_usuario, btn_cancelar_usuario, btn_eliminar_productos, btn_modificar_productos, btn_cancelar_productos, btn_reactivar_U, btn_restaurarP, btn_eliminarS, btn_modificarS, btn_cancelarS, btn_restaurarS, btn_eliminar_categoria, btn_modificar_categoria, btn_cancelar_categoria, btn_restaurarC};
         for (JComponent c : components) {
             c.setVisible(false);
         }
+        radioBtn_detallesNo.setSelected(true);
+        radioBtn_activoC.setSelected(true);
         radioBtn_activoS.setSelected(true);
         radioBtn_puesto_U.setSelected(true);
         radioBtn_activoU.setSelected(true);
@@ -68,6 +77,8 @@ public class Venta extends javax.swing.JFrame {
         btnGroup_activoU = new javax.swing.ButtonGroup();
         btnGroup_activoP = new javax.swing.ButtonGroup();
         btnGroup_activoS = new javax.swing.ButtonGroup();
+        btnGroup_activoC = new javax.swing.ButtonGroup();
+        btnGroup_detallesPagos = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         Agregar_jTab = new javax.swing.JScrollPane();
         tab_agregar = new javax.swing.JPanel();
@@ -123,6 +134,48 @@ public class Venta extends javax.swing.JFrame {
         btn_modificar_usuario = new javax.swing.JButton();
         boton_cerrarSesion_usuarios = new javax.swing.JButton();
         bckground_usuarios = new javax.swing.JButton();
+        Categoria_Jtab = new javax.swing.JScrollPane();
+        tab_agregar1 = new javax.swing.JPanel();
+        label_titulo1 = new javax.swing.JLabel();
+        label_nombre1 = new javax.swing.JLabel();
+        label_categoriasC = new javax.swing.JLabel();
+        radioBtn_activoC = new javax.swing.JRadioButton();
+        radioBtn_inactivoC = new javax.swing.JRadioButton();
+        txt_NombreC = new javax.swing.JTextField();
+        scrollP_productos1 = new javax.swing.JScrollPane();
+        tabla_Categoria = new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel());
+        btn_cerrarSesion1 = new javax.swing.JButton();
+        btn_agregar_categoria = new javax.swing.JButton();
+        logo3 = new javax.swing.JButton();
+        btn_cancelar_categoria = new javax.swing.JButton();
+        btn_eliminar_categoria = new javax.swing.JButton();
+        btn_modificar_categoria = new javax.swing.JButton();
+        btn_restaurarC = new javax.swing.JButton();
+        fondo_agregar1 = new javax.swing.JButton();
+        Sucursal_jTab = new javax.swing.JScrollPane();
+        tab_S = new javax.swing.JPanel();
+        label_tituloS = new javax.swing.JLabel();
+        label_direccionS = new javax.swing.JLabel();
+        label_CPS = new javax.swing.JLabel();
+        label_coloniaS = new javax.swing.JLabel();
+        label_telefonoS = new javax.swing.JLabel();
+        txt_TelefonoS = new javax.swing.JTextField();
+        txt_ColoniaS = new javax.swing.JTextField();
+        txt_CPS = new javax.swing.JTextField();
+        txt_DireccionS = new javax.swing.JTextField();
+        scrollP_S = new javax.swing.JScrollPane();
+        tabla_agregarS = new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel());
+        btn_cerrarSesionS = new javax.swing.JButton();
+        btn_AgregarS = new javax.swing.JButton();
+        logo4 = new javax.swing.JButton();
+        btn_cancelarS = new javax.swing.JButton();
+        btn_modificarS = new javax.swing.JButton();
+        btn_eliminarS = new javax.swing.JButton();
+        btn_restaurarS = new javax.swing.JButton();
+        label_sucursalesS = new javax.swing.JLabel();
+        radioBtn_activoS = new javax.swing.JRadioButton();
+        radioBtn_inactivoS = new javax.swing.JRadioButton();
+        fondo_agregarS = new javax.swing.JButton();
         Venta_JTab = new javax.swing.JScrollPane();
         tab_venta = new javax.swing.JPanel();
         label_ventas = new javax.swing.JLabel();
@@ -151,55 +204,21 @@ public class Venta extends javax.swing.JFrame {
         btn_pago = new javax.swing.JButton();
         btn_agregar_venta = new javax.swing.JButton();
         background_venta = new javax.swing.JButton();
-        Agregar_jTab1 = new javax.swing.JScrollPane();
-        tab_agregar1 = new javax.swing.JPanel();
-        label_titulo1 = new javax.swing.JLabel();
-        label_nombre1 = new javax.swing.JLabel();
-        txt_NombreC = new javax.swing.JTextField();
-        scrollP_productos1 = new javax.swing.JScrollPane();
-        tabla_Categoria = new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel());
-        btn_cerrarSesion1 = new javax.swing.JButton();
-        btn_agregar_categoria = new javax.swing.JButton();
-        logo3 = new javax.swing.JButton();
-        btn_cancelar_categoria = new javax.swing.JButton();
-        btn_eliminar_categoria = new javax.swing.JButton();
-        btn_modificar_categoria = new javax.swing.JButton();
-        fondo_agregar1 = new javax.swing.JButton();
-        Sucursal_jTab = new javax.swing.JScrollPane();
-        tab_S = new javax.swing.JPanel();
-        label_tituloS = new javax.swing.JLabel();
-        label_direccionS = new javax.swing.JLabel();
-        label_CPS = new javax.swing.JLabel();
-        label_coloniaS = new javax.swing.JLabel();
-        label_telefonoS = new javax.swing.JLabel();
-        txt_TelefonoS = new javax.swing.JTextField();
-        txt_ColoniaS = new javax.swing.JTextField();
-        txt_CPS = new javax.swing.JTextField();
-        txt_DireccionS = new javax.swing.JTextField();
-        scrollP_S = new javax.swing.JScrollPane();
-        tabla_agregarS = new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel());
-        btn_cerrarSesionS = new javax.swing.JButton();
-        btn_AgregarS = new javax.swing.JButton();
-        logo4 = new javax.swing.JButton();
-        btn_cancelarS = new javax.swing.JButton();
-        btn_modificarS = new javax.swing.JButton();
-        btn_eliminarS = new javax.swing.JButton();
-        btn_restaurarS = new javax.swing.JButton();
-        label_sucursalesS = new javax.swing.JLabel();
-        radioBtn_activoS = new javax.swing.JRadioButton();
-        radioBtn_inactivoS = new javax.swing.JRadioButton();
-        fondo_agregarS = new javax.swing.JButton();
-        Agregar_jTab3 = new javax.swing.JScrollPane();
+        Pagos_Jtab = new javax.swing.JScrollPane();
         tab_agregar3 = new javax.swing.JPanel();
         label_titulo3 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jComboBox1 = new javax.swing.JComboBox();
-        label_nombre3 = new javax.swing.JLabel();
-        label_precio3 = new javax.swing.JLabel();
+        tabla_historial = new javax.swing.JTable();
         btn_cerrarSesion3 = new javax.swing.JButton();
         btn_BuscarHistorial = new javax.swing.JButton();
+        spinnerFechadeIncio = new javax.swing.JSpinner();
+        radioBtn_detallesSi = new javax.swing.JRadioButton();
+        jLabel4 = new javax.swing.JLabel();
+        spinnerFechaFinal = new javax.swing.JSpinner();
+        label_sucursalesS1 = new javax.swing.JLabel();
+        radioBtn_detallesNo = new javax.swing.JRadioButton();
         logo5 = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox();
         fondo_agregar3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -572,191 +591,42 @@ public class Venta extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Empleados", Usuarios_JTab);
 
-        tab_venta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        label_ventas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        label_ventas.setForeground(new java.awt.Color(204, 204, 204));
-        label_ventas.setText("Ventas");
-        tab_venta.add(label_ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 70, -1));
-
-        titulo_ventas.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        titulo_ventas.setForeground(new java.awt.Color(204, 204, 204));
-        titulo_ventas.setText("Punto de Venta");
-        tab_venta.add(titulo_ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, -1, -1));
-
-        label_codigoProd.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        label_codigoProd.setForeground(new java.awt.Color(204, 204, 204));
-        label_codigoProd.setText("Nombre");
-        tab_venta.add(label_codigoProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 80, 130, -1));
-
-        label_categoria_ventas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        label_categoria_ventas.setForeground(new java.awt.Color(204, 204, 204));
-        label_categoria_ventas.setText("Categoría");
-        tab_venta.add(label_categoria_ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 139, -1));
-
-        label_cambio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        label_cambio.setForeground(new java.awt.Color(255, 255, 255));
-        label_cambio.setText("Cambio");
-        tab_venta.add(label_cambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 470, -1, -1));
-
-        label_busquedas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        label_busquedas.setForeground(new java.awt.Color(204, 204, 204));
-        label_busquedas.setText("Busquedas");
-        tab_venta.add(label_busquedas, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 180, 70, -1));
-
-        label_total.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        label_total.setForeground(new java.awt.Color(255, 255, 255));
-        label_total.setText("Total");
-        tab_venta.add(label_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 56, -1));
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel2.setText("Cantidad");
-        tab_venta.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, -1, -1));
-
-        label_recibo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        label_recibo.setForeground(new java.awt.Color(255, 255, 255));
-        label_recibo.setText("Recibió");
-        tab_venta.add(label_recibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 420, -1, -1));
-        tab_venta.add(txtF_codproducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 238, -1));
-
-        txtF_total.setEditable(false);
-        txtF_total.setText("0");
-        tab_venta.add(txtF_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 420, 76, -1));
-
-        txtF_recibo.setText("0");
-        tab_venta.add(txtF_recibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 420, 80, -1));
-
-        txtF_cambio.setEditable(false);
-        txtF_cambio.setText("0");
-        tab_venta.add(txtF_cambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 470, 80, -1));
-
-        try{
-            Connection con   = Conexion.getConexion();
-            ResultSet r = Conexion.consultValues(con, "select nombre from categoria",null);
-            r.last();
-            String[] c=new String[r.getRow()];
-            r.beforeFirst();
-            int i = 0;
-            for(i = 0 ; r.next();i++)
-            c[i]=r.getString(1);
-            combo_categorias_ventas.setModel(new javax.swing.DefaultComboBoxModel(c));
-            con.close();
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
-        }
-        combo_categorias_ventas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                combo_categorias_ventasActionPerformed(evt);
-            }
-        });
-        tab_venta.add(combo_categorias_ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 110, 240, -1));
-
-        tabla_busquedas.setModel(new punto_de_venta_p2.CustomTableModel("busque por categoria o por nombre"));
-        tabla_busquedas.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tabla_busquedasFocusLost(evt);
-            }
-        });
-        tabla_busquedas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabla_busquedasMouseClicked(evt);
-            }
-        });
-        ScrollP_busquedas.setViewportView(tabla_busquedas);
-
-        tab_venta.add(ScrollP_busquedas, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, 430, 180));
-
-        tabla_ventas.setModel(new punto_de_venta_p2.CustomTableModel("agregar producto"));
-        tabla_ventas.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tabla_ventasFocusLost(evt);
-            }
-        });
-        tabla_ventas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabla_ventasMouseClicked(evt);
-            }
-        });
-        ScrollP_Ventas.setViewportView(tabla_ventas);
-
-        tab_venta.add(ScrollP_Ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 440, 180));
-
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
-        tab_venta.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, 70, -1));
-
-        logo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
-        logo2.setBorderPainted(false);
-        logo2.setContentAreaFilled(false);
-        tab_venta.add(logo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
-
-        btn_buscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btn_buscar.setText("Buscar");
-        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_buscarActionPerformed(evt);
-            }
-        });
-        tab_venta.add(btn_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 130, 140, 30));
-
-        cerrarSesion_venta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cerrarSesion_venta.setText("Cerrar Sesión ");
-        cerrarSesion_venta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cerrarSesion_ventaActionPerformed(evt);
-            }
-        });
-        tab_venta.add(cerrarSesion_venta, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 20, -1, 30));
-
-        btn_CancelarV.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btn_CancelarV.setText("Cancelar");
-        btn_CancelarV.setEnabled(false);
-        btn_CancelarV.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_CancelarVActionPerformed(evt);
-            }
-        });
-        tab_venta.add(btn_CancelarV, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 470, 100, -1));
-
-        btn_pago.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btn_pago.setText("Pago");
-        btn_pago.setEnabled(false);
-        btn_pago.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_pagoActionPerformed(evt);
-            }
-        });
-        tab_venta.add(btn_pago, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 420, 100, -1));
-
-        btn_agregar_venta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btn_agregar_venta.setText("Agregar a cuenta");
-        btn_agregar_venta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_agregar_ventaActionPerformed(evt);
-            }
-        });
-        tab_venta.add(btn_agregar_venta, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 70, 140, 30));
-
-        background_venta.setBackground(new java.awt.Color(251, 251, 251));
-        background_venta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/nebula.png"))); // NOI18N
-        background_venta.setText("jButton7");
-        tab_venta.add(background_venta, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 530));
-
-        Venta_JTab.setViewportView(tab_venta);
-
-        jTabbedPane1.addTab("Ventas", Venta_JTab);
-
         tab_agregar1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         label_titulo1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         label_titulo1.setForeground(new java.awt.Color(255, 255, 255));
         label_titulo1.setText("Categorias");
-        tab_agregar1.add(label_titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, -1, -1));
+        tab_agregar1.add(label_titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 120, -1, -1));
 
         label_nombre1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         label_nombre1.setForeground(new java.awt.Color(255, 255, 255));
         label_nombre1.setText("Nombre");
         tab_agregar1.add(label_nombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
+
+        label_categoriasC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_categoriasC.setForeground(new java.awt.Color(255, 255, 255));
+        label_categoriasC.setText("Categorias:");
+        tab_agregar1.add(label_categoriasC, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 150, 70, 20));
+
+        radioBtn_activoC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioBtn_activoC.setForeground(new java.awt.Color(255, 255, 255));
+        radioBtn_activoC.setText("activas");
+        radioBtn_activoC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioBtn_activoCActionPerformed(evt);
+            }
+        });
+        tab_agregar1.add(radioBtn_activoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 150, -1, -1));
+
+        radioBtn_inactivoC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioBtn_inactivoC.setForeground(new java.awt.Color(255, 255, 255));
+        radioBtn_inactivoC.setText("inactivas");
+        radioBtn_inactivoC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioBtn_inactivoCActionPerformed(evt);
+            }
+        });
+        tab_agregar1.add(radioBtn_inactivoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 150, -1, -1));
         tab_agregar1.add(txt_NombreC, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 160, -1));
 
         try{
@@ -773,7 +643,7 @@ public class Venta extends javax.swing.JFrame {
         });
         scrollP_productos1.setViewportView(tabla_Categoria);
 
-        tab_agregar1.add(scrollP_productos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, 520, 320));
+        tab_agregar1.add(scrollP_productos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 220, 520, 230));
 
         btn_cerrarSesion1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn_cerrarSesion1.setText("Cerrar Sesión ");
@@ -828,14 +698,25 @@ public class Venta extends javax.swing.JFrame {
         });
         tab_agregar1.add(btn_modificar_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, -1, -1));
 
+        btn_restaurarC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_restaurarC.setText("Restaurar Categoria");
+        btn_restaurarC.setToolTipText("");
+        btn_restaurarC.setEnabled(false);
+        btn_restaurarC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_restaurarCActionPerformed(evt);
+            }
+        });
+        tab_agregar1.add(btn_restaurarC, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 280, -1, -1));
+
         fondo_agregar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/glazed-doughnut-atom.jpg"))); // NOI18N
         fondo_agregar1.setBorderPainted(false);
         fondo_agregar1.setContentAreaFilled(false);
         tab_agregar1.add(fondo_agregar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 540));
 
-        Agregar_jTab1.setViewportView(tab_agregar1);
+        Categoria_Jtab.setViewportView(tab_agregar1);
 
-        jTabbedPane1.addTab("Categoria", Agregar_jTab1);
+        jTabbedPane1.addTab("Categoria", Categoria_Jtab);
 
         tab_S.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -982,31 +863,197 @@ public class Venta extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Sucursales", Sucursal_jTab);
 
+        tab_venta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        label_ventas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_ventas.setForeground(new java.awt.Color(204, 204, 204));
+        label_ventas.setText("Ventas");
+        tab_venta.add(label_ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 70, -1));
+
+        titulo_ventas.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        titulo_ventas.setForeground(new java.awt.Color(204, 204, 204));
+        titulo_ventas.setText("Punto de Venta");
+        tab_venta.add(titulo_ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, -1, -1));
+
+        label_codigoProd.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_codigoProd.setForeground(new java.awt.Color(204, 204, 204));
+        label_codigoProd.setText("Nombre");
+        tab_venta.add(label_codigoProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 80, 130, -1));
+
+        label_categoria_ventas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_categoria_ventas.setForeground(new java.awt.Color(204, 204, 204));
+        label_categoria_ventas.setText("Categoría");
+        tab_venta.add(label_categoria_ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 139, -1));
+
+        label_cambio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_cambio.setForeground(new java.awt.Color(255, 255, 255));
+        label_cambio.setText("Cambio");
+        tab_venta.add(label_cambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 470, -1, -1));
+
+        label_busquedas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_busquedas.setForeground(new java.awt.Color(204, 204, 204));
+        label_busquedas.setText("Busquedas");
+        tab_venta.add(label_busquedas, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 180, 70, -1));
+
+        label_total.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_total.setForeground(new java.awt.Color(255, 255, 255));
+        label_total.setText("Total");
+        tab_venta.add(label_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 56, -1));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel2.setText("Cantidad");
+        tab_venta.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, -1, -1));
+
+        label_recibo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_recibo.setForeground(new java.awt.Color(255, 255, 255));
+        label_recibo.setText("Recibió");
+        tab_venta.add(label_recibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 420, -1, -1));
+        tab_venta.add(txtF_codproducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 238, -1));
+
+        txtF_total.setEditable(false);
+        txtF_total.setText("0");
+        tab_venta.add(txtF_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 420, 76, -1));
+
+        txtF_recibo.setText("0");
+        tab_venta.add(txtF_recibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 420, 80, -1));
+
+        txtF_cambio.setEditable(false);
+        txtF_cambio.setText("0");
+        tab_venta.add(txtF_cambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 470, 80, -1));
+
+        try{
+            Connection con   = Conexion.getConexion();
+            ResultSet r = Conexion.consultValues(con, "select nombre from categoria",null);
+            r.last();
+            String[] c=new String[r.getRow()];
+            r.beforeFirst();
+            int i = 0;
+            for(i = 0 ; r.next();i++)
+            c[i]=r.getString(1);
+            combo_categorias_ventas.setModel(new javax.swing.DefaultComboBoxModel(c));
+            con.close();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        tab_venta.add(combo_categorias_ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 110, 240, -1));
+
+        tabla_busquedas.setModel(new punto_de_venta_p2.CustomTableModel("busque por categoria o por nombre"));
+        tabla_busquedas.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tabla_busquedasFocusLost(evt);
+            }
+        });
+        tabla_busquedas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_busquedasMouseClicked(evt);
+            }
+        });
+        ScrollP_busquedas.setViewportView(tabla_busquedas);
+
+        tab_venta.add(ScrollP_busquedas, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, 430, 180));
+
+        tabla_ventas.setModel(new punto_de_venta_p2.CustomTableModel("agregar producto"));
+        tabla_ventas.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tabla_ventasFocusLost(evt);
+            }
+        });
+        tabla_ventas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_ventasMouseClicked(evt);
+            }
+        });
+        ScrollP_Ventas.setViewportView(tabla_ventas);
+
+        tab_venta.add(ScrollP_Ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 440, 180));
+
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        tab_venta.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, 70, -1));
+
+        logo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
+        logo2.setBorderPainted(false);
+        logo2.setContentAreaFilled(false);
+        tab_venta.add(logo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
+
+        btn_buscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_buscar.setText("Buscar");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
+        tab_venta.add(btn_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 130, 140, 30));
+
+        cerrarSesion_venta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cerrarSesion_venta.setText("Cerrar Sesión ");
+        cerrarSesion_venta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cerrarSesion_ventaActionPerformed(evt);
+            }
+        });
+        tab_venta.add(cerrarSesion_venta, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 20, -1, 30));
+
+        btn_CancelarV.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_CancelarV.setText("Cancelar");
+        btn_CancelarV.setEnabled(false);
+        btn_CancelarV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_CancelarVActionPerformed(evt);
+            }
+        });
+        tab_venta.add(btn_CancelarV, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 470, 100, -1));
+
+        btn_pago.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_pago.setText("Pago");
+        btn_pago.setEnabled(false);
+        btn_pago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_pagoActionPerformed(evt);
+            }
+        });
+        tab_venta.add(btn_pago, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 420, 100, -1));
+
+        btn_agregar_venta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_agregar_venta.setText("Agregar a cuenta");
+        btn_agregar_venta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_agregar_ventaActionPerformed(evt);
+            }
+        });
+        tab_venta.add(btn_agregar_venta, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 70, 140, 30));
+
+        background_venta.setBackground(new java.awt.Color(251, 251, 251));
+        background_venta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/nebula.png"))); // NOI18N
+        background_venta.setText("jButton7");
+        tab_venta.add(background_venta, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 530));
+
+        Venta_JTab.setViewportView(tab_venta);
+
+        jTabbedPane1.addTab("Ventas", Venta_JTab);
+
         tab_agregar3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         label_titulo3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         label_titulo3.setForeground(new java.awt.Color(255, 255, 255));
         label_titulo3.setText("Historial de Ventas");
         tab_agregar3.add(label_titulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, -1, -1));
-        tab_agregar3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 620, 300));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-        tab_agregar3.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 150, -1));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Fecha de incio:");
+        tab_agregar3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, -1, -1));
 
-        label_nombre3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        label_nombre3.setForeground(new java.awt.Color(255, 255, 255));
-        label_nombre3.setText("Mes");
-        tab_agregar3.add(label_nombre3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, -1, -1));
+        try {
+            Connection con   = Conexion.getConexion();
+            String sql ="SELECT  fecha_compra,fecha_pago,p.cantidad,concat(s.nombre,' ',s.apellido) as staff  FROM  pago p natural join compra c natural join staff s group by c.compra_id ";
+            tabla_historial.setModel(Conexion.createTableModel(con,sql,null,"No se ha vendido nada"));
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        jScrollPane1.setViewportView(tabla_historial);
 
-        label_precio3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        label_precio3.setForeground(new java.awt.Color(255, 255, 255));
-        label_precio3.setText("Año");
-        tab_agregar3.add(label_precio3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, -1, -1));
+        tab_agregar3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 900, 300));
 
         btn_cerrarSesion3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn_cerrarSesion3.setText("Cerrar Sesión ");
@@ -1024,24 +1071,61 @@ public class Venta extends javax.swing.JFrame {
                 btn_BuscarHistorialActionPerformed(evt);
             }
         });
-        tab_agregar3.add(btn_BuscarHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 450, -1, -1));
+        tab_agregar3.add(btn_BuscarHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 140, -1, -1));
+
+        spinnerFechadeIncio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        spinnerFechadeIncio.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, new java.util.Date(), java.util.Calendar.DAY_OF_MONTH));
+        spinnerFechadeIncio.setEditor(new JSpinner.DateEditor(spinnerFechadeIncio,"dd/MM/yyyy"));
+        tab_agregar3.add(spinnerFechadeIncio, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 140, 120, -1));
+
+        radioBtn_detallesSi.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioBtn_detallesSi.setForeground(new java.awt.Color(255, 255, 255));
+        radioBtn_detallesSi.setText("si");
+        radioBtn_detallesSi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioBtn_detallesSiActionPerformed(evt);
+            }
+        });
+        tab_agregar3.add(radioBtn_detallesSi, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Fecha de termino:");
+        tab_agregar3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 140, -1, -1));
+
+        spinnerFechaFinal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        spinnerFechaFinal.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, new java.util.Date(), java.util.Calendar.DAY_OF_MONTH));
+        spinnerFechaFinal.setEditor(new JSpinner.DateEditor(spinnerFechaFinal,"dd/MM/yyyy"));
+        tab_agregar3.add(spinnerFechaFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 140, 120, -1));
+
+        label_sucursalesS1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label_sucursalesS1.setForeground(new java.awt.Color(255, 255, 255));
+        label_sucursalesS1.setText("Mostrar Detalles:");
+        tab_agregar3.add(label_sucursalesS1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 110, 20));
+
+        radioBtn_detallesNo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioBtn_detallesNo.setForeground(new java.awt.Color(255, 255, 255));
+        radioBtn_detallesNo.setText("no");
+        radioBtn_detallesNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioBtn_detallesNoActionPerformed(evt);
+            }
+        });
+        tab_agregar3.add(radioBtn_detallesNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 140, -1, -1));
 
         logo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
         logo5.setBorderPainted(false);
         logo5.setContentAreaFilled(false);
         tab_agregar3.add(logo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2016" }));
-        tab_agregar3.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, 140, -1));
-
         fondo_agregar3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/donuts_galaxy_wallpaper_by_annedelune-d6uhkc1.png"))); // NOI18N
         fondo_agregar3.setBorderPainted(false);
         fondo_agregar3.setContentAreaFilled(false);
         tab_agregar3.add(fondo_agregar3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 540));
 
-        Agregar_jTab3.setViewportView(tab_agregar3);
+        Pagos_Jtab.setViewportView(tab_agregar3);
 
-        jTabbedPane1.addTab("Historial de Ventas", Agregar_jTab3);
+        jTabbedPane1.addTab("Historial de Ventas", Pagos_Jtab);
 
         jPanel1.setMaximumSize(new java.awt.Dimension(987, 592));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1301,14 +1385,14 @@ public class Venta extends javax.swing.JFrame {
 
     private void combo_categoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_categoriasActionPerformed
         if (combo_categorias.getSelectedItem().toString().equals("crear nueva categoria")) {
-            cambiarVentana(new AgregarCategoria());
+          
         }
     }//GEN-LAST:event_combo_categoriasActionPerformed
 
     private void combo_sucursalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_sucursalesActionPerformed
         // TODO add your handling code here:
         if (combo_sucursales.getSelectedItem().toString().equals("agregar nueva sucursal")) {
-            cambiarVentana(new AgregarSucursal());
+            
         }
     }//GEN-LAST:event_combo_sucursalesActionPerformed
 
@@ -1986,16 +2070,23 @@ public class Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cerrarSesion3ActionPerformed
 
     private void btn_BuscarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_BuscarHistorialActionPerformed
-        // TODO add your handling code here:
+        try {
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String fechainicio = dateFormat.format(spinnerFechadeIncio.getValue());
+            String fechafinal = dateFormat.format(spinnerFechaFinal.getValue());
+            ResultSet r;
+            Connection con = Conexion.getConexion();
+            if (radioBtn_detallesNo.isSelected()) {
+                r = Conexion.callStoredProcedure(con, "call getComprasEnFechaSinDetalle(?,?)", new Object[]{fechainicio, fechafinal});
+            } else {
+                r = Conexion.callStoredProcedure(con, "call getComprasEnFecha(?,?)", new Object[]{fechainicio, fechafinal});
+            }
+            tabla_historial.setModel(Conexion.createTableModel(con, r, "no hay compras"));
+        } catch (SQLException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_BuscarHistorialActionPerformed
-
-    private void combo_categorias_ventasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_categorias_ventasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_combo_categorias_ventasActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void tabla_CategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_CategoriaMouseClicked
         // TODO add your handling code here:
@@ -2003,7 +2094,7 @@ public class Venta extends javax.swing.JFrame {
         int row = tabla_Categoria.getSelectedRow();
         int rows = tabla_Categoria.getSelectedRowCount();
 
-        if (rows > 0) {
+        if (rows > 0 && radioBtn_activoC.isSelected()) {
             //SELECT nombre,apellido,activo,puesto,contrasenia,correo,direccion
             btn_agregar_categoria.setVisible(false);
             btn_agregar_categoria.setEnabled(false);
@@ -2022,7 +2113,6 @@ public class Venta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tabla_CategoriaMouseClicked
 
-   
 
     private void btn_cancelar_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelar_categoriaActionPerformed
         // TODO add your handling code here:
@@ -2091,10 +2181,117 @@ public class Venta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_eliminar_categoriaActionPerformed
 
+    private void radioBtn_activoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBtn_activoCActionPerformed
+        JComponent[] components = {btn_agregar_categoria, txt_NombreC, label_nombre1};
+        for (JComponent c : components) {
+            c.setEnabled(true);
+            c.setVisible(true);
+        }
+        btn_restaurarC.setVisible(false);
+        btn_restaurarC.setEnabled(false);
+        components = new JComponent[]{btn_cancelar_categoria, btn_eliminar_categoria, btn_modificar_categoria};
+        for (JComponent c : components) {
+            c.setVisible(false);
+            c.setEnabled(false);
+        }
+        txt_NombreC.setText(null);
+        tabla_agregarS.clearSelection();
+        try {
+            Connection con = Conexion.getConexion();
+            String SQL = "SELECT nombre from categoria where activa = ?";
+            tabla_Categoria.setModel(Conexion.createTableModel(con, SQL, new Object[]{true}, "agregue una categoria"));
+
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_radioBtn_activoCActionPerformed
+
+    private void radioBtn_inactivoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBtn_inactivoCActionPerformed
+        JComponent[] components = {btn_agregar_categoria, txt_NombreC, label_nombre1};
+        for (JComponent c : components) {
+            c.setEnabled(false);
+            c.setVisible(false);
+        }
+        btn_restaurarC.setVisible(true);
+        btn_restaurarC.setEnabled(true);
+        components = new JComponent[]{btn_cancelar_categoria, btn_eliminar_categoria, btn_modificar_categoria};
+        for (JComponent c : components) {
+            c.setVisible(false);
+            c.setEnabled(false);
+        }
+        txt_NombreC.setText(null);
+        tabla_agregarS.clearSelection();
+        try {
+            Connection con = Conexion.getConexion();
+            String SQL = "SELECT nombre from categoria where activa = ?";
+            tabla_Categoria.setModel(Conexion.createTableModel(con, SQL, new Object[]{false}, "agregue una categoria"));
+
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_radioBtn_inactivoCActionPerformed
+
+    private void btn_restaurarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_restaurarCActionPerformed
+        try {
+            CustomTableModel model = (CustomTableModel) tabla_Categoria.getModel();
+            Connection con = Conexion.getConexion();
+            for (int i = 0; i < tabla_Categoria.getSelectedRowCount(); i++) {
+                Conexion.executeUpdate(con, "Update  categoria set activa= ? where nombre= ?", new Object[]{true, model.getValueAt(tabla_Categoria.getSelectedRows()[i], 0)});
+            }
+            btn_agregar_categoria.setVisible(true);
+            btn_agregar_categoria.setEnabled(true);
+            btn_cancelar_categoria.setVisible(false);
+            btn_eliminar_categoria.setVisible(false);
+            btn_modificar_categoria.setVisible(false);
+            btn_cancelar_categoria.setEnabled(false);
+            btn_eliminar_categoria.setEnabled(false);
+            btn_modificar_categoria.setEnabled(false);
+            tabla_Categoria.clearSelection();
+            Conexion.refreshTable(tabla_Categoria, con);
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_restaurarCActionPerformed
+
+    private void radioBtn_detallesSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBtn_detallesSiActionPerformed
+        try {
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String fechainicio = dateFormat.format(spinnerFechadeIncio.getValue());
+            String fechafinal = dateFormat.format(spinnerFechaFinal.getValue());
+            ResultSet r;
+            Connection con = Conexion.getConexion();
+            r = Conexion.callStoredProcedure(con, "call getComprasEnFecha(?,?)", new Object[]{fechainicio, fechafinal});
+            tabla_historial.setModel(Conexion.createTableModel(con, r, "no hay compras"));
+        } catch (SQLException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_radioBtn_detallesSiActionPerformed
+
+    private void radioBtn_detallesNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBtn_detallesNoActionPerformed
+        try {
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String fechainicio = dateFormat.format(spinnerFechadeIncio.getValue());
+            String fechafinal = dateFormat.format(spinnerFechaFinal.getValue());
+            System.out.println(fechainicio);
+            System.out.println(fechafinal);
+            ResultSet r;
+            Connection con = Conexion.getConexion();
+            r = Conexion.callStoredProcedure(con, "call getComprasEnFechaSinDetalle(?,?)", new Object[]{fechainicio, fechafinal});
+            tabla_historial.setModel(Conexion.createTableModel(con, r, "no hay compras"));
+        } catch (SQLException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_radioBtn_detallesNoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane Agregar_jTab;
-    private javax.swing.JScrollPane Agregar_jTab1;
-    private javax.swing.JScrollPane Agregar_jTab3;
+    private javax.swing.JScrollPane Categoria_Jtab;
+    private javax.swing.JScrollPane Pagos_Jtab;
     private javax.swing.JScrollPane ScrollP_Ventas;
     private javax.swing.JScrollPane ScrollP_busquedas;
     private javax.swing.JScrollPane Sucursal_jTab;
@@ -2104,9 +2301,11 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JButton bckground_usuarios;
     private javax.swing.JButton boton_cerrarSesion_usuarios;
     private javax.swing.ButtonGroup btnGroup_PuestoU;
+    private javax.swing.ButtonGroup btnGroup_activoC;
     private javax.swing.ButtonGroup btnGroup_activoP;
     private javax.swing.ButtonGroup btnGroup_activoS;
     private javax.swing.ButtonGroup btnGroup_activoU;
+    private javax.swing.ButtonGroup btnGroup_detallesPagos;
     private javax.swing.JButton btn_Agregar;
     private javax.swing.JButton btn_AgregarS;
     private javax.swing.JButton btn_BuscarHistorial;
@@ -2134,6 +2333,7 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JButton btn_modificar_usuario;
     private javax.swing.JButton btn_pago;
     private javax.swing.JButton btn_reactivar_U;
+    private javax.swing.JButton btn_restaurarC;
     private javax.swing.JButton btn_restaurarP;
     private javax.swing.JButton btn_restaurarS;
     private javax.swing.JButton cerrarSesion_venta;
@@ -2145,10 +2345,10 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JButton fondo_agregar1;
     private javax.swing.JButton fondo_agregar3;
     private javax.swing.JButton fondo_agregarS;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner1;
@@ -2162,6 +2362,7 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JLabel label_cantidadP1;
     private javax.swing.JLabel label_categoria;
     private javax.swing.JLabel label_categoria_ventas;
+    private javax.swing.JLabel label_categoriasC;
     private javax.swing.JLabel label_codigoProd;
     private javax.swing.JLabel label_coloniaS;
     private javax.swing.JLabel label_contrasenia;
@@ -2169,14 +2370,13 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JLabel label_estatusU;
     private javax.swing.JLabel label_nombre;
     private javax.swing.JLabel label_nombre1;
-    private javax.swing.JLabel label_nombre3;
     private javax.swing.JLabel label_nombre_usuarios;
     private javax.swing.JLabel label_precio;
-    private javax.swing.JLabel label_precio3;
     private javax.swing.JLabel label_puesto;
     private javax.swing.JLabel label_recibo;
     private javax.swing.JLabel label_sucursal;
     private javax.swing.JLabel label_sucursalesS;
+    private javax.swing.JLabel label_sucursalesS1;
     private javax.swing.JLabel label_telefonoS;
     private javax.swing.JLabel label_titulo;
     private javax.swing.JLabel label_titulo1;
@@ -2190,9 +2390,13 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JButton logo3;
     private javax.swing.JButton logo4;
     private javax.swing.JButton logo5;
+    private javax.swing.JRadioButton radioBtn_activoC;
     private javax.swing.JRadioButton radioBtn_activoP;
     private javax.swing.JRadioButton radioBtn_activoS;
     private javax.swing.JRadioButton radioBtn_activoU;
+    private javax.swing.JRadioButton radioBtn_detallesNo;
+    private javax.swing.JRadioButton radioBtn_detallesSi;
+    private javax.swing.JRadioButton radioBtn_inactivoC;
     private javax.swing.JRadioButton radioBtn_inactivoP;
     private javax.swing.JRadioButton radioBtn_inactivoS;
     private javax.swing.JRadioButton radioBtn_inactivoU;
@@ -2202,6 +2406,8 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JScrollPane scrollP_Usuarios;
     private javax.swing.JScrollPane scrollP_productos;
     private javax.swing.JScrollPane scrollP_productos1;
+    private javax.swing.JSpinner spinnerFechaFinal;
+    private javax.swing.JSpinner spinnerFechadeIncio;
     private javax.swing.JPanel tabUsuarios;
     private javax.swing.JPanel tab_S;
     private javax.swing.JPanel tab_agregar;
@@ -2212,6 +2418,7 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JTable tabla_agregarP;
     private javax.swing.JTable tabla_agregarS;
     private javax.swing.JTable tabla_busquedas;
+    private javax.swing.JTable tabla_historial;
     private javax.swing.JTable tabla_usuarios;
     private javax.swing.JTable tabla_ventas;
     private javax.swing.JLabel titulo_usuarios;
