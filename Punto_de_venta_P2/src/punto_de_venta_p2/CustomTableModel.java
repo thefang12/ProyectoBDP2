@@ -37,6 +37,10 @@ public class CustomTableModel extends AbstractTableModel {
         this.error_message = error_mesage;
     }
 
+    public void setError_message(String error_message) {
+        this.error_message = error_message;
+    }
+
     public CustomTableModel() {
         columnNames = new ArrayList();
         rowData = new ArrayList();

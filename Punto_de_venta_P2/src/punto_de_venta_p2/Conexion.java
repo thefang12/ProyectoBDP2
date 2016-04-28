@@ -75,6 +75,7 @@ public class Conexion {
         CustomTableModel modelo = new CustomTableModel();
         try {
             ResultSet rsDatos = consultValues(con, SentenciaSQL, data);
+            modelo.setError_message(fail_message);
             if (rsDatos.next()) {
                 //optendremos lo metodos se la consulta 
                 // del cual obtenemos 
