@@ -142,8 +142,11 @@ public class Venta extends javax.swing.JFrame {
         scrollP_productos1 = new javax.swing.JScrollPane();
         tabla_Categoria = new javax.swing.JTable(new punto_de_venta_p2.CustomTableModel());
         btn_cerrarSesion1 = new javax.swing.JButton();
-        btn_Agregar1 = new javax.swing.JButton();
+        btn_agregar_categoria = new javax.swing.JButton();
         logo3 = new javax.swing.JButton();
+        btn_cancelar_categoria = new javax.swing.JButton();
+        btn_eliminar_categoria = new javax.swing.JButton();
+        btn_modificar_categoria = new javax.swing.JButton();
         fondo_agregar1 = new javax.swing.JButton();
         Agregar_jTab2 = new javax.swing.JScrollPane();
         tab_agregar2 = new javax.swing.JPanel();
@@ -661,8 +664,8 @@ public class Venta extends javax.swing.JFrame {
 
         try{
             Connection con =  Conexion.getConexion();
-            String SQL ="SELECT nombre from categoria";
-            tabla_Categoria.setModel(Conexion.createTableModel(con,SQL,null,"agregue una categoria"));
+            String SQL ="SELECT nombre from categoria where activa = ?";
+            tabla_Categoria.setModel(Conexion.createTableModel(con,SQL,new Object[]{true},"agregue una categoria"));
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
         }
@@ -684,19 +687,49 @@ public class Venta extends javax.swing.JFrame {
         });
         tab_agregar1.add(btn_cerrarSesion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 40, -1, -1));
 
-        btn_Agregar1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btn_Agregar1.setText("Agregar");
-        btn_Agregar1.addActionListener(new java.awt.event.ActionListener() {
+        btn_agregar_categoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_agregar_categoria.setText("Agregar");
+        btn_agregar_categoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_Agregar1ActionPerformed(evt);
+                btn_agregar_categoriaActionPerformed(evt);
             }
         });
-        tab_agregar1.add(btn_Agregar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 280, -1, -1));
+        tab_agregar1.add(btn_agregar_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, -1, -1));
 
         logo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Drawing (1).png"))); // NOI18N
         logo3.setBorderPainted(false);
         logo3.setContentAreaFilled(false);
         tab_agregar1.add(logo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
+
+        btn_cancelar_categoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_cancelar_categoria.setText("Cancelar");
+        btn_cancelar_categoria.setEnabled(false);
+        btn_cancelar_categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelar_categoriaActionPerformed(evt);
+            }
+        });
+        tab_agregar1.add(btn_cancelar_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, -1, -1));
+
+        btn_eliminar_categoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_eliminar_categoria.setText("Eliminar");
+        btn_eliminar_categoria.setEnabled(false);
+        btn_eliminar_categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_eliminar_categoriaActionPerformed(evt);
+            }
+        });
+        tab_agregar1.add(btn_eliminar_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, -1, -1));
+
+        btn_modificar_categoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_modificar_categoria.setText("Modificar");
+        btn_modificar_categoria.setEnabled(false);
+        btn_modificar_categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modificar_categoriaActionPerformed(evt);
+            }
+        });
+        tab_agregar1.add(btn_modificar_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, -1, -1));
 
         fondo_agregar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/glazed-doughnut-atom.jpg"))); // NOI18N
         fondo_agregar1.setBorderPainted(false);
@@ -1251,23 +1284,22 @@ public class Venta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_cerrarSesion1ActionPerformed
 
-    private void btn_Agregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Agregar1ActionPerformed
+    private void btn_agregar_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_categoriaActionPerformed
         // TODO add your handling code here:
         try {
             String select;
             Connection con = Conexion.getConexion();
-            
-            String insert = "INSERT INTO categoria VALUES(?,?)";
-            Object[] o = {Conexion.getAutonumericField(con, insert, 1), txt_NombreC.getText()};
+            //aqui te falt un campo que agregamos de ultimo moemnto 
+            String insert = "INSERT INTO categoria VALUES(?,?,?)";
+            Object[] o = {Conexion.getAutonumericField(con, insert, 1), txt_NombreC.getText(),true};
             Conexion.executeUpdate(con, insert, o);
-           
-            select = "Select  categoria_id from categoria where nombre = '" + txt_NombreC.getText() ;
+           Conexion.refreshTable(tabla_Categoria,con);
            
             con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-    }//GEN-LAST:event_btn_Agregar1ActionPerformed
+    }//GEN-LAST:event_btn_agregar_categoriaActionPerformed
 
     private void btn_cerrarSesion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarSesion2ActionPerformed
         // TODO add your handling code here:
@@ -1354,7 +1386,24 @@ public class Venta extends javax.swing.JFrame {
         CustomTableModel model = (CustomTableModel) tabla_Categoria.getModel();
        int row = tabla_Categoria.getSelectedRow();
        int rows = tabla_Categoria.getSelectedRowCount();
-       txt_NombreC.setText((String) model.getValueAt(row, 0));
+       
+       if (rows > 0) {
+            //SELECT nombre,apellido,activo,puesto,contrasenia,correo,direccion
+            btn_agregar_categoria.setVisible(false);
+            btn_agregar_categoria.setEnabled(false);
+            btn_cancelar_categoria.setVisible(true);
+            btn_eliminar_categoria.setVisible(true);
+            btn_modificar_categoria.setVisible(true);
+            btn_cancelar_categoria.setEnabled(true);
+            btn_eliminar_categoria.setEnabled(true);
+            btn_modificar_categoria.setEnabled(false);
+            txt_NombreC.setText(null);            
+            if (evt.getClickCount() > 1 && rows == 1) {
+
+                btn_modificar_categoria.setEnabled(true);                
+                txt_NombreC.setText((String) model.getValueAt(row, 0));
+            }
+       }
     }//GEN-LAST:event_tabla_CategoriaMouseClicked
 
     private void tabla_SucursalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_SucursalMouseClicked
@@ -1367,6 +1416,73 @@ public class Venta extends javax.swing.JFrame {
          txt_CPS.setText((String) model.getValueAt(row, 2));
           txt_TelefonoS.setText((String) model.getValueAt(row, 3));
     }//GEN-LAST:event_tabla_SucursalMouseClicked
+
+    private void btn_cancelar_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelar_categoriaActionPerformed
+        // TODO add your handling code here:
+        btn_agregar_categoria.setVisible(true);
+        btn_agregar_categoria.setEnabled(true);
+        btn_cancelar_categoria.setVisible(false);
+        btn_eliminar_categoria.setVisible(false);
+        btn_modificar_categoria.setVisible(false);
+        btn_cancelar_categoria.setEnabled(false);
+        btn_eliminar_categoria.setEnabled(false);
+        btn_modificar_categoria.setEnabled(false);
+        txt_NombreC.setText(null);
+        tabla_Categoria.clearSelection();
+    }//GEN-LAST:event_btn_cancelar_categoriaActionPerformed
+
+    private void btn_modificar_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificar_categoriaActionPerformed
+        // TODO add your handling code here:
+        try {
+            Connection con = Conexion.getConexion();
+            // TODO add your handling code here:
+
+            //ResultSet r = Conexion.consultValues(con, "Select categoria_id from categoria where nombre = ?", new Object[]{combo_sucursales.getSelectedItem()});
+            //if (r.last()) {
+                Conexion.executeUpdate(con, "Update categoria set nombre =? where nombre = ?", //aqui esta el error uri la columna donde esta el nombre es la 0 no la 4
+                        new Object[]{txt_NombreC.getText(), ((CustomTableModel) tabla_Categoria.getModel()).getValueAt(tabla_Categoria.getSelectedRow(), 0)});
+            //}
+
+            Conexion.refreshTable(tabla_Categoria, con);
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        btn_agregar_categoria.setVisible(true);
+        btn_agregar_categoria.setEnabled(true);
+        btn_cancelar_categoria.setVisible(false);
+        btn_eliminar_categoria.setVisible(false);
+        btn_modificar_categoria.setVisible(false);
+        btn_cancelar_categoria.setEnabled(false);
+        btn_eliminar_categoria.setEnabled(false);
+        btn_modificar_categoria.setEnabled(false);
+        txt_NombreC.setText(null);
+        tabla_Categoria.clearSelection();
+    }//GEN-LAST:event_btn_modificar_categoriaActionPerformed
+
+    private void btn_eliminar_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminar_categoriaActionPerformed
+        // TODO add your handling code here:
+        try {
+            CustomTableModel model = (CustomTableModel) tabla_Categoria.getModel();
+            Connection con = Conexion.getConexion();
+	    for (int i = 0; i < tabla_Categoria.getSelectedRowCount(); i++) {
+                Conexion.executeUpdate(con, "Update  categoria set activa= ? where nombre= ?", new Object[]{false, model.getValueAt( tabla_Categoria.getSelectedRows()[i], 0)});
+            }
+            btn_agregar_categoria.setVisible(true);
+            btn_agregar_categoria.setEnabled(true);
+            btn_cancelar_categoria.setVisible(false);
+            btn_eliminar_categoria.setVisible(false);
+            btn_modificar_categoria.setVisible(false);
+            btn_cancelar_categoria.setEnabled(false);
+            btn_eliminar_categoria.setEnabled(false);
+            btn_modificar_categoria.setEnabled(false);
+            tabla_Categoria.clearSelection();
+            Conexion.refreshTable(tabla_Categoria, con);
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_eliminar_categoriaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane Agregar_jTab;
@@ -1382,19 +1498,22 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btnGroup_PuestoU;
     private javax.swing.ButtonGroup btnGroup_activoU;
     private javax.swing.JButton btn_Agregar;
-    private javax.swing.JButton btn_Agregar1;
     private javax.swing.JButton btn_Agregar2;
+    private javax.swing.JButton btn_agregar_categoria;
     private javax.swing.JButton btn_agregar_usuario;
     private javax.swing.JButton btn_agregar_venta;
     private javax.swing.JButton btn_buscar;
+    private javax.swing.JButton btn_cancelar_categoria;
     private javax.swing.JButton btn_cancelar_productos;
     private javax.swing.JButton btn_cancelar_usuario;
     private javax.swing.JButton btn_cerrarSesion;
     private javax.swing.JButton btn_cerrarSesion1;
     private javax.swing.JButton btn_cerrarSesion2;
+    private javax.swing.JButton btn_eliminar_categoria;
     private javax.swing.JButton btn_eliminar_productos;
     private javax.swing.JButton btn_eliminar_usuario;
     private javax.swing.JButton btn_help_usuarios;
+    private javax.swing.JButton btn_modificar_categoria;
     private javax.swing.JButton btn_modificar_productos;
     private javax.swing.JButton btn_modificar_usuario;
     private javax.swing.JButton btn_pago;

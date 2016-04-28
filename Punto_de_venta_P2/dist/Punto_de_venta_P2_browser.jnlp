@@ -7,13 +7,13 @@
     <offline-allowed/>
   </information>
   <resources>
-    <jfx:javafx-runtime version="8.0+" href="http://javadl.sun.com/webapps/download/GetFile/javafx-latest/windows-i586/javafx2.jnlp"/>
+    <jfx:javafx-runtime version="2.2+" href="http://javadl.sun.com/webapps/download/GetFile/javafx-latest/windows-i586/javafx2.jnlp"/>
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Punto_de_venta_P2.jar" size="7128928" download="eager" />
-    <jar href="lib/AbsoluteLayout.jar" size="2903" download="eager" />
-    <jar href="lib/beansbinding-1.2.1.jar" size="631289" download="eager" />
+    <jar href="Punto_de_venta_P2.jar" size="7147707" download="eager" />
+    <jar href="lib/AbsoluteLayout.jar" size="2847" download="eager" />
+    <jar href="lib/beansbinding-1.2.1.jar" size="631281" download="eager" />
     <jar href="lib/mysql-connector-java-3.1.14-bin.jar" size="459094" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="punto_de_venta_p2.Login"  name="Punto_de_venta_P2" >
